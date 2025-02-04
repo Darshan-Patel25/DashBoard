@@ -1,109 +1,137 @@
-import React from "react";
+import React from 'react';
 import Header from "components/Header";
-import StatBox from "../../components/StatBox";
-import { Box, useTheme } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
+import FlexBetween from "components/FlexBetween";
+import {
+  DownloadOutlined,
+  Traffic,
+  Email,
+  PointOfSale,
+  PersonAdd,
+} from "@mui/icons-material";
+import StatBox from 'components/StatBox';
+
+
+//  Static Data
+const staticData = {
+  totalCustomers: 1234,
+  todayStats: {
+    totalSales: 4567,
+  },
+  thisMonthStats: {
+    totalSales: 23456,
+  },
+  yearlySalesTotal: 123456,
+};
+
 
 const Analytics = () => {
   const theme = useTheme();
-  const colors = theme.palette; // Assuming colors are defined in your theme
+  const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header
-        title="Business Performance"
-        subtitle="See insights on how your profile has changed since April 8"
-      />
+      <FlexBetween>
+        <Header title="Business Performance" subtitle="See insight on your Profile changed from April 8" />
+
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: theme.palette.secondary.light,
+              color: theme.palette.background.alt,
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+          >
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Download Reports
+          </Button>
+        </Box>
+      </FlexBetween>
 
       <Box
+        mt="20px"
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridAutoRows="160px"
         gap="20px"
+        sx={{
+          "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
+        }}
       >
         {/* ROW 1 */}
-        <Box
-          gridColumn="span 3"
-          backgroundColor={theme.palette.secondary.main}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="12,361"
-            subtitle="Hello"
-            progress="0.75"
-            increase="+14%"
-            icon={
-              <EmailIcon
-                sx={{ color: colors.success.main, fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        <StatBox
+          title="Average Impression"
+          value={staticData.totalCustomers}
+          increase="+14%"
+          description="Since last month"
+          icon={<Email sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+        />
 
-        <Box
-          gridColumn="span 3"
-          backgroundColor={theme.palette.secondary.main}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
-            icon={
-              <PointOfSaleIcon
-                sx={{ color: colors.success.main, fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        <StatBox
+          title="Average Engagement Rate"
+          value={staticData.todayStats.totalSales}
+          increase="+21%"
+          description="Since last month"
+          icon={<PointOfSale sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+        />
 
-        <Box
-          gridColumn="span 3"
-          backgroundColor={theme.palette.secondary.main}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
-            icon={
-              <PersonAddIcon
-                sx={{ color: colors.success.main, fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        
 
-        <Box
-          gridColumn="span 3"
-          backgroundColor={theme.palette.secondary.main}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
+        <StatBox
+          title="Avg Reach"
+          value={staticData.thisMonthStats.totalSales}
+          increase="+5%"
+          description="Since last month"
+          icon={<PersonAdd sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+        />
+
+        <StatBox
+          title="Yearly Sales"
+          value={staticData.yearlySalesTotal}
+          increase="+43%"
+          description="Since last month"
+          icon={<Traffic sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+        />
+         <Box
+          gridColumn="span 4"
+          gridRow="span 5"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
         >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <TrafficIcon
-                sx={{ color: colors.success.main, fontSize: "26px" }}
-              />
-            }
-          />
+          
         </Box>
+        
+        <Box
+          gridColumn="span 8"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+          
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+          
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+          
+        </Box>
+       
       </Box>
     </Box>
   );
