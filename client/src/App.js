@@ -12,6 +12,7 @@ import Message from "scenes/Message"
 import  Analytics from "scenes/Analytics";
 
 import Schedule from "scenes/Schedule";
+import Connectpage from "scenes/Schedule/connectpage";
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -28,6 +29,7 @@ function App() {
               <Route path="/schedule" element={<Schedule />} />
               <Route path="/message" element={<Message />} />
               <Route path="medialibrary" element={<MediaLibrary />} />
+              <Route path="/connectpage" element={<Connectpage />} />
          
             </Route>
           </Routes>
