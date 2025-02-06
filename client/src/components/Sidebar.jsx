@@ -20,7 +20,8 @@ import {
   ReceiptLongOutlined,
   DataUsageOutlined,
   AccountCircleOutlined,
-  CalendarMonth, Settings,
+  CalendarMonth,
+  Telegram,
   TrendingUpOutlined,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -34,9 +35,8 @@ const navItems = [
   { text: "Calender", icon: <CalendarMonth /> },
   { text: "Schedule", icon: <ReceiptLongOutlined /> },
   { text: "Account", icon: <AccountCircleOutlined />, hasDrawer: true },
-  { text: "Management", icon: null },
-  { text: "Setting", icon: <Settings /> },
-  { text: "Performance", icon: <TrendingUpOutlined /> },
+  { text: "Competitor-Insight  ", icon: <TrendingUpOutlined /> },
+  { text: "Sync-TelegramBot", icon: <Telegram/> },
 ];
 
 const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobile }) => {

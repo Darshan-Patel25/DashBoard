@@ -14,7 +14,7 @@ import Schedule from "scenes/Schedule";
 import ConnectAccount from "scenes/Schedule/connectaccount";
 import ManageAccount from "scenes/Schedule/manageaccount";
 import Connectpage from "scenes/Schedule/pages/connectpage";
-import Setting from "scenes/Setting"
+import Competit from "scenes/competitoeanalysis"
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -37,7 +37,7 @@ function App() {
               <Route path="/connectaccount" element={<ConnectAccount />} />
               <Route path="/manageaccount" element={<ManageAccount />} />
               <Route path="/connectpage" element={<Connectpage />} />
-              <Route path="/setting" element={<Setting />} />
+              <Route path="/competitor-insight" element={<Competit />} />
             </Route>
           </Routes>
         </ThemeProvider>

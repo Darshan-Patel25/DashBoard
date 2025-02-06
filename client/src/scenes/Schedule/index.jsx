@@ -1,23 +1,46 @@
 import React, { useState } from "react";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button,  useTheme ,useMediaQuery} from "@mui/material";
 import St from "components/St";
 import StatBox from "components/StatBox";
-import { Facebook, Twitter, FileCopy, Image, Mood, LocationOn } from "@mui/icons-material";
+import { Facebook, Twitter, FileCopy, Image, Mood, LocationOn, } from "@mui/icons-material";
 import Header from "../../components/Header"
 export default function Schedule() {
   const [post, setPost] = useState("");
   const theme = useTheme();
-
+ const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   return (
-    <Box m="1.5rem 2.5rem">
-    <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" bgcolor={theme.palette.background.default} p={2}>
     
-      <Header title="ManageAccount The Post" subtitle="Create the post" />
-    
-      <Box width="100%" maxWidth="1200px" bgcolor={theme.palette.background.alt} boxShadow={3} borderRadius={2} p={3}>
-        <Typography variant="h3" sx={{ color: theme.palette.primary.main, textAlign: "center", mb: 3 }}>
-          Create Post
-        </Typography>
+    <Box m="1rem 2rem">
+      <Header title="Create post"  />
+      
+
+      <Box
+        mt="20px"
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gridAutoRows="160px"
+        gap="20px"
+        sx={{
+          "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
+        }}
+      >
+        {/* ROW 1 */}
+        
+        <Box
+          gridColumn="span 8"
+          gridRow="span 3"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+         
+         <StatBox
+          title="Create post"
+          
+        />
+         
+
+        
 
         {/* Tabs */}
         <Box display="flex" borderBottom={1} borderColor="divider">
@@ -40,11 +63,14 @@ export default function Schedule() {
 
         {/* Icons */}
         <Box display="flex" justifyContent="center" gap={2} mt={3} color="gray">
-          <St icon={<FileCopy />} title="File" />
-          <St icon={<Image />} title="Image" />
-          <St icon={<Mood />} title="Emoji" />
-          <St icon={<LocationOn />} title="Location" />
-        </Box>
+  <St icon={<FileCopy sx={{ fontSize: 20 }} />} title="File" />
+  <St icon={<Image sx={{ fontSize: 20 }} />} title="Image" />
+  <St icon={<Mood sx={{ fontSize: 20 }} />} title="Emoji" />
+  <St icon={<LocationOn sx={{ fontSize: 20 }} />} title="Location" />
+
+  
+</Box>
+
 
         {/* Statistics */}
         <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={2} mt={4}>
@@ -53,14 +79,68 @@ export default function Schedule() {
         </Box>
 
         {/* Buttons */}
-        <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button variant="outlined">Save as Draft</Button>
+        <Box display="flex" justifyContent="space-between" mt={4}>
+      
           <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
-            Add to Queue
+             AI-Powered Post Optimization
+          </Button>
+          <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
+            Direct Post
+          </Button>
+          <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
+          Schedule Post
           </Button>
         </Box>
+    
+   
+
+
+
+        </Box>
+       
+
+
+        <Box
+          gridColumn="span 4"
+          gridRow="span 5"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+          
+        >
+          <StatBox
+          title="Top 10  Trending Hastag"
+         
+        />
+    
+        
+    <ul style={{ 
+  padding: "0", 
+  margin: "0", 
+  listStyle: "none", /* Adds numbers */
+  fontSize: "18px", /* Increases font size */
+  textAlign: "center", /* Centers text */
+  fontWeight: "bold" /* Makes text bold */
+}}>
+  {[
+    "#LataMangeshkar", "#ViratKohli", "#Budget2025", "#IPL2025", "#Modi", 
+    "#Crypto", "#TechNews", "#StockMarket", "#Oscars2025", "#AI"
+  ].map((hashtag, index) => (
+    <li key={index} style={{ padding: "5px 0" }}>{hashtag}</li>
+  ))}
+</ul>
+
+
+      
+
+       </Box>
       </Box>
     </Box>
-    </Box>
+            
+  
+   
   );
 }
+
+
+
