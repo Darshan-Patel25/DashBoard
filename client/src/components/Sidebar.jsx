@@ -19,55 +19,30 @@ import {
   HomeOutlined,
   ReceiptLongOutlined,
   DataUsageOutlined,
-  PermMediaOutlined,
-  MessageOutlined,
-  AdminPanelSettingsOutlined,
+  AccountCircleOutlined,
+  CalendarMonth, Settings,
   TrendingUpOutlined,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import AccountDrawer from "scenes/Account"; // Correct import
 import profileImage from "assets/profile.jpeg";
 
 const navItems = [
-  { 
-    text: "Dashboard", 
-    icon: <HomeOutlined /> 
-  },
-  { 
-    text: "Analytics", 
-    icon: <DataUsageOutlined />
-   },
-  { 
-    text: "Message",
-     icon: <MessageOutlined /> 
-    },
-  { 
-    text: "Schedule",
-     icon: <ReceiptLongOutlined /> },
-  {
-     text: "MediaLibrary",
-      icon: <PermMediaOutlined />
-
-   },
-  { 
-    text: "Management", 
-    icon: null 
-  },
-  {
-     text: "Admin", 
-     icon: <AdminPanelSettingsOutlined /> 
-    },
-  { 
-    text: "Performance",
-     icon: <TrendingUpOutlined /> 
-    },
-
-
+  { text: "Dashboard", icon: <HomeOutlined /> },
+  { text: "Analytics", icon: <DataUsageOutlined /> },
+  { text: "Calender", icon: <CalendarMonth /> },
+  { text: "Schedule", icon: <ReceiptLongOutlined /> },
+  { text: "Account", icon: <AccountCircleOutlined />, hasDrawer: true },
+  { text: "Management", icon: null },
+  { text: "Setting", icon: <Settings /> },
+  { text: "Performance", icon: <TrendingUpOutlined /> },
 ];
 
 const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobile }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState("");
+  const [isAccountDrawerOpen, setIsAccountDrawerOpen] = useState(false); // Renamed
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -88,7 +63,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
             "& .MuiDrawer-paper": {
               color: theme.palette.secondary[200],
               backgroundColor: theme.palette.background.alt,
-              boxSizing: "border-box", // ✅ Fixed Typo
+              boxSizing: "border-box",
               borderWidth: isNonMobile ? 0 : "2px",
               width: drawerWidth,
             },
@@ -109,7 +84,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
             </Box>
 
             <List>
-              {navItems.map(({ text, icon }) => {
+              {navItems.map(({ text, icon, hasDrawer }) => {
                 if (!icon) {
                   return (
                     <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
@@ -124,24 +99,22 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                   <ListItem key={text} disablePadding>
                     <ListItemButton
                       onClick={() => {
-                        navigate(`/${lcText}`);
-                        setActive(lcText);
+                        if (hasDrawer && text === "Account") {
+                          setIsAccountDrawerOpen(true);
+                        } else {
+                          navigate(`/${lcText}`);
+                          setActive(lcText);
+                        }
                       }}
                       sx={{
-                        backgroundColor: active === lcText
-                          ? theme.palette.secondary[300]
-                          : "transparent",
-                        color: active === lcText
-                          ? theme.palette.primary[600]
-                          : theme.palette.secondary[100],
+                        backgroundColor: active === lcText ? theme.palette.primary[500] : "transparent",
+                        color: active === lcText ? theme.palette.common.white : theme.palette.secondary[100],
                       }}
                     >
                       <ListItemIcon
                         sx={{
                           ml: "2rem",
-                          color: active === lcText
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[200],
+                          color: active === lcText ? theme.palette.common.white : theme.palette.secondary[200],
                         }}
                       >
                         {icon}
@@ -173,13 +146,10 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                   fontSize="0.9rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {user?.name || "Guest"} {/* ✅ Optional Chaining */}
+                  {user?.name || "Guest"}
                 </Typography>
-                <Typography
-                  fontSize="0.8rem"
-                  sx={{ color: theme.palette.secondary[200] }}
-                >
-                  {user?.occupation || "Unknown"} {/* ✅ Fallback Value */}
+                <Typography fontSize="0.8rem" sx={{ color: theme.palette.secondary[200] }}>
+                  {user?.occupation || "Unknown"}
                 </Typography>
               </Box>
               <SettingsOutlined
@@ -192,6 +162,12 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
           </Box>
         </Drawer>
       )}
+
+      {/* Account Drawer */}
+      <AccountDrawer
+        isOpen={isAccountDrawerOpen}
+        onClose={() => setIsAccountDrawerOpen(false)}
+      />
     </Box>
   );
 };

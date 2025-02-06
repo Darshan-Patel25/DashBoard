@@ -1,4 +1,3 @@
-
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
@@ -7,15 +6,19 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
 import Layout from "scenes/layout";
 import Dashboard from "scenes/dashboard";
-import MediaLibrary from "scenes/MediaLibrary";
-import Message from "scenes/Message"
-import  Analytics from "scenes/Analytics";
+import Account from "scenes/Account";
+import Calender from "scenes/Calender";
+import Analytics from "scenes/Analytics";
 
 import Schedule from "scenes/Schedule";
-import Connectpage from "scenes/Schedule/connectpage";
+import ConnectAccount from "scenes/Schedule/connectaccount";
+import ManageAccount from "scenes/Schedule/manageaccount";
+import Connectpage from "scenes/Schedule/pages/connectpage";
+import Setting from "scenes/Setting"
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
   return (
     <div className="app">
       <BrowserRouter>
@@ -27,10 +30,14 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/schedule" element={<Schedule />} />
-              <Route path="/message" element={<Message />} />
-              <Route path="medialibrary" element={<MediaLibrary />} />
+              <Route path="/calender" element={<Calender />} />
+              <Route path="/account" element={<Account />} />
+
+              {/* Fixed Typo */}
+              <Route path="/connectaccount" element={<ConnectAccount />} />
+              <Route path="/manageaccount" element={<ManageAccount />} />
               <Route path="/connectpage" element={<Connectpage />} />
-         
+              <Route path="/setting" element={<Setting />} />
             </Route>
           </Routes>
         </ThemeProvider>
