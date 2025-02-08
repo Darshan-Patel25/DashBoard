@@ -73,7 +73,7 @@ const Calendar = () => {
           p="15px"
           borderRadius="4px"
         >
-          <Typography variant="h5">Events</Typography>
+          <Typography variant="h5">Content Calender</Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem

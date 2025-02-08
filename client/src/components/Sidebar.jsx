@@ -26,7 +26,7 @@ import {
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
-import AccountDrawer from "scenes/Account"; // Correct import
+//import AccountDrawer from "scenes/Account"; // Correct import
 import profileImage from "assets/profile.jpeg";
 
 const navItems = [
@@ -34,7 +34,7 @@ const navItems = [
   { text: "Analytics", icon: <DataUsageOutlined /> },
   { text: "Calender", icon: <CalendarMonth /> },
   { text: "Schedule", icon: <ReceiptLongOutlined /> },
-  { text: "Account", icon: <AccountCircleOutlined />, hasDrawer: true },
+  { text: "Account", icon: <AccountCircleOutlined />,  },
   { text: "Competitor-Insight  ", icon: <TrendingUpOutlined /> },
   { text: "Sync-TelegramBot", icon: <Telegram/> },
 ];
@@ -164,10 +164,10 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
       )}
 
       {/* Account Drawer */}
-      <AccountDrawer
+      {/* <AccountDrawer
         isOpen={isAccountDrawerOpen}
         onClose={() => setIsAccountDrawerOpen(false)}
-      />
+      /> */}
     </Box>
   );
 };

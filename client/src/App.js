@@ -13,8 +13,9 @@ import Analytics from "scenes/Analytics";
 import Schedule from "scenes/Schedule";
 import ConnectAccount from "scenes/Schedule/connectaccount";
 import ManageAccount from "scenes/Schedule/manageaccount";
-import Connectpage from "scenes/Schedule/pages/connectpage";
+//import Connectpage from "scenes/Schedule/pages/connectpage";
 import Competit from "scenes/competitoeanalysis"
+import SyncTelegrambot from "scenes/syncTelegrambot.jsx";
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -36,8 +37,9 @@ function App() {
               {/* Fixed Typo */}
               <Route path="/connectaccount" element={<ConnectAccount />} />
               <Route path="/manageaccount" element={<ManageAccount />} />
-              <Route path="/connectpage" element={<Connectpage />} />
+              {/* <Route path="/connectpage" element={<Connectpage />} /> */}
               <Route path="/competitor-insight" element={<Competit />} />
+              <Route path="/sync-telegrambot" element={<SyncTelegrambot />} />
             </Route>
           </Routes>
         </ThemeProvider>

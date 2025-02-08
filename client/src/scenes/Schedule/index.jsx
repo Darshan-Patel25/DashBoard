@@ -28,7 +28,7 @@ export default function Schedule() {
         
         <Box
           gridColumn="span 8"
-          gridRow="span 3"
+          gridRow="span 4"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
@@ -62,7 +62,7 @@ export default function Schedule() {
         </Box>
 
         {/* Icons */}
-        <Box display="flex" justifyContent="center" gap={2} mt={3} color="gray">
+        <Box display="flex" justifyContent="center" gap={2} mt={2} color="gray" >
   <St icon={<FileCopy sx={{ fontSize: 20 }} />} title="File" />
   <St icon={<Image sx={{ fontSize: 20 }} />} title="Image" />
   <St icon={<Mood sx={{ fontSize: 20 }} />} title="Emoji" />
@@ -72,14 +72,12 @@ export default function Schedule() {
 </Box>
 
 
-        {/* Statistics */}
-        <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={2} mt={4}>
-          <StatBox title="Total Posts" value="234" increase="+5%" icon={<FileCopy />} description="Growth this month" />
-          <StatBox title="Scheduled Posts" value="45" increase="+10%" icon={<Image />} description="Pending approval" />
-        </Box>
-
+<Box display="flex" justifyContent="space-between" alignItems="center" mt={1} gap={2}>
+  <StatBox title="Total Posts" value="234" increase="+5%" />
+  <StatBox title="Scheduled Posts" value="45" increase="+10%" />
+</Box>
         {/* Buttons */}
-        <Box display="flex" justifyContent="space-between" mt={4}>
+        <Box display="flex" justifyContent="space-between" mt={3}>
       
           <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
              AI-Powered Post Optimization
@@ -102,7 +100,7 @@ export default function Schedule() {
 
         <Box
           gridColumn="span 4"
-          gridRow="span 5"
+          gridRow="span 4"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
