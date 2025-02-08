@@ -1,0 +1,158 @@
+.brochure-spread {
+    display: flex;
+    margin-top: 4rem;
+  }
+  .page {
+    flex: 1;
+    padding: 20px;
+  
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .brochure-label {
+    background-color: #3C5BBF;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .page-number {
+    background-color: #333;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  
+  .creative-team-title {
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 4rem;
+    margin-left: 2rem;
+  }
+  
+  .creative-team-title .highlight {
+    color: #3C5BBF;
+    margin: 12px;
+  }
+  
+  .featured-member {
+    margin-bottom: 30px;
+  }
+  
+  .featured-image-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .featured-image {
+    width: 50%;
+    border-radius: 0 0 0 80px;
+    margin-left: 3rem;
+  }
+  
+  .featured-image-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    /* background-color: #7ab8ff7e; */
+    border-radius: 0 0 0 80px;
+  }
+  
+  .featured-name {
+    margin-bottom: 10px;
+  }
+  
+  .quote-box {
+    background: linear-gradient(135deg, #e3eeffb9, #f5f9ff9d);
+    color: rgb(61, 60, 60);
+    padding: 30px;
+    position: relative;
+  }
+  
+  .quote-mark {
+    font-size: 72px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    opacity: 0.3;
+  }
+  
+  .quote-text {
+    font-style: italic;
+    padding-left: 40px;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 45px;
+    width: 500px;
+    margin-top: 4rem;
+    margin-left: 3rem;
+  }
+  
+  .team-member {
+    text-align: center;
+  }
+  
+  .member-image {
+    width: 80%;
+    height: 70%;
+    border-radius: 25px;
+  }
+  
+  .member-info {
+    margin: -10px 10px 10px;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+  }
+  
+  .member-info.blue {
+    background-color: #4e80d1e0;
+  }
+  
+  .member-info.dark {
+    background-color: #3d3a3ddd;
+  }
+  
+  .member-name,
+  .member-job {
+    margin: 0;
+  }
+  
+  .member-details {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  @media (max-width: 768px) {
+    .brochure-spread {
+      flex-direction: column;
+    }
+  
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .creative-team-title {
+      font-size: 36px;
+    }
+  }
+  
+  

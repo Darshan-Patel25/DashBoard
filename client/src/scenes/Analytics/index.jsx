@@ -1,19 +1,12 @@
-
-import React from 'react';
+import React from "react";
 import Header from "components/Header";
 import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import {
-  DownloadOutlined,
-
-  Email,
-  
-
-} from "@mui/icons-material";
-import StatBox from 'components/StatBox';
-import TelegramPost from '../../components/sentimentPost';
-import LineChart from 'components/Linechart';
-import SentimentChart from '../../components/sentimentchart';
+import { DownloadOutlined } from "@mui/icons-material";
+import StatBox from "components/StatBox";
+import TelegramPost from "../../components/sentimentPost";
+import LineChart from "components/Linechart";
+import SentimentChart from "../../components/sentimentchart";
 
 const Analytics = () => {
   const theme = useTheme();
@@ -23,7 +16,6 @@ const Analytics = () => {
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title="Sentiment Analytics" subtitle="Welcome to analytics page" />
-
         <Box>
           <Button
             sx={{
@@ -39,7 +31,6 @@ const Analytics = () => {
           </Button>
         </Box>
       </FlexBetween>
-         
 
       <Box
         mt="20px"
@@ -51,19 +42,27 @@ const Analytics = () => {
           "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
         }}
       >
-        {/* ROW 1 */}
-        
+        {/* Scrollable Telegram Posts */}
         <Box
           gridColumn="span 12"
           gridRow="span 1"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
+          sx={{
+            maxHeight: "320px", // Adjust height as needed
+            overflowY: "auto", // Enables scrolling when content exceeds height
+          }}
         >
-         
-        
-        <TelegramPost text="New Post" description="This is a new post"  date="2025-5-1" status="pending"/>
+          <TelegramPost text="New Post 1" description="This is a new post" date="2025-5-1" status="pending" />
+          <TelegramPost text="New Post 2" description="This is a new post" date="2025-5-2" status="approved" />
+          <TelegramPost text="New Post 3" description="This is a new post" date="2025-5-3" status="rejected" />
+          <TelegramPost text="New Post 4" description="This is a new post" date="2025-5-4" status="pending" />
+          <TelegramPost text="New Post 5" description="This is a new post" date="2025-5-5" status="approved" />
+          <TelegramPost text="New Post 6" description="This is a new post" date="2025-5-6" status="rejected" />
         </Box>
+
+        {/* Line Chart */}
         <Box
           gridColumn="span 6"
           gridRow="span 3"
@@ -71,65 +70,46 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-         
-         <LineChart />
-    
+          <LineChart />
         </Box>
 
-
+        {/* Suggestions */}
         <Box
           gridColumn="span 6"
           gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
-       
         >
-          <StatBox
-          title="Suggestion"
-
-        />
-           <ul style={{ 
-  padding: "0", 
-  margin: "0", 
-  listStyle: "none", /* Adds numbers */
-  fontSize: "18px", /* Increases font size */
-  textAlign: "center", /* Centers text */
-  fontWeight: "bold" /* Makes text bold */
-}}>
-  {[
-    "LataMangeshkar", "ViratKohli",
-   
-  ].map((hashtag, index) => (
-    <li key={index} >{hashtag}</li>
-  ))}
-</ul>
-      
-
+          <StatBox title="Suggestions" />
+          <ul
+            style={{
+              padding: "0",
+              margin: "0",
+              listStyle: "none",
+              fontSize: "18px",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            {["LataMangeshkar", "ViratKohli"].map((hashtag, index) => (
+              <li key={index}>{hashtag}</li>
+            ))}
+          </ul>
         </Box>
 
+        {/* Sentiment Chart */}
         <Box
           gridColumn="span 6"
           gridRow="span 1"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
-          
-       
         >
-          <StatBox
-          title="Overall Sentiment Analysis of posts"
-
-        />
-           
-      
-<SentimentChart />
+          <StatBox title="Overall Sentiment Analysis of posts" />
+          <SentimentChart />
         </Box>
-
-       
       </Box>
-
-
     </Box>
   );
 };

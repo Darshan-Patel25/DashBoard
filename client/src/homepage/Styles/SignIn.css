@@ -1,0 +1,170 @@
+  .container {
+    display: flex;
+    min-height: 100vh;
+    max-width: 100vw;
+    margin: 0 auto;
+  }
+  
+  /* Left Side Styles */
+  .left-side {
+    flex: 1;
+    background-color: #456ec8c9;
+    color: white;
+    padding: 20px;
+  }
+  
+  .logo {
+    margin-bottom: 40px;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .hero-text {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  .info-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .info-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .info-subtitle {
+    color: #a8dadc;
+  }
+  
+  .hero-image img {
+    max-width: 80%;
+    height: auto;
+  }
+  
+  /* Right Side Styles */
+  .right-side {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .form-wrapper h2 {
+    font-size: 32px;
+    color: #1d3557;
+    margin-bottom: 30px;
+  }
+  
+  .signin-form {
+    width: 100%;
+  }
+  
+  .input-group {
+    margin-bottom: 24px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1d3557;
+  }
+  
+  .password-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .forgot-link {
+    color: #457b9d;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  
+  .btn-primary {
+    background-color: #456EC8;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #f1faee;
+    color: #1d3557;
+  }
+  
+  .signup-prompt {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .signup-prompt a {
+    color: #456EC8;
+    text-decoration: none;
+  }
+  
+  .terms-text {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  .terms-text a {
+    color: #457b9d;
+    text-decoration: none;
+  }
+  
+  .social-signin {
+    text-align: center;
+  }
+  
+  .social-signin a {
+    color: #457b9d;
+    text-decoration: none;
+  }
+  
+ 
+  

@@ -1,0 +1,8 @@
+*{
+    font-family: "Lato", serif;
+    font-style: italic;
+}
+.hero_content{
+    background: linear-gradient(135deg, #e3eeffb9, #f5f9ff9d);
+    margin: 0;
+}

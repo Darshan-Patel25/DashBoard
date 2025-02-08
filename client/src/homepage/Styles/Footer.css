@@ -1,0 +1,121 @@
+.footer {
+    background-color: #3D3A3D;
+    color: white;
+    padding: 40px 20px;
+   
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 40px;
+  }
+  
+  /* Left Section */
+  .footer-left h3 {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  .social-links p {
+    margin-bottom: 15px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icons a {
+    color: white;
+    text-decoration: none;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Middle Section */
+  .footer-middle ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-middle li {
+    margin-bottom: 15px;
+  }
+  
+  .footer-middle a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  /* Right Section */
+  .footer-right h3 {
+    margin-bottom: 15px;
+  }
+  
+  .footer-right p {
+    margin-bottom: 20px;
+  }
+  
+  .subscribe-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .subscribe-form input {
+    flex: 1;
+    padding: 10px;
+    background-color: #2C292B;
+    border: none;
+    border-radius: 4px;
+    color: white;
+  }
+  
+  .subscribe-form button {
+    padding: 10px 20px;
+    background-color: #456EC8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .subscribe-form button:hover {
+    background-color: #5593D7;
+  }
+  
+  small {
+    display: block;
+    color: #888;
+    font-size: 12px;
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .footer-links a {
+    color: #888;
+    text-decoration: none;
+  }

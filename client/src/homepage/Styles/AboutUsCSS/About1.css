@@ -1,0 +1,225 @@
+.brochure-container {
+    display: flex;
+    min-height: 100vh;
+    background: #ffffff;
+  }
+  
+  .brochure-page {
+    flex: 1;
+    position: relative;
+    padding-left: 2rem;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  
+  .page-number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #1f1f1f;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .page-label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #4b89dc;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .content-wrapper {
+    margin-top: 4rem;
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+  
+  .heading-dark {
+    color: #1f1f1f;
+    display: block;
+  }
+  
+  .heading-blue {
+    color: #3C5BBF;
+    display: block;
+  }
+  
+  /* About Section Styles */
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .about-intro {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  
+  .about-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #4a4a4a;
+    max-width: 85%;
+  }
+  
+  .image-container {
+    position: relative;
+    margin-top: 2rem;
+  }
+  
+  .blue-shape {
+    position: absolute;
+    left: -2rem;
+    bottom: -1.5rem;
+    width: 8rem;
+    height: 8rem;
+    background: #4b8adc;
+    border-radius: 1rem;
+    z-index: 1;
+    
+    margin-left: 2rem;
+   
+    
+    
+  }
+  
+  .building-image {
+    position: relative;
+    width: 85%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    z-index: 1;
+    margin-left: 2rem;
+
+  }
+  
+  /* CEO Section Styles */
+  .ceo-section {
+    background: linear-gradient(to bottom, #ffffff 60%,    #3D3A3D 40%);
+  }
+  
+  .ceo-content {
+    position: relative;
+  }
+  
+  .ceo-name {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  
+  .ceo-intro {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    max-width: 50%;
+    padding-top: 3rem;
+  }
+  
+  .ceo-image-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    margin-top:  -13rem;
+    float: right;
+  }
+  
+  .image-frame {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 1rem;
+  }
+  
+  .image-frame-blue {
+    position: absolute;
+    right: -1.8rem;
+    top: -1.5rem;
+    width: 40%;
+    height: 30%;
+    background: #4b89dc;
+    border-radius: 1rem;
+    z-index: 1;
+  }
+  
+  .ceo-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+    z-index: 2;
+  }
+  
+  .quote-section {
+    position: relative;
+    color: white;
+    padding: 2rem;
+    margin-top: 2rem;
+    clear: both;
+    
+  }
+  
+  .quote-mark {
+    font-size: 4rem;
+    color: #3C5BBF;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+  }
+  
+  .quote-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-left: 3rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .brochure-container {
+      flex-direction: column;
+    }
+  
+    .about-content {
+      grid-template-columns: 1fr;
+    }
+  
+    .ceo-image-container {
+      float: none;
+      margin: 2rem auto;
+    }
+  
+    .ceo-intro {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .heading {
+      font-size: 2rem;
+    }
+  
+    .ceo-image-container {
+      width: 100%;
+      height: 300px;
+    }
+  }
+  
+  
