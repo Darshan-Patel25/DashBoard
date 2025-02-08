@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Header from "components/Header";
 import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
@@ -8,12 +8,13 @@ import {
   Email,
   PointOfSale,
   PersonAdd,
-  
 } from "@mui/icons-material";
-import StatBox from 'components/StatBox';
+import StatBox from "components/StatBox";
+import LineChart from "../../components/ThreeBarchart"; 
+import BarChart from "../../components/Barchart";
+import Piechart from "../../components/Piechart";
+import PostTable from "../../components/PostCard";
 
-
-//  Static Data
 const staticData = {
   totalCustomers: 1234,
   todayStats: {
@@ -24,7 +25,6 @@ const staticData = {
   },
   yearlySalesTotal: 123456,
 };
-
 
 const DashboardPage = () => {
   const theme = useTheme();
@@ -78,8 +78,6 @@ const DashboardPage = () => {
           icon={<PointOfSale sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
 
-        
-
         <StatBox
           title="Avg Reach"
           value={staticData.thisMonthStats.totalSales}
@@ -95,16 +93,25 @@ const DashboardPage = () => {
           description="Since last month"
           icon={<Traffic sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
-         <Box
+
+        {/* Placeholder Box */}
+        <Box
           gridColumn="span 4"
           gridRow="span 5"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
-        >
-          
-        </Box>
         
+      >
+    <Header title="All Posts" subtitle="Schedule posts" />
+        
+        <PostTable/>
+        <PostTable/>
+        <PostTable/>
+        
+      </Box>
+
+        {/* Charts */}
         <Box
           gridColumn="span 8"
           gridRow="span 2"
@@ -113,7 +120,9 @@ const DashboardPage = () => {
           borderRadius="0.55rem"
         >
           
+          <LineChart/>
         </Box>
+
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -121,8 +130,11 @@ const DashboardPage = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          
+          <BarChart/>
+        
         </Box>
+
+        {/* Another Placeholder */}
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -130,11 +142,12 @@ const DashboardPage = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          
-        </Box>
-       
-      </Box>
+    <Piechart/>
     </Box>
+      </Box>
+      
+    </Box>
+    
   );
 };
 
