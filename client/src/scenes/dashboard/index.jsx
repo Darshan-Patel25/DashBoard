@@ -145,7 +145,7 @@ const DashboardPage = () => {
     <Piechart/>
     </Box>
       </Box>
-      
+    
     </Box>
     
   );

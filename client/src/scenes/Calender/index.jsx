@@ -17,9 +17,9 @@ import {
 import Header from "../../components/Header";
 import { tokensDark as tokens } from "../../theme";
 
-const Calendar = () => {
+const Calender = () => {
   //const theme = useTheme();
-  const colors = tokens; // Use the imported tokens directly
+  const colors = tokens;
   const [currentEvents, setCurrentEvents] = useState([]);
 
   const handleDateClick = (selected) => {
@@ -151,4 +151,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default Calender;
