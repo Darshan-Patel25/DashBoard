@@ -48,14 +48,28 @@ exports.fetchComments = async (req, res) => {
 
     // Extract tweet text
     const postText = await page.evaluate(() => {
-      const tweetElement = document.querySelector(
-        'article[data-testid="tweet"]'
-      );
+      const tweetElement = document.querySelector('article[data-testid="tweet"]');
       if (!tweetElement) return "N/A";
-      return (
-        tweetElement.querySelector('div[data-testid="tweetText"]')?.innerText ||
-        "N/A"
+      return tweetElement.querySelector('div[data-testid="tweetText"]')?.innerText || "N/A";
+    });
+
+    // Extract engagement metrics
+    const engagementMetrics = await page.evaluate(() => {
+      const tweetElement = document.querySelector('article[data-testid="tweet"]');
+      if (!tweetElement) return {};
+
+      const metrics = {};
+      const engagementElements = tweetElement.querySelectorAll(
+        '[data-testid="reply"], [data-testid="retweet"], [data-testid="like"], [data-testid="bookmark"]'
       );
+
+      engagementElements.forEach((element) => {
+        const metricType = element.getAttribute('data-testid');
+        const metricValue = element.querySelector('span')?.innerText || "0";
+        metrics[metricType] = metricValue;
+      });
+
+      return metrics;
     });
 
     // Extract comments
@@ -68,20 +82,13 @@ exports.fetchComments = async (req, res) => {
       await page.waitForTimeout(1000);
 
       const newComments = await page.evaluate(() => {
-        return Array.from(
-          document.querySelectorAll('article[data-testid="tweet"]')
-        )
-          .map(
-            (comment) =>
-              comment.querySelector('div[data-testid="tweetText"]')?.innerText
-          )
+        return Array.from(document.querySelectorAll('article[data-testid="tweet"]'))
+          .map((comment) => comment.querySelector('div[data-testid="tweetText"]')?.innerText)
           .filter((text) => text);
       });
 
       // Remove duplicates and trim spaces
-      comments = [...new Set([...comments, ...newComments])].map((comment) =>
-        comment.trim()
-      );
+      comments = [...new Set([...comments, ...newComments])].map((comment) => comment.trim());
 
       if (comments.length === previousCommentCount) {
         console.log("No more comments loaded. Exiting...");
@@ -102,7 +109,7 @@ exports.fetchComments = async (req, res) => {
     let combinedText = `PostText: ${postText} Comments: ${formattedComments}`;
 
     console.log("\nCombined Text for AI Sentiment Analysis:");
-    // console.log(combinedText);
+    console.log(combinedText);
 
     const end = performance.now();
     console.log(`Execution Time: ${(end - start) / 1000} seconds`);
@@ -118,7 +125,7 @@ exports.fetchComments = async (req, res) => {
               {
                 text:
                   combinedText +
-                  " analyze the sentiment of these comments and return positive, negative, or neutral sentiment insights in para and give me avaerage of all comments and give me too the point answer i dont need any extra explaination  give me only postitive negative or neutral in res",
+                  " analyze the sentiment of these comments and return positive, negative, or neutral sentiment insights in para and give me average of all comments. Give me only positive, negative, or neutral in response, no extra explanation.",
               },
             ],
           },
@@ -126,16 +133,17 @@ exports.fetchComments = async (req, res) => {
       }
     );
 
-    const sentimentAnalysis =
-      geminiResponse.data?.candidates?.[0]?.content?.parts[0]?.text;
+    const sentimentAnalysis = geminiResponse.data?.candidates?.[0]?.content?.parts[0]?.text;
 
     res.json({
       sentimentAnalysis: sentimentAnalysis || "No sentiment analysis available",
+      engagementMetrics: engagementMetrics || {},
     });
   } catch (error) {
     console.error("Error during tweet scraping:", error);
-    res.status(500).json({ error: "Failed to fetch comments" });
+    res.status(500).json({ error: "Failed to fetch tweet data" });
   } finally {
     await browser.close();
   }
+
 };
