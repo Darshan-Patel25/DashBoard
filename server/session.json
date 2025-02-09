@@ -1,0 +1,185 @@
+{
+  "cookies": [
+    {
+      "name": "guest_id_marketing",
+      "value": "v1%3A173857838961212499",
+      "domain": ".twitter.com",
+      "path": "/",
+      "expires": 1773138390.454824,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "guest_id_ads",
+      "value": "v1%3A173857838961212499",
+      "domain": ".twitter.com",
+      "path": "/",
+      "expires": 1773138390.454909,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "personalization_id",
+      "value": "\"v1_vC4kMIvVuQayf54fg67r7w==\"",
+      "domain": ".twitter.com",
+      "path": "/",
+      "expires": 1773138390.45493,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "guest_id",
+      "value": "v1%3A173857838961212499",
+      "domain": ".twitter.com",
+      "path": "/",
+      "expires": 1773138390.454945,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "guest_id",
+      "value": "173857838961212499",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1770114390.776913,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "night_mode",
+      "value": "2",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1770114412.146307,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "guest_id_marketing",
+      "value": "v1%3A173857838961212499",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1773138416.011631,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "guest_id_ads",
+      "value": "v1%3A173857838961212499",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1773138416.011575,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "gt",
+      "value": "1886360606988763459",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1738587391.662478,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "kdt",
+      "value": "CqcLa770jj0ACR8FLRJ0RqKCgTFPWozTaKRs4C2o",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1773138408.611659,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth_token",
+      "value": "7941e715be0846e77ff848a866cbcd22c04d0cd1",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1773138408.61183,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ct0",
+      "value": "6b13c6f6028cfba3539f2ad6ecad4852554954d794f60f6eb6c75688aa6c32a4a1e6d4bdc8c6286a07d06f149614e78bd1b0e0150fcc1c1a3caaaf673cb7e4f005a5d06e9cf9961b9e42f5b60e97bb2a",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1773138410.361804,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "att",
+      "value": "1-MxcD8qxtAY6tYyXHmcyaYDkOW6tu0MXq9qYnokMe",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1738664811.057863,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "lang",
+      "value": "en",
+      "domain": "x.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "twid",
+      "value": "u%3D1884937687515484160",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1770114416.011671,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "twid",
+      "value": "u%3D1884937687515484160",
+      "domain": ".twitter.com",
+      "path": "/",
+      "expires": 1773138414.02774,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "personalization_id",
+      "value": "\"v1_vC4kMIvVuQayf54fg67r7w==\"",
+      "domain": ".x.com",
+      "path": "/",
+      "expires": 1770114414.029845,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "IDE",
+      "value": "AHWqTUka9AVq91Tp5ReUFmgFexzGmIlZGpMCkQEfhcLmmjAeGx6Ed6rYbrW_a_TjqdM",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1773138417.607524,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": []
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Advanced Social Media Analytics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f7fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(45deg, #1f3b53, #4caf50);
+        padding: 50px 0;
+        color: white;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        font-weight: 600;
+      }
+
+      header p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        font-weight: 300;
+      }
+
+      /* Main Container */
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Section Titles */
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #1f3b53;
+      }
+
+      /* Analytics Overview Section */
+      .overview {
+        margin-bottom: 50px;
+      }
+
+      .card-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .card {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+        color: #1f3b53;
+        margin-bottom: 10px;
+      }
+
+      .value {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #4caf50;
+      }
+
+      .compare {
+        font-size: 1rem;
+        color: #888;
+      }
+
+      /* Graph Section */
+      .graph-section {
+        margin-bottom: 50px;
+      }
+
+      canvas {
+        max-width: 100%;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .suggestion-card {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 15px;
+        background: #333;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Advanced Social Media Analytics</h1>
+        <p>Your posts analyzed. Your growth, amplified.</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Analytics Overview Section -->
+      <section class="overview">
+        <div class="section">
+          <h2 class="section-title">Account Overview</h2>
+          <p><strong>Username:</strong> <%= analyticsData.username %></p>
+          <p><strong>Platform:</strong> <%= analyticsData.platform %></p>
+        </div>
+
+        <h2>
+          Performance Overview for <%= analyticsData.username %> on <%=
+          analyticsData.platform %>
+        </h2>
+
+        <div class="card-container">
+          <div class="card">
+            <h3>Followers</h3>
+            <div class="value"><%= analyticsData.stats[0] %></div>
+            <p class="compare">Average <%= analyticsData.Average[0] %></p>
+          </div>
+          <div class="card">
+            <h3>Following</h3>
+            <div class="value"><%= analyticsData.stats[1] %></div>
+            <p class="compare">Average <%= analyticsData.Average[1] %></p>
+          </div>
+          <div class="card">
+            <h3>Tweets</h3>
+            <div class="value"><%= analyticsData.stats[2] %></div>
+            <p class="compare">Average <%= analyticsData.Average[2] %></p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section">
+        <h2 class="section-title">Top Trending Hashtags</h2>
+        <ul>
+          <li><%= analyticsData.hashtags[0] %></li>
+          <li><%= analyticsData.hashtags[1] %></li>
+          <li><%= analyticsData.hashtags[2] %></li>
+          <li><%= analyticsData.hashtags[3] %></li>
+          <li><%= analyticsData.hashtags[4] %></li>
+          <li><%= analyticsData.hashtags[5] %></li>
+          <li><%= analyticsData.hashtags[6] %></li>
+          <li><%= analyticsData.hashtags[7] %></li>
+          <li><%= analyticsData.hashtags[8] %></li>
+          <li><%= analyticsData.hashtags[9] %></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Personalized Suggestions</h2>
+        <div class="suggestions">
+          <p>
+            Based on the current account performance, here are some suggestions:
+          </p>
+          <ul>
+            <li>
+              🚀 Post more educational content related to tech trends, coding,
+              and AI to engage your target audience.
+            </li>
+            <li>
+              📸 Share behind-the-scenes content or day-in-the-life posts to
+              make your content relatable.
+            </li>
+            <li>
+              📊 Utilize polls and interactive tweets to engage your followers
+              and understand their preferences.
+            </li>
+            <li>
+              📅 Maintain a consistent posting schedule. Consider posting 2-3
+              times daily during peak hours (e.g., 9 AM, 12 PM, 6 PM).
+            </li>
+            <li>
+              📹 Incorporate short videos and Twitter Threads to explain complex
+              tech concepts simply.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <section class="personalized-improvements">
+        <h2>Personalized Growth Plan</h2>
+        <div class="improvement-box">
+          <h3>Visual Enhancement</h3>
+          <p>
+            Integrating high-quality images and videos will increase engagement
+            by at least 15%.
+          </p>
+        </div>
+        <div class="improvement-box">
+          <h3>Audience Targeting</h3>
+          <p>
+            Refining your audience targeting strategy will ensure a better
+            reach.
+          </p>
+        </div>
+        <div class="improvement-box">
+          <h3>Frequency Optimization</h3>
+          <p>
+            Increasing post frequency to 5 times a week will increase
+            visibility.
+          </p>
+        </div>
+      </section>
+      <!-- Graph Section -->
+      <div class="section">
+        <h2>Twitter Stats Summary</h2>
+        <canvas id="statsChart"></canvas>
+      </div>
+
+      <section class="suggestions">
+        <h2>Next Post Suggestions</h2>
+        <div class="suggestion-cards">
+          <div class="suggestion-card">
+            <h3>Best Time to Post</h3>
+            <p>Try posting at 5 PM to capture more engagement.</p>
+          </div>
+          <div class="suggestion-card">
+            <h3>Content Focus</h3>
+            <p>Visuals are key – add video content for better reach.</p>
+          </div>
+          <div class="suggestion-card">
+            <h3>Hashtag Strategy</h3>
+            <p>Incorporate trending hashtags to increase impressions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Personalized Improvement Suggestions -->
+    </main>
+
+    <footer>
+      <p>© 2025 Social Media Analytics</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('statsChart').getContext('2d');
+      const statsData = {
+        labels: ['Followers', 'Likes', 'Comments'],
+        datasets: [{
+          label: 'Twitter Engagement Summary',
+          data: <%- JSON.stringify(analyticsData.stats) %>,
+          backgroundColor: ['#007bff', '#28a745', '#ffc107'],
+          borderColor: ['#0056b3', '#1c7430', '#e0a800'],
+          borderWidth: 1
+        }]
+      };
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: statsData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+       } });
+    </script>
+  </body>
+</html>

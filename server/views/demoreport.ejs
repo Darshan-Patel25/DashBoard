@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Report</title>
+</head>
+<body>
+  <h1>Social Media Analytics Report</h1>
+
+  <h2>User: <%= analyticsData.UserCreated %></h2>
+  <p>Followers: <%= analyticsData.Followers %></p>
+  <p>Following: <%= analyticsData.Following %></p>
+  <p>Tweets: <%= analyticsData.Tweets %></p>
+  <p>Average Growth:</p>
+  <ul>
+    <li>Followers: <%= analyticsData.Average.followers %></li>
+    <li>Following: <%= analyticsData.Average.followings %></li>
+    <li>Tweets: <%= analyticsData.Average.tweets %></li>
+  </ul>
+
+  <h3>Last 30 Days Stats</h3>
+  <ul>
+    <li>Followers: <%= analyticsData.Last30days.followers %></li>
+    <li>Following: <%= analyticsData.Last30days.followings %></li>
+    <li>Tweets: <%= analyticsData.Last30days.tweets %></li>
+  </ul>
+
+  <h3>Graph Data:</h3>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Followers</th>
+      <th>Growth</th>
+      <th>Followings</th>
+      <th>Growth</th>
+      <th>Tweets</th>
+      <th>Growth</th>
+    </tr>
+    <% analyticsData.Graph.forEach(function(dayData) { %>
+      <tr>
+        <td><%= dayData.date %></td>
+        <td><%= dayData.followers %></td>
+        <td><%= dayData.followersGrowth %></td>
+        <td><%= dayData.followings %></td>
+        <td><%= dayData.followingsGrowth %></td>
+        <td><%= dayData.tweets %></td>
+        <td><%= dayData.tweetsGrowth %></td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>

@@ -1,38 +1,112 @@
-import mongoose from "mongoose";
-
-const UserSchema = new mongoose.Schema(
+const mongoose = require("mongoose");
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      min: 2,
-      max: 100,
+      // unique: true,
     },
     email: {
       type: String,
       required: true,
-      max: 50,
       unique: true,
+      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
     },
     password: {
       type: String,
       required: true,
-      min: 5,
+      minlength: 8,
     },
-    city: String,
-    state: String,
-    country: String,
-    occupation: String,
-    phoneNumber: String,
-    transactions: Array,
+    profilePicture: {
+      type: String,
+      default: null,
+    },
+    telegramId: {
+      type: String,
+      default: null,
+    },
+    socialAccounts: {
+      twitter: {
+        handle: {
+          type: String,
+          default: null,
+        },
+        accessToken: {
+          type: String,
+          default: null,
+        },
+        refreshToken: {
+          type: String,
+          default: null,
+        },
+      },
+      facebook: {
+        pageName: {
+          type: String,
+          default: null,
+        },
+        accessToken: {
+          type: String,
+          default: null,
+        },
+      },
+      instagram: {
+        usernames: {
+          type: String,
+          default: null,
+        },
+        accessToken: {
+          type: String,
+          default: null,
+        },
+      },
+    },
     role: {
       type: String,
-      enum: ["user", "admin", "superadmin"],
-      default: "admin",
+      enum: ["admin", "user"],
+      default: "user",
     },
+    analytics: {
+      totalPosts: {
+        type: Number,
+        default: 0,
+      },
+      totalFollowers: {
+        type: Number,
+        default: 0,
+      },
+      totalEngagement: {
+        type: Number,
+        default: 0,
+      },
+    },
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+    scheduledPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ScheduledPost",
+      },
+    ],
+    competitorAnalysis: [
+      {
+        type: String,
+      },
+    ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const User = mongoose.model("User", UserSchema);
-export default User;
+// Hash password before saving
+userSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
+});
+
+module.exports = mongoose.model("User", userSchema);
