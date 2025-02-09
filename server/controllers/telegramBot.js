@@ -64,7 +64,7 @@ bot.on("text", async (ctx) => {
     }
 
     const post = {
-      chatId: userId || "123456",
+      chatId: userId,
       content: userState.text,
       time: scheduledTime,
     };
@@ -72,7 +72,8 @@ bot.on("text", async (ctx) => {
     try {
       // Create a scheduled post with source as 'telegram_bot'
       const newPost = new ScheduledPost({
-        userId: new mongoose.Types.ObjectId() || "123456",
+        userId: new mongoose.Types.ObjectId(), // Temporary ObjectId
+        chatId: userId, // Store the chat ID here
         content: userState.text,
         scheduledTime: scheduledTime,
         platform: "twitter",

@@ -60,18 +60,30 @@ exports.Schedulepostroute = async (req, res) => {
 
 exports.gettelegrambotpost = async (req, res) => {
   try {
+    // Find the user by their userId (from req.userId)
+    const user = await User.findOne({ _id: req.userId });
+    console.log("user", user);
+    // Handle the case when the user is not found
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+        success: false,
+      });
+    }
+
+    // Find posts based on the user's associated chatId
     const posts = await ScheduledPost.find({
-      userId: req.userId,
+      chatId: user.telegramId, // Assuming 'telegramId' stores the chatId in the User schema
       source: "telegram_bot",
     });
 
     res.status(200).json({
-      message: "Posts from Dashboard retrieved successfully.",
+      message: "Posts from Telegram Bot retrieved successfully.",
       success: true,
       data: posts,
     });
   } catch (error) {
-    console.error("Error fetching Dashboard posts:", error);
+    console.error("Error fetching Telegram bot posts:", error);
     res.status(500).json({
       message: "Internal server error.",
       success: false,
