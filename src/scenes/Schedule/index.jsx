@@ -53,7 +53,7 @@ export default function Schedule() {
         <Box mt={2}>
           <textarea
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            rows="12"
+            rows="11"
             placeholder="What do you want to share?"
             value={post}
             onChange={(e) => setPost(e.target.value)}
@@ -72,12 +72,12 @@ export default function Schedule() {
 </Box>
 
 
-<Box display="flex" justifyContent="space-between" alignItems="center" mt={1} gap={2}>
+<Box display="flex" justifyContent="space-between" alignItems="center" mt={0} gap={2}>
   <StatBox title="Total Posts" value="234" increase="+5%" />
   <StatBox title="Scheduled Posts" value="45" increase="+10%" />
 </Box>
         {/* Buttons */}
-        <Box display="flex" justifyContent="space-between" mt={3}>
+        <Box display="flex" justifyContent="space-between" mt={0}>
       
           <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
              AI-Powered Post Optimization
