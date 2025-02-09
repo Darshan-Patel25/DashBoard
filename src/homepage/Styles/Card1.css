@@ -1,0 +1,134 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  padding: 40px;
+  gap: 48px;
+  background: linear-gradient(135deg, #e8f0ff, #f9fafe);
+  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+  max-width: 1350px;
+  margin: 3rem auto 0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+
+/* Left Section */
+.left-section {
+  flex: 1;
+  max-width: 500px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.small-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 14px;
+  background-color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Heading and Description */
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  color: #2C292B;
+}
+
+.description {
+  color: #423E41;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+/* Button Styling */
+.demo-button {
+  background-color: #6366f1;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.demo-button:hover {
+  background-color: #4f46e5;
+}
+
+/* Right Section */
+.right-section {
+  flex: 1;
+}
+
+.graph-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.graph-header h2 {
+  font-size: 18px;
+  color: #111;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #666;
+  font-size: 14px;
+}
+
+.live-button {
+  background-color: #ecfdf5;
+  color: #059669;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.graph {
+  width: 100%;
+  position: relative;
+}
+
+.graph-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}

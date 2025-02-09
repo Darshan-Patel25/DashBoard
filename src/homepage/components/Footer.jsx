@@ -1,0 +1,83 @@
+import React from "react";
+
+const Footer = () => {
+  return (
+    <footer className="bg-gray-800 text-white py-10">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+        {/* Left Section */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Get real-time insights on audience growth, follower trends, and potential clients, all in one place
+          </h3>
+        </div>
+
+        {/* Middle Section */}
+        <div>
+          <nav>
+            <ul className="space-y-2">
+              <li>
+                <a href="#how" className="text-gray-400 hover:text-white">
+                  How it works
+                </a>
+              </li>
+              <li>
+                <a href="#about" className="text-gray-400 hover:text-white">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#features" className="text-gray-400 hover:text-white">
+                  Features
+                </a>
+              </li>
+              <li>
+                <a href="#pricing" className="text-gray-400 hover:text-white">
+                  Pricing
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        {/* Right Section */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Subscribe</h3>
+          <p className="text-gray-400 mb-4">
+            Join our newsletter to stay up to date on features and releases.
+          </p>
+          <div className="flex space-x-2 mb-2">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
+            />
+            <button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md">
+              Subscribe
+            </button>
+          </div>
+          <small className="text-gray-500">
+            By subscribing you agree with our Privacy Policy and provide consent to receive updates from our company.
+          </small>
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="max-w-6xl mx-auto mt-8 border-t border-gray-700 pt-4 flex justify-between items-center px-4">
+        <p>© 2025 TrendTide. All rights reserved.</p>
+        <div className="flex space-x-4">
+          <a href="#privacy" className="text-gray-400 hover:text-white">
+            Privacy Policy
+          </a>
+          <a href="#terms" className="text-gray-400 hover:text-white">
+            Terms of use
+          </a>
+          <a href="#cookies" className="text-gray-400 hover:text-white">
+            Cookies
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
