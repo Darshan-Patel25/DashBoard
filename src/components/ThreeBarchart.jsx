@@ -1,7 +1,13 @@
-import * as React from "react";
+import React from "react";
 import { BarChart } from "@mui/x-charts";
 
-export default function BarLabel() {
+const BarLabel = ({ graphData }) => {
+  // Extract the days, followers, followings, and tweets directly from graphData
+  const days = graphData.map((entry) => entry.day);
+  const followersData = graphData.map((entry) => parseInt(entry.followers));
+  const followingsData = graphData.map((entry) => parseInt(entry.followings));
+  const tweetsData = graphData.map((entry) => parseInt(entry.tweets));
+
   return (
     <div className="overflow-x-auto w-full">
       <div className="min-w-[600px]">
@@ -9,20 +15,22 @@ export default function BarLabel() {
           xAxis={[
             {
               scaleType: "band",
-              data: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+              data: days,
               label: "Days of the Week",
             },
           ]}
           yAxis={[{ label: "Engagement Count" }]}
           series={[
-            { id: 1, label: "Followers", data: [4, 3, 5, 2, 3, 4, 1] },
-            { id: 2, label: "Likes", data: [1, 6, 3, 5, 2, 4, 3] },
-            { id: 3, label: "Comments", data: [2, 5, 6, 1, 4, 2, 5] },
+            { id: 1, label: "Followers", data: followersData },
+            { id: 2, label: "Followings", data: followingsData },
+            { id: 3, label: "Tweets", data: tweetsData },
           ]}
-          width={750} // Adjusted width
+          width={750}
           height={300}
         />
       </div>
     </div>
   );
-}
+};
+
+export default BarLabel;

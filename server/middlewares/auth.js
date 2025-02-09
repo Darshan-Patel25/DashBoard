@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 exports.auth = async (req, res, next) => {
   try {
     const token =
-      req.cookies.accessToken || req?.header?.authorization?.split(" ")[1];
+      req.cookies.accessToken || req.headers["authorization"]?.split(" ")[1];
+
     if (!token) {
       return res.status(400).json({
         message: "user is not loggedIn",

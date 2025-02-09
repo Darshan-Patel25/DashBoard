@@ -1,10 +1,14 @@
 import Chart from 'react-apexcharts';
 
-const BasicColumn = () => {
+const BasicColumn = ({ graphData }) => {
+  // Extract data for chart from the graphData prop
+  const days = graphData.map((entry) => entry.day);
+  const tweetsGrowthData = graphData.map((entry) => parseInt(entry.tweetsGrowth));
+
   const data = [
     {
-      name: 'Net Profit',
-      data: [44, 55, 57, 56, 61, 58, 63],
+      name: 'Tweets Growth',
+      data: tweetsGrowthData,
     },
   ];
 
@@ -21,7 +25,7 @@ const BasicColumn = () => {
         borderRadius: 4,
       },
     },
-    colors: ['#FF4560'],
+    colors: ['#00E396'], // Tweets Growth color
     dataLabels: {
       enabled: false,
     },
@@ -37,7 +41,7 @@ const BasicColumn = () => {
           color: '#FFFFFF',
         },
       },
-      categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      categories: days,
       labels: {
         style: {
           colors: '#FFFFFF',
@@ -46,7 +50,7 @@ const BasicColumn = () => {
     },
     yaxis: {
       title: {
-        text: 'Net Profit ($)',
+        text: 'Tweets Growth Count',
         style: {
           color: '#FFFFFF',
         },
@@ -62,7 +66,7 @@ const BasicColumn = () => {
     },
     tooltip: {
       y: {
-        formatter: (val) => 50000,
+        formatter: (val) => val,
       },
     },
   };

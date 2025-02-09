@@ -25,6 +25,7 @@
     "chart.js": "^4.4.7",
     "cra-template": "1.2.0",
     "gsap": "^3.12.7",
+    "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-apexcharts": "^1.7.0",
     "react-datepicker": "^4.8.0",

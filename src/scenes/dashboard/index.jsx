@@ -1,54 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Button, Typography, useTheme, useMediaQuery } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import {
-  DownloadOutlined,
-  Traffic,
-  Email,
-  PointOfSale,
-  PersonAdd,
-} from "@mui/icons-material";
+import LiveBadge from "homepage/components/LiveBadge";
+import { Traffic, Email, PointOfSale, PersonAdd } from "@mui/icons-material";
 import StatBox from "components/StatBox";
 import LineChart from "../../components/ThreeBarchart"; 
 import BarChart from "../../components/Barchart";
 import Piechart from "../../components/Piechart";
-import PostTable from "../../components/PostCard";
-
-const staticData = {
-  totalCustomers: 1234,
-  todayStats: {
-    totalSales: 4567,
-  },
-  thisMonthStats: {
-    totalSales: 23456,
-  },
-  yearlySalesTotal: 123456,
-};
+import PostCard from "../../components/PostCard";
+import Cookies from "js-cookie"; // Import the cookie library
 
 const DashboardPage = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
+  // State to hold API data and posts
+  const [data, setData] = useState(null);
+  const [posts, setPosts] = useState([]);
+
+  // Fetch the API data
+  useEffect(() => {
+    const token = Cookies.get("accessToken"); // Get token from cookies
+    // console.log(token)
+    if (!token) {
+      console.error("Access token is missing.");
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/comments/stas", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to the request
+          },
+        });
+        const jsonData = await response.json();
+        setData(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/schedule/showallpost", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token to the request
+          },
+
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+
+        const postsData = await response.json();
+        setPosts(postsData.posts || []);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchData();
+    fetchPosts();
+  }, []);
+
+  if (!data) {
+    return <Typography>Loading data...</Typography>;
+  }
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Dashboard" subtitle="See insight on your Profile changed from April 8" />
+        <Header
+          title={
+            <Box display="flex" alignItems="center">
+              Dashboard <LiveBadge />
+            </Box>
+          }
+          subtitle="See insight on your Profile changed from April 8"
+        />
 
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box>
+        <Button
+          sx={{
+            backgroundColor: theme.palette.secondary.light,
+            color: theme.palette.background.alt,
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+          }}
+          onClick={() => {
+            fetch("http://localhost:8080/generate-pdf")
+              .then((response) => response.blob())
+              .then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Report.pdf";
+                a.click();
+              })
+              .catch((err) => console.error("Download Error:", err));
+          }}
+        >
+          Download Reports
+        </Button>
       </FlexBetween>
 
       <Box
@@ -61,55 +118,63 @@ const DashboardPage = () => {
           "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
         }}
       >
-        {/* ROW 1 */}
+        {/* Stat Boxes */}
         <StatBox
-          title="Average Impression"
-          value={staticData.totalCustomers}
-          increase="+14%"
+          title="Followers"
+          value={data.Followers}
+          increase={data.Average.followers}
           description="Since last month"
           icon={<Email sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
 
         <StatBox
-          title="Average Engagement Rate"
-          value={staticData.todayStats.totalSales}
-          increase="+21%"
+          title="Following"
+          value={data.Following}
+          increase={data.Average.followings}
           description="Since last month"
           icon={<PointOfSale sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
 
         <StatBox
-          title="Avg Reach"
-          value={staticData.thisMonthStats.totalSales}
-          increase="+5%"
+          title="Tweets"
+          value={data.Tweets}
+          increase={data.Average.tweets}
           description="Since last month"
           icon={<PersonAdd sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
 
         <StatBox
-          title="Yearly Sales"
-          value={staticData.yearlySalesTotal}
-          increase="+43%"
-          description="Since last month"
+          title="User Created On"
+          value={data.UserCreated}
+          increase=""
+          description=""
           icon={<Traffic sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
         />
 
-        {/* Placeholder Box */}
+        {/* Post Table */}
         <Box
           gridColumn="span 4"
           gridRow="span 5"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
-        
-      >
-    <Header title="All Posts" subtitle="Schedule posts" />
-        
-        <PostTable/>
-        <PostTable/>
-        <PostTable/>
-        
-      </Box>
+        >
+          <Header title="All Posts" subtitle="Schedule posts" />
+          {posts.length > 0 ? (
+  posts.map((post, index) => (
+    <PostCard
+      key={index}
+      content={post.content}
+      scheduledTime={post.scheduledTime}
+      status={post.status}
+      platform={post.platform}
+    />
+  ))
+) : (
+  <Typography>No posts available.</Typography>
+)}
+
+        </Box>
 
         {/* Charts */}
         <Box
@@ -119,8 +184,7 @@ const DashboardPage = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          
-          <LineChart/>
+          <LineChart graphData={data.Graph} />
         </Box>
 
         <Box
@@ -130,11 +194,9 @@ const DashboardPage = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <BarChart/>
-        
+          <BarChart graphData={data.Graph} />
         </Box>
 
-        {/* Another Placeholder */}
         <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -142,12 +204,10 @@ const DashboardPage = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-    <Piechart/>
-    </Box>
+          <Piechart />
+        </Box>
       </Box>
-      
     </Box>
-    
   );
 };
 

@@ -14,7 +14,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/login", // Backend API
+        "http://localhost:8080/api/user/login", // Backend API
         {
           email: email,
           password: password,

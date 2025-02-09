@@ -2,28 +2,25 @@ import React from 'react';
 import Header from "components/Header";
 import { Box, useTheme, useMediaQuery, Typography, Button } from "@mui/material";
 import St from 'components/St';
-
 import { useNavigate } from 'react-router-dom';
-import B1 from "assets/b1.jpeg"
-import B2 from "assets/b2.jpeg"
-import B3 from "assets/b3.jpeg"
-import B4 from "assets/b4.jpeg"
-import B5 from "assets/b5.jpeg"
-import B6 from "assets/b6.jpeg"
-import B7 from "assets/b7.jpeg"
-import B8 from "assets/b8.jpeg"
-
-
+import B1 from "assets/b1.jpeg";
+import B2 from "assets/b2.jpeg";
+import B3 from "assets/b3.jpeg";
+import B4 from "assets/b4.jpeg";
+import B5 from "assets/b5.jpeg";
+import B6 from "assets/b6.jpeg";
+import B7 from "assets/b7.jpeg";
+import B8 from "assets/b8.jpeg";
 
 const socialNetworks = [
-  { name: 'Facebook', icon:<img src={B1} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Page', 'Connect Group'] },
-  { name: 'Twitter', icon: <img src={B2} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile'], checkbox: 'Follow us' },
-  { name: 'LinkedIn', icon: <img src={B3} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile', 'Connect Page'] },
-  { name: 'Pinterest', icon: <img src={B4} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Board'] },
-  { name: 'Google My Business', icon: <img src={B5} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Location'] },
-  { name: 'Instagram', icon: <img src={B6} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Personal', 'Connect Business'] },
-  { name: 'Reminder for TikTok', icon:<img src={B7} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile'] },
-  { name: 'Tumblr', icon: <img src={B8} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Blog'] },
+  { name: 'Facebook', icon: <img src={B1} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Page', 'Connect Group'] },
+  { name: 'Twitter', icon: <img src={B2} alt="Twitter" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile'], checkbox: 'Follow us' },
+  { name: 'LinkedIn', icon: <img src={B3} alt="LinkedIn" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile', 'Connect Page'] },
+  { name: 'Pinterest', icon: <img src={B4} alt="Pinterest" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Board'] },
+  { name: 'Google My Business', icon: <img src={B5} alt="Google My Business" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Location'] },
+  { name: 'Instagram', icon: <img src={B6} alt="Instagram" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Personal', 'Connect Business'] },
+  { name: 'Reminder for TikTok', icon: <img src={B7} alt="TikTok" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile'] },
+  { name: 'Tumblr', icon: <img src={B8} alt="Tumblr" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Blog'] },
 ];
 
 const ConnectAccount = () => {
@@ -62,8 +59,15 @@ const ConnectAccount = () => {
                 color="primary"
                 fullWidth
                 sx={{ mt: 1 }}
-                onClick={() => navigate('/connectpage')} 
-
+                onClick={() => {
+                  if (network.name === 'Twitter' && btn === 'Connect Profile') {
+                    // Navigate to external URL for Twitter
+                    window.location.href = 'http://localhost:8080/link-twitter';
+                  } else {
+                    // Default internal navigation for other buttons
+                    navigate('/connectpage');
+                  }
+                }}
               >
                 {btn}
               </Button>

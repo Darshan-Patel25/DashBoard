@@ -15,7 +15,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/register", // Backend API
+        "http://localhost:8080/api/user/register", // Backend API
         {
           name: username,
           email: email,

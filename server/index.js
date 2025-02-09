@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const puppeteer = require("puppeteer");
-const telegrambot = require("./controllers/telegramBot");
+// const telegrambot = require("./controllers/telegramBot");
 const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
