@@ -91,7 +91,7 @@ app.use(
   cors({
     credentials: true,
     origin: process.env.FRONTEND_URL,
-    allowedHeaders: "Content-Type,Authorization"
+    allowedHeaders: "Content-Type,Authorization",
   })
 );
 app.use(express.json());
@@ -187,8 +187,6 @@ app.get("/", (req, res) => {
 app.use("/api/user", userrouter);
 app.use("/api/schedule", router);
 app.use("/api/comments", anaytics);
-app.use("/register", usersController.registerUsercontroller)
-app.use("/login", usersController.loginController)
 
 connectDB().then(() => {
   app.listen(process.env.PORT || 8080, () => {
