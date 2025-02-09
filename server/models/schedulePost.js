@@ -18,6 +18,7 @@ const scheduledPostSchema = new mongoose.Schema({
     type: String,
     enum: ["twitter", "facebook", "instagram"],
     required: true,
+    default: "twitter",
   },
   status: {
     type: String,

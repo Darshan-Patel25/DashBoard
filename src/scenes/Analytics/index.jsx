@@ -1,16 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, Typography } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { DownloadOutlined } from "@mui/icons-material";
 import StatBox from "components/StatBox";
 import TelegramPost from "../../components/sentimentPost";
 import LineChart from "components/Linechart";
 import SentimentChart from "../../components/sentimentchart";
+import Cookies from "js-cookie";
 
 const Analytics = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const [postedPosts, setPostedPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPostedPosts = async () => {
+      try {
+        // Get access token from cookies
+        const token = Cookies.get("accessToken");
+
+        if (!token) {
+          console.error("Access token not found in cookies.");
+          return;
+        }
+
+        // Fetch posted posts
+        const response = await fetch("http://localhost:8080/api/schedule/show-posted-post", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch posted posts");
+          return;
+        }
+
+        const data = await response.json();
+        setPostedPosts(data.data || []);
+      } catch (error) {
+        console.error("Error fetching posted posts:", error);
+      }
+    };
+
+    fetchPostedPosts();
+  }, []);
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -42,7 +79,7 @@ const Analytics = () => {
           "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
         }}
       >
-        {/* Scrollable Telegram Posts */}
+        {/* Scrollable Posted Posts Section */}
         <Box
           gridColumn="span 12"
           gridRow="span 1"
@@ -50,16 +87,24 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
           sx={{
-            maxHeight: "320px", // Adjust height as needed
-            overflowY: "auto", // Enables scrolling when content exceeds height
+            maxHeight: "320px",
+            overflowY: "auto",
           }}
         >
-          <TelegramPost text="New Post 1" description="This is a new post" date="2025-5-1" status="pending" />
-          <TelegramPost text="New Post 2" description="This is a new post" date="2025-5-2" status="approved" />
-          <TelegramPost text="New Post 3" description="This is a new post" date="2025-5-3" status="rejected" />
-          <TelegramPost text="New Post 4" description="This is a new post" date="2025-5-4" status="pending" />
-          <TelegramPost text="New Post 5" description="This is a new post" date="2025-5-5" status="approved" />
-          <TelegramPost text="New Post 6" description="This is a new post" date="2025-5-6" status="rejected" />
+          <StatBox title="Posted Posts" />
+          {postedPosts.length > 0 ? (
+            postedPosts.map((post, index) => (
+              <TelegramPost
+                key={index}
+                text={post.content}
+                description={post.description || "No description"}
+                date={post.scheduledTime || "N/A"}
+                status={post.status}
+              />
+            ))
+          ) : (
+            <Typography>No posted posts available.</Typography>
+          )}
         </Box>
 
         {/* Line Chart */}
