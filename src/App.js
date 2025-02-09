@@ -45,7 +45,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/schedule" element={<Schedule />} />
+
             <Route path="/calender" element={<Calender />} />
+
             <Route path="/account" element={<Account />} />
             <Route path="/connectaccount" element={<ConnectAccount />} />
             <Route path="/manageaccount" element={<ManageAccount />} />

@@ -21,7 +21,7 @@ export default function BarLabel() {
         { id: 2, label: "Likes", data: [1, 6, 3, 5, 2, 4, 3] },
         { id: 3, label: "Comments", data: [2, 5, 6, 1, 4, 2, 5] },
       ]}
-      width={900}
+      width={750}
       height={300}
     />
   );

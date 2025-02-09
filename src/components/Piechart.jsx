@@ -14,7 +14,9 @@ const TweetSuggestionApp = () => {
   };
 
   return (
+
     <Card style={{ width: 350,height:320, padding: 20,backgroundColor: 'transparent', color: 'white', mt:1, borderRadius: 2, boxShadow: 3 }}>
+
       <CardContent>
         <Typography variant="h5" style={{ marginBottom: 10 }}>
           Personalized Tweet Suggestions
