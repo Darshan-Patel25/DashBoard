@@ -152,29 +152,33 @@ const DashboardPage = () => {
         />
 
         {/* Post Table */}
-        <Box
-          gridColumn="span 4"
-          gridRow="span 5"
-          backgroundColor={theme.palette.background.alt}
-          p="1rem"
-          borderRadius="0.55rem"
-        >
-          <Header title="All Posts" subtitle="Schedule posts" />
-          {posts.length > 0 ? (
-  posts.map((post, index) => (
-    <PostCard
-      key={index}
-      content={post.content}
-      scheduledTime={post.scheduledTime}
-      status={post.status}
-      platform={post.platform}
-    />
-  ))
-) : (
-  <Typography>No posts available.</Typography>
-)}
-
-        </Box>
+       <Box
+  gridColumn="span 4"
+  gridRow="span 5"
+  backgroundColor={theme.palette.background.alt}
+  p="1rem"
+  borderRadius="0.55rem"
+  sx={{
+   
+    overflowY: "auto",  // Vertical scrolling
+   
+  }}
+>
+  <Header title="All Posts" subtitle="Schedule posts" />
+  {posts.length > 0 ? (
+    posts.map((post, index) => (
+      <PostCard
+        key={index}
+        content={post.content}
+        scheduledTime={post.scheduledTime}
+        status={post.status}
+        platform={post.platform}
+      />
+    ))
+  ) : (
+    <Typography>No posts available.</Typography>
+  )}
+</Box>
 
         {/* Charts */}
         <Box

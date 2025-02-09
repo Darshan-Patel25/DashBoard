@@ -60,14 +60,12 @@ const ConnectAccount = () => {
                 fullWidth
                 sx={{ mt: 1 }}
                 onClick={() => {
-                  if (network.name === 'Twitter' && btn === 'Connect Profile') {
-                    // Navigate to external URL for Twitter
-                    window.location.href = 'http://localhost:8080/link-twitter';
-                  } else {
-                    // Default internal navigation for other buttons
-                    navigate('/connectpage');
-                  }
-                }}
+                  console.log("log")
+  if (network.name === 'Twitter' && btn === 'Connect Profile') {
+    window.location.href = 'http://localhost:8080/link-twitter';
+  } 
+}}
+
               >
                 {btn}
               </Button>

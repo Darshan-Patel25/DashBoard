@@ -1,11 +1,22 @@
 const ScheduledPost = require("../models/schedulePost");
-
+const User = require("../models/user");
 exports.getPostedPosts = async (req, res) => {
   try {
     // Fetch all posts with status "posted" for the user
+    const user = await User.findOne({ _id: req.userId });
+    console.log("user", user);
+    // Handle the case when the user is not found
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+        success: false,
+      });
+    }
+
+    // Find posts based on the user's associated chatId
     const posts = await ScheduledPost.find({
-      userId: req.userId,
-      status: "posted", // Filter only "posted" status
+      chatId: user.telegramId, // Assuming 'telegramId' stores the chatId in the User schema
+      status: "posted",
     });
 
     res.status(200).json({

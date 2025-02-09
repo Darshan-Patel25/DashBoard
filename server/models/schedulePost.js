@@ -6,6 +6,11 @@ const scheduledPostSchema = new mongoose.Schema({
     ref: "User", // reference to the User model
     required: true,
   },
+  chatId: {
+    type: String, // Stores the Telegram chat ID
+    // required: true,
+    default: null,
+  },
   content: {
     type: String,
     required: true,
