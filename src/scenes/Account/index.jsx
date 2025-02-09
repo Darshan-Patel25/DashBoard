@@ -16,15 +16,15 @@ import B8 from "assets/b8.jpeg"
 
 
 const socialNetworks = [
-  { name: 'Twitter', icon: <img src={B2} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile'], checkbox: 'Follow us' }, 
-  { name: 'Facebook', icon:<img src={B1} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Page', 'Connect Group'] },
- 
-  { name: 'LinkedIn', icon: <img src={B3} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile', 'Connect Page'] },
-  { name: 'Pinterest', icon: <img src={B4} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Board'] },
-  { name: 'Google My Business', icon: <img src={B5} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Location'] },
-  { name: 'Instagram', icon: <img src={B6} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Personal', 'Connect Business'] },
-  { name: 'Reminder for TikTok', icon:<img src={B7} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Profile'] },
-  { name: 'Tumblr', icon: <img src={B8} alt="Facebook" style={{ width: 70, height:70 ,borderRadius: '50%'}} />, buttons: ['Connect Blog'] },
+  { name: 'Twitter', icon: <img src={B2} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile'], checkbox: 'Follow us' },
+  { name: 'Facebook', icon: <img src={B1} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Page', 'Connect Group'] },
+
+  { name: 'LinkedIn', icon: <img src={B3} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile', 'Connect Page'] },
+  { name: 'Pinterest', icon: <img src={B4} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Board'] },
+  { name: 'Google My Business', icon: <img src={B5} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Location'] },
+  { name: 'Instagram', icon: <img src={B6} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Personal', 'Connect Business'] },
+  { name: 'Reminder for TikTok', icon: <img src={B7} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile'] },
+  { name: 'Tumblr', icon: <img src={B8} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Blog'] },
 ];
 
 const ConnectAccount = () => {
@@ -34,7 +34,7 @@ const ConnectAccount = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="ConnectAccount The Post" subtitle="Create the post" />
+      <Header title="Connect Your Accounts" subtitle="Create the post" />
       <Box
         mt="20px"
         display="grid"
@@ -63,7 +63,7 @@ const ConnectAccount = () => {
                 color="primary"
                 fullWidth
                 sx={{ mt: 1 }}
-                onClick={() => navigate('/connectpage')} 
+                onClick={() => navigate('/connectpage')}
 
               >
                 {btn}
