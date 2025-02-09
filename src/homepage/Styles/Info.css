@@ -1,0 +1,25 @@
+.info{
+    max-width: 960px;
+    display: flex; 
+    margin: 0 auto;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    color: #3B383B;
+ 
+}
+.info p{
+    font-size: 34px;
+}
+.profile_img img{
+    width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-left: -10px;
+  border: 2px solid white;
+
+}
+.profile_img{
+    margin-top: 1rem;
+    padding: 3px;
+    
+}
