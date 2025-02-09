@@ -14,7 +14,7 @@ exports.tweetCorrection = async (req, res) => {
   }
 
   try {
-    const prompt = `${content} fix grammar and English, also give me hashtags for this tweet`;
+    const prompt = `${content} ,fix grammar and English also give me hashtags for this tweet give me correct response in string and note that never mention anything from that user know that this response is from ai`;
 
     const result = await model.generateContent(prompt);
 

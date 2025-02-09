@@ -5,11 +5,11 @@ const moment = require("moment");
 const sendPostSuccessEmail = require("../mailTemplates/postsuccesmail");
 
 exports.Schedulepostroute = async (req, res) => {
-  const { content, scheduledTime, platform } = req.body;
+  const { content, scheduledTime } = req.body;
   const id = req.userId;
-
+  console.log("schedule post route");
   console.log(id);
-  if (!id || !content || !scheduledTime || !platform) {
+  if (!id || !content || !scheduledTime) {
     return res.status(400).json({
       message: "All fields are required",
       success: false,
@@ -26,7 +26,6 @@ exports.Schedulepostroute = async (req, res) => {
       userId: id,
       content,
       scheduledTime: formattedScheduledTime,
-      platform,
     });
     await sendPostSuccessEmail(
       "vandanrangani21@gmail.com",

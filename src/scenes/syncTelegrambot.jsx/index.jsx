@@ -2,80 +2,73 @@ import React, { useEffect, useState } from "react";
 import Header from "components/Header";
 import { Box, Button, Typography, TextField } from "@mui/material";
 import { Telegram } from "@mui/icons-material";
-import PostCard from "../../components/PostCard"; // Import PostCard component
-import TelegramPost from "../../components/telegrampost"; // Import TelegramPost component
+import Cookies from "js-cookie"; // Import js-cookie
+import TelegramPost from "../../components/telegrampost";
+
 const SyncTelegramBot = () => {
   const [telegramId, setTelegramId] = useState("");
   const [telegramPosts, setTelegramPosts] = useState([]);
 
-
-
-  useEffect(() => {
-    const fetchTelegramPosts = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/schedule/get-post-telegram-bot", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Ensures cookies are sent for authentication
-        });
-
-        const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-
-        // Map response data to match TelegramPost props
-        const formattedPosts = data.data.map((post) => ({
-          text: post.content,
-          description: `Scheduled for ${post.platform}`,
-          date: post.scheduledTime,
-          status: post.status,
-        }));
-
-        setTelegramPosts(formattedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchTelegramPosts();
-  }, []);
-
-  // Function to save and generate post cards dynamically
-  const handleSave = async () => {
+  const fetchTelegramPosts = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/user/teleid", {
-        method: "PUT", // Change to PUT
+      const token = Cookies.get("accessToken"); // Get the token from the cookie
+      if (!token) throw new Error("Access token not found");
+
+      const response = await fetch("http://localhost:8080/api/schedule/get-post-telegram-bot", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Use the token here
         },
-        credentials: "include", // Ensures authentication cookies (JWT) are sent
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message);
+
+      const formattedPosts = data.data.map((post) => ({
+        text: post.content,
+        description: `Scheduled for ${post.platform}`,
+        date: post.scheduledTime,
+        status: post.status,
+      }));
+
+      setTelegramPosts(formattedPosts);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const token = Cookies.get("accessToken");
+      if (!token) throw new Error("Access token not found");
+
+      const response = await fetch("http://localhost:8080/api/user/teleid", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Use the token here
+        },
+        credentials: "include",
         body: JSON.stringify({ telegramId }),
       });
 
-
       const data = await response.json();
-
       if (!data.success) throw new Error(data.message);
 
-      // If successful, add post locally
-      const newPost = {
-        id: telegramPosts.length + 1,
-        text: telegramId,
-        status: "Pending",
-        date: new Date().toDateString(),
-      };
-
-      setTelegramPosts((prevPosts) => [newPost, ...prevPosts]);
-      setTelegramId(""); // Clear input after saving
+      setTelegramId("");
+      fetchTelegramPosts(); // Refresh posts after successful save
     } catch (error) {
       console.error("Error saving Telegram ID:", error);
     }
   };
 
+  useEffect(() => {
+    fetchTelegramPosts();
+  }, []);
 
   return (
-
     <Box m="1.5rem 2.5rem">
       <Header title="Sync Telegram Bot" />
       <Box display="flex" alignItems="center" gap={2} mt={3}>
@@ -116,7 +109,6 @@ const SyncTelegramBot = () => {
         <Typography>No scheduled posts available.</Typography>
       )}
     </Box>
-
   );
 };
 
