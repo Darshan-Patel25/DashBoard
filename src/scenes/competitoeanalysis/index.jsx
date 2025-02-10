@@ -1,90 +1,197 @@
-import React, { useState } from 'react';
-import { Box, Typography, Checkbox, Button, Grid, FormControlLabel, Divider, TextField } from '@mui/material';
-
-const initialPages = [
-  
-];
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  Select,
+  TextField,
+  MenuItem,
+} from '@mui/material';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
+import Header from 'components/Header';
 
 const ConnectPage = () => {
-  const [pages, setPages] = useState(initialPages);
-  const [selectedPages, setSelectedPages] = useState([]);
   const [newPage, setNewPage] = useState('');
+  const [competitors, setCompetitors] = useState([]);
+  const [selectedCompetitor, setSelectedCompetitor] = useState('');
+  const [graphData, setGraphData] = useState([]);
 
-  const handleToggle = (page) => {
-    setSelectedPages((prev) =>
-      prev.includes(page) ? prev.filter((p) => p !== page) : [...prev, page]
-    );
-  };
+  useEffect(() => {
+    fetchCompetitors();
+  }, []);
 
-  const handleSelectAll = () => {
-    if (selectedPages.length === pages.length) {
-      setSelectedPages([]);
-    } else {
-      setSelectedPages(pages);
+  // Fetch competitors from the server
+  const fetchCompetitors = async () => {
+    const accessToken = Cookies.get('accessToken');
+    if (!accessToken) {
+      alert('Authentication required.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/api/comments/getcompanies', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setCompetitors(result.competitorAnalysis || []);
+      } else {
+        alert(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error fetching competitors:', error);
+      alert('Failed to fetch competitors.');
     }
   };
 
-  const handleAddPage = () => {
-    if (newPage.trim() !== '' && !pages.includes(newPage)) {
-      setPages([...pages, newPage]);
-      setNewPage('');
+  // Handle adding a new competitor
+  const handleAddPage = async () => {
+    if (!newPage.trim()) {
+      alert('Please enter a valid page.');
+      return;
+    }
+
+    const accessToken = Cookies.get('accessToken');
+    if (!accessToken) {
+      alert('Authentication required.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/api/comments/competitor-analysis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ competitorAnalysis: newPage }),
+      });
+
+      if (response.ok) {
+        alert(`New competitor "${newPage}" added successfully!`);
+        setNewPage('');
+        fetchCompetitors(); // Refresh competitors list
+      } else {
+        const result = await response.json();
+        alert(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error adding new page:', error);
+      alert('Failed to add new page.');
+    }
+  };
+
+  // Handle fetching competitor statistics
+  const handleSubmitCompetitors = async () => {
+    if (!selectedCompetitor) {
+      alert('Please select a competitor.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/comments/stas?username=${selectedCompetitor}`);
+      const result = await response.json();
+
+      if (response.ok) {
+        const data = result.Graph.map((item) => ({
+          date: item.date,
+          followers: parseInt(item.followers) || 0,
+          followings: parseInt(item.followings) || 0,
+          tweets: parseInt(item.tweets) || 0,
+        }));
+        setGraphData(data);
+      } else {
+        alert(`Error: ${result.error || 'Failed to fetch stats.'}`);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+      alert('Failed to fetch stats.');
     }
   };
 
   return (
     <Box p={4}>
-      <Typography variant="h4" fontWeight="bold" mb={2}>Connect Facebook Page</Typography>
-      
+      <Typography variant="h4" fontWeight="bold" mb={2}>
+        <Header title={'Competitor Analytics'} />
+      </Typography>
+
+      {/* New Page Input and Add Button */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <TextField
           label="Add New Page"
-          variant="outlined"
-          size="medium"
-          fullWidth
-          sx={{ mr: 2 }}
           value={newPage}
+          style={{width:"70rem"}}
           onChange={(e) => setNewPage(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={handleAddPage} sx={{ height: '53px', fontSize:"15px" }}>Add </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ height: '53px', fontSize: '15px' }}
+          onClick={handleAddPage}
+        >
+          Add
+        </Button>
       </Box>
-      
-      <Box className="statBox" p={2} border={1} borderColor="grey.300" borderRadius={2}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h6">Page List</Typography>
-          <FormControlLabel
-            control={<Checkbox checked={selectedPages.length === pages.length} onChange={handleSelectAll} />}
-            label="Select All"
-          />
-        </Box>
-
-        <Grid container spacing={2}>
-          {pages.map((page) => (
-            <Grid item xs={12} sm={6} md={4} key={page}>
-              <Box className="st" p={1} border={1} borderColor="grey.300" borderRadius={1} display="flex" alignItems="center">
-                <Checkbox
-                  checked={selectedPages.includes(page)}
-                  onChange={() => handleToggle(page)}
-                />
-                <Typography>{page}</Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
-      {/* <Box mt={4}>
-        <Typography variant="h6">Account Groups</Typography>
-        <Box p={2} border={1} borderColor="grey.300" borderRadius={2} textAlign="center">
-          <Typography color="text.secondary">Track All Activities</Typography>
-        </Box>
-      </Box> */}
 
       <Divider sx={{ my: 3 }} />
 
-      <Box display="flex" justifyContent="flex-end" gap={2}>
-        <Button variant="outlined" color="secondary">Cancel</Button>
-        <Button variant="contained" color="primary">Track All Activities</Button>
-      </Box>
+      {/* Select Competitor Dropdown */}
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <InputLabel>Select Competitor</InputLabel>
+        <Select
+          value={selectedCompetitor}
+          onChange={(e) => setSelectedCompetitor(e.target.value)}
+          label="Select Competitor"
+        >
+          {competitors.map((comp, index) => (
+            <MenuItem key={index} value={comp}>
+              {comp}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* Submit Competitor Button */}
+      <Button variant="contained" color="primary" onClick={handleSubmitCompetitors}>
+        Submit Selected Competitor
+      </Button>
+
+      {/* Graph Section */}
+      <Typography variant="h5" mt={4} mb={2}>
+        Engagement Trends
+      </Typography>
+
+      {graphData.length > 0 ? (
+        <BarChart width={600} height={300} data={graphData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="followers" fill="#8884d8" />
+          <Bar dataKey="followings" fill="#82ca9d" />
+          <Bar dataKey="tweets" fill="#ffc658" />
+        </BarChart>
+      ) : (
+        <Typography>No data available for engagement trends.</Typography>
+      )}
     </Box>
   );
 };

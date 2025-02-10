@@ -22,26 +22,42 @@ router.get("/stas", fetchSocialStats);
 router.post("/remainder", auth, postreaminder);
 router.get("/getremainder", auth, getremainders);
 
-router.post("/competitor-analysis", async (req, res) => {
-  const { competitorAnalysis } = req.body;
-  const email = "rajukani100@gmail.com"; // Static for demo; update based on your needs
-
-  if (!email || !Array.isArray(competitorAnalysis)) {
-    return res.status(400).json({ message: "Invalid request" });
-  }
-
+router.post("/competitor-analysis", auth, async (req, res) => {
   try {
-    const user = await User.findOne({ email: email });
+    const user = await User.findById(req.userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.competitorAnalysis = competitorAnalysis;
-    await user.save();
+    const newCompetitor = req.body.competitorAnalysis; // Assuming it's a single string
 
-    res
-      .status(200)
-      .json({ message: "Competitor companies updated successfully!" });
+    if (!newCompetitor || typeof newCompetitor !== "string") {
+      return res.status(400).json({ message: "Invalid competitor data." });
+    }
+
+    // Push the new value to the competitorAnalysis array
+    await User.updateOne(
+      { _id: req.userId },
+      { $push: { competitorAnalysis: newCompetitor } }
+    );
+
+    res.status(200).json({ message: "Competitor added successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/getcompanies", auth, async (req, res) => {
+  try {
+    // Check if user is authenticated
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return competitor companies list
+    res.status(200).json({ competitorAnalysis: user.competitorAnalysis || [] });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
