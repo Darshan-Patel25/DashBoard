@@ -5,24 +5,34 @@ import {
   Typography,
   Button,
   Divider,
-  TextField,
-  MenuItem,
-  Select,
   FormControl,
   InputLabel,
+  Select,
+  TextField,
+  MenuItem,
 } from '@mui/material';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import Header from 'components/Header';
 
 const ConnectPage = () => {
-  const [competitors, setCompetitors] = useState([]);
-  const [selectedCompetitors, setSelectedCompetitors] = useState([]);
   const [newPage, setNewPage] = useState('');
+  const [competitors, setCompetitors] = useState([]);
+  const [selectedCompetitor, setSelectedCompetitor] = useState('');
+  const [graphData, setGraphData] = useState([]);
 
   useEffect(() => {
     fetchCompetitors();
   }, []);
 
-  // Fetch competitor companies from the backend
+  // Fetch competitors from the server
   const fetchCompetitors = async () => {
     const accessToken = Cookies.get('accessToken');
     if (!accessToken) {
@@ -51,10 +61,10 @@ const ConnectPage = () => {
     }
   };
 
-  // Handle posting a competitor directly to the DB
-  const handleAddCompetitor = async () => {
+  // Handle adding a new competitor
+  const handleAddPage = async () => {
     if (!newPage.trim()) {
-      alert('Please enter a valid competitor name.');
+      alert('Please enter a valid page.');
       return;
     }
 
@@ -71,46 +81,70 @@ const ConnectPage = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ competitorAnalysis: newPage.trim() }),
+        body: JSON.stringify({ competitorAnalysis: newPage }),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        alert('Competitor added successfully!');
-        setCompetitors((prev) => [...prev, newPage.trim()]);
-        setNewPage(''); // Clear input field after successful addition
+        alert(`New competitor "${newPage}" added successfully!`);
+        setNewPage('');
+        fetchCompetitors(); // Refresh competitors list
       } else {
+        const result = await response.json();
         alert(`Error: ${result.message}`);
       }
     } catch (error) {
-      console.error('Error adding competitor:', error);
-      alert('Failed to add competitor.');
+      console.error('Error adding new page:', error);
+      alert('Failed to add new page.');
+    }
+  };
+
+  // Handle fetching competitor statistics
+  const handleSubmitCompetitors = async () => {
+    if (!selectedCompetitor) {
+      alert('Please select a competitor.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/comments/stas?username=${selectedCompetitor}`);
+      const result = await response.json();
+
+      if (response.ok) {
+        const data = result.Graph.map((item) => ({
+          date: item.date,
+          followers: parseInt(item.followers) || 0,
+          followings: parseInt(item.followings) || 0,
+          tweets: parseInt(item.tweets) || 0,
+        }));
+        setGraphData(data);
+      } else {
+        alert(`Error: ${result.error || 'Failed to fetch stats.'}`);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+      alert('Failed to fetch stats.');
     }
   };
 
   return (
     <Box p={4}>
       <Typography variant="h4" fontWeight="bold" mb={2}>
-        Competitor Analytics
+        <Header title={'Competitor Analytics'} />
       </Typography>
 
-      {/* Add New Competitor Section */}
+      {/* New Page Input and Add Button */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <TextField
           label="Add New Page"
-          variant="outlined"
-          size="medium"
-          fullWidth
-          sx={{ mr: 2 }}
           value={newPage}
+          style={{width:"70rem"}}
           onChange={(e) => setNewPage(e.target.value)}
         />
         <Button
           variant="contained"
           color="primary"
-          onClick={handleAddCompetitor}
           sx={{ height: '53px', fontSize: '15px' }}
+          onClick={handleAddPage}
         >
           Add
         </Button>
@@ -118,42 +152,46 @@ const ConnectPage = () => {
 
       <Divider sx={{ my: 3 }} />
 
-      <Header
-        title="Track All Activities of your Competitors"
-        subtitle="Select the option and see all the activities"
-      />
+      {/* Select Competitor Dropdown */}
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <InputLabel>Select Competitor</InputLabel>
+        <Select
+          value={selectedCompetitor}
+          onChange={(e) => setSelectedCompetitor(e.target.value)}
+          label="Select Competitor"
+        >
+          {competitors.map((comp, index) => (
+            <MenuItem key={index} value={comp}>
+              {comp}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-      {/* Dynamic Competitor Selection Dropdown */}
-      <Box mt={3}>
-        <FormControl fullWidth>
-          <InputLabel id="competitor-select-label">Choose your Competitors</InputLabel>
-          <Select
-            labelId="competitor-select-label"
-            label="Choose your Competitors"
-            multiple
-            value={selectedCompetitors}
-            onChange={(e) => setSelectedCompetitors(e.target.value)}
-          >
-            {competitors.map((competitor, index) => (
-              <MenuItem key={index} value={competitor}>
-                {competitor}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+      {/* Submit Competitor Button */}
+      <Button variant="contained" color="primary" onClick={handleSubmitCompetitors}>
+        Submit Selected Competitor
+      </Button>
 
-      <Divider sx={{ my: 3 }} />
+      {/* Graph Section */}
+      <Typography variant="h5" mt={4} mb={2}>
+        Engagement Trends
+      </Typography>
 
-      {/* Action Buttons */}
-      <Box display="flex" justifyContent="flex-end" gap={2}>
-        <Button variant="outlined" color="secondary">
-          Cancel
-        </Button>
-        <Button variant="contained" color="primary">
-          Submit Selected Competitors
-        </Button>
-      </Box>
+      {graphData.length > 0 ? (
+        <BarChart width={600} height={300} data={graphData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="followers" fill="#8884d8" />
+          <Bar dataKey="followings" fill="#82ca9d" />
+          <Bar dataKey="tweets" fill="#ffc658" />
+        </BarChart>
+      ) : (
+        <Typography>No data available for engagement trends.</Typography>
+      )}
     </Box>
   );
 };
