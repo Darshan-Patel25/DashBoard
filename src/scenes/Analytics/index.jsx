@@ -49,11 +49,48 @@ const Analytics = () => {
     fetchPostedPosts();
   }, []);
 
+  const handlePdfDownload = () => {
+    fetch(`http://localhost:8080/generate-pdf`)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Report.pdf`;
+        a.click();
+      })
+      .catch((err) => console.error("Download Error:", err));
+  };
+
+  const handleExcelDownload = () => {
+    fetch("http://localhost:8080/api/user/generate-excel", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "SocialMediaDataWithCharts.xlsx";
+        a.click();
+        window.URL.revokeObjectURL(url); // Cleanup
+      })
+      .catch((err) => console.error("Download Error:", err));
+  }
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Sentiment Analytics" subtitle="Welcome to analytics page" />
-        <Box>
+        <Header title="Sentiment Analytics" subtitle="Welcome to the analytics page" />
+        <Box display="flex" gap="10px">
           <Button
             sx={{
               backgroundColor: theme.palette.secondary.light,
@@ -62,9 +99,24 @@ const Analytics = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
+            onClick={() => handlePdfDownload()}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Reports
+            Download PDF
+          </Button>
+
+          <Button
+            sx={{
+              backgroundColor: theme.palette.secondary.light,
+              color: theme.palette.background.alt,
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+            onClick={() => handleExcelDownload()}
+          >
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Download Excel
           </Button>
         </Box>
       </FlexBetween>

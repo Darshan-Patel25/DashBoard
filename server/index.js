@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const fs = require("fs");
 const puppeteer = require("puppeteer");
 const telegrambot = require("./controllers/telegramBot");
 const express = require("express");
@@ -71,16 +72,33 @@ app.get("/generate-pdf", async (req, res) => {
       waitUntil: "networkidle0",
     });
 
-    // Generate PDF from page
-    const pdf = await page.pdf({
+    const pdfPath = path.join(__dirname, "report.pdf");
+
+    // Generate PDF
+    await page.pdf({
       format: "A4",
       printBackground: true,
-      path: "./report.pdf",
+      path: pdfPath,
     });
 
     await browser.close();
 
-    res.download("./report.pdf", "Social_Media_Analytics_Report.pdf");
+    // Set CORS headers before sending the file
+    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    // Read the PDF as a buffer and send it
+    res.sendFile(pdfPath, (err) => {
+      if (err) {
+        console.error("Error sending PDF:", err);
+        res.status(500).send("Error sending PDF");
+      } else {
+        console.log("PDF sent successfully");
+      }
+    });
+
   } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).send("Error generating PDF");
@@ -90,10 +108,13 @@ app.get("/generate-pdf", async (req, res) => {
 app.use(
   cors({
     credentials: true,
+    methods: "GET, POST",
     origin: process.env.FRONTEND_URL,
     allowedHeaders: "Content-Type,Authorization",
   })
 );
+
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
