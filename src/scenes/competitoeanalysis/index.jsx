@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import BarLabel from '../../components/ThreeBarchart';
 import {
   Box,
   Typography,
@@ -179,16 +180,7 @@ const ConnectPage = () => {
       </Typography>
 
       {graphData.length > 0 ? (
-        <BarChart width={600} height={300} data={graphData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="followers" fill="#8884d8" />
-          <Bar dataKey="followings" fill="#82ca9d" />
-          <Bar dataKey="tweets" fill="#ffc658" />
-        </BarChart>
+        <BarLabel graphData={graphData} />
       ) : (
         <Typography>No data available for engagement trends.</Typography>
       )}
