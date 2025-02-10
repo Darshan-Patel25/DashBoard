@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const fs = require("fs");
 const puppeteer = require("puppeteer");
-const telegrambot = require("./controllers/telegramBot");
+// const telegrambot = require("./controllers/telegramBot");
 const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
@@ -87,7 +87,10 @@ app.get("/generate-pdf", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "GET");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
 
     // Read the PDF as a buffer and send it
     res.sendFile(pdfPath, (err) => {
@@ -98,7 +101,6 @@ app.get("/generate-pdf", async (req, res) => {
         console.log("PDF sent successfully");
       }
     });
-
   } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).send("Error generating PDF");
@@ -113,7 +115,6 @@ app.use(
     allowedHeaders: "Content-Type,Authorization",
   })
 );
-
 
 app.use(express.json());
 app.use(cookieParser());
