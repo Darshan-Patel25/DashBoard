@@ -1,65 +1,165 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-//import { tokensDark, tokensLight } from "../../theme";
-
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
- 
-} from "@mui/material";
+import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import { tokensDark as tokens } from "../../theme";
+import Cookie from "js-cookie";
 
 const Calender = () => {
-  //const theme = useTheme();
-  const colors = tokens; // Use the imported tokens directly
+  const colors = tokens;
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [reminders, setReminders] = useState([]);
 
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = Cookie.get("accessToken");
 
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-      });
+      try {
+        const [postResponse, reminderResponse] = await Promise.all([
+          fetch("http://localhost:8080/api/schedule/showallpost", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          fetch("http://localhost:8080/api/comments/getremainder", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+        const mappedEvents = [];
+        
+        // Process Scheduled Posts
+        if (postResponse.ok) {
+          const postData = await postResponse.json();
+          postData.posts.forEach((post) => {
+            mappedEvents.push({
+              id: post._id,
+              title: `Schedule-Post: ${post.status}`,
+              start: post.scheduledTime,
+              allDay: true,
+              backgroundColor: post.status === "pending" ? colors.secondary[500] : "#1B998B",
+              extendedProps: {
+                content: post.content,
+                platform: post.platform,
+                source: post.source,
+                status: post.status,
+              },
+            });
+          });
+        } else {
+          console.error("Failed to fetch schedule posts:", postResponse.status);
+        }
+
+        // Process Reminders
+        if (reminderResponse.ok) {
+          const reminderData = await reminderResponse.json();
+          reminderData.forEach((reminder) => {
+            mappedEvents.push({
+              id: reminder._id,
+              title: `Reminder: ${reminder.postTitle}`,
+              start: reminder.reminderTime,
+              allDay: false,
+              backgroundColor: colors.primary[500],
+            });
+
+            setReminders((prev) => [
+              ...prev,
+              {
+                id: reminder._id,
+                title: reminder.postTitle,
+                start: reminder.reminderTime,
+              },
+            ]);
+          });
+        } else {
+          console.error("Failed to fetch reminders:", reminderResponse.status);
+        }
+
+        setCurrentEvents(mappedEvents);
+      } catch (error) {
+        console.error("Error fetching posts or reminders:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleDateClick = async (selected) => {
+  const postTitle = prompt("Enter your reminder content:");
+  if (!postTitle) {
+    alert("Reminder content is required.");
+    return;
+  }
+
+  const time = prompt("Enter reminder time (HH:mm format):");
+  if (!time || !/^\d{2}:\d{2}$/.test(time)) {
+    alert("Reminder time is required and must be in HH:mm format.");
+    return;
+  }
+
+  // Extract full date from selected.startStr
+  const datePart = selected.startStr.split("T")[0]; 
+  const reminderTime = `${datePart}T${time}:00`;
+
+  // Add visually to calendar
+  const calendarApi = selected.view.calendar;
+  calendarApi.unselect();
+
+  calendarApi.addEvent({
+    id: `${datePart}-${postTitle}`,
+    title: `Reminder: ${postTitle}`,
+    start: reminderTime,
+    allDay: false,
+    backgroundColor: colors.primary[500],
+  });
+
+  setReminders((prev) => [
+    ...prev,
+    {
+      id: `${datePart}-${postTitle}`,
+      title: postTitle,
+      start: reminderTime,
+    },
+  ]);
+
+  // Save to backend
+  try {
+    const token = Cookie.get("accessToken");
+    const response = await fetch("http://localhost:8080/api/comments/remainder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        postTitle,
+        reminderTime,
+      }),
+    });
+
+    console.log("Title:", postTitle);
+    console.log("Time:", reminderTime);
+
+    if (response.ok) {
+      alert("Reminder added successfully.");
+    } else {
+      console.error("Failed to add reminder:", response.status);
     }
-  };
+  } catch (error) {
+    console.error("Error adding reminder:", error);
+  }
+};
 
-  const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
-    }
-  };
-
-  // Add custom rendering for events to highlight specific dates
-  const dayRender = (args) => {
-    // Check if there's an event on that date
-    const eventDate = args.dateStr;
-    const eventExists = currentEvents.some(
-      (event) => event.start.toISOString().substring(0, 10) === eventDate
-    );
-
-    if (eventExists) {
-      args.el.classList.add("highlighted-date"); // Add a CSS class to highlight the date
-    }
-  };
 
   return (
     <Box m="20px">
@@ -72,12 +172,18 @@ const Calender = () => {
           backgroundColor={colors.primary[400]}
           p="15px"
           borderRadius="4px"
+          sx={{
+            maxHeight: "90vh",
+            overflow: "auto",
+            marginBottom:"20px"
+
+          }}
         >
-          <Typography variant="h5">Content Calender</Typography>
+          <Typography variant="h5">Reminders</Typography>
           <List>
-            {currentEvents.map((event) => (
+            {reminders.map((reminder) => (
               <ListItem
-                key={event.id}
+                key={reminder.id}
                 sx={{
                   backgroundColor: colors.secondary[500],
                   margin: "10px 0",
@@ -85,10 +191,10 @@ const Calender = () => {
                 }}
               >
                 <ListItemText
-                  primary={event.title}
+                  primary={reminder.title}
                   secondary={
                     <Typography>
-                      {new Date(event.start).toLocaleDateString()} {/* Replace formatDate with native Date method */}
+                      {new Date(reminder.start).toLocaleString()}
                     </Typography>
                   }
                 />
@@ -116,37 +222,13 @@ const Calender = () => {
             editable={true}
             selectable={true}
             selectMirror={true}
-            dayMaxEvents={true}
+            dayMaxEvents={false} // Show all events without collapsing
             select={handleDateClick}
-            eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2022-09-14",
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2022-09-28",
-              },
-            ]}
-            dayRender={dayRender} // Adding custom day rendering
+            events={currentEvents}
+            eventDisplay="block" // Force all events to display fully
           />
         </Box>
       </Box>
-
-      {/* Add custom styling for highlighted dates */}
-      <style>
-        {`
-          .highlighted-date {
-            background-color: ${colors.secondary[500]} !important; /* Highlight color */
-            border-radius: 50%;
-            color: white;
-          }
-        `}
-      </style>
     </Box>
   );
 };

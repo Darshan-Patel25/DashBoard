@@ -1,20 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const { auth } = require("../middlewares/auth");
 const { fetchComments } = require("../controllers/sentimentcomments");
 const { tweetCorrection } = require("../controllers/tweetCorrection");
 const { fetchHashtags } = require("../controllers/hastagController");
 const { fetchSocialStats } = require("../controllers/socailStas");
-const { postreaminder } = require("../controllers/postremainder");
+const {
+  postreaminder,
+  getremainders,
+} = require("../controllers/postremainder");
 const cron = require("node-cron");
 const moment = require("moment");
 const transporter = require("../config/mailer");
 const Reminder = require("../models/remainderSchema");
+const { rotateRadians } = require("pdf-lib");
 router.post("/sentiment-comments", fetchComments);
 router.post("/correct", tweetCorrection);
 router.get("/trending-hashtags", fetchHashtags);
 router.get("/stas", fetchSocialStats);
-router.post("/remainder", postreaminder);
+router.post("/remainder", auth, postreaminder);
+router.get("/getremainder", auth, getremainders);
+
 router.post("/competitor-analysis", async (req, res) => {
   const { competitorAnalysis } = req.body;
   const email = "rajukani100@gmail.com"; // Static for demo; update based on your needs
