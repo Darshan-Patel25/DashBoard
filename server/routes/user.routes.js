@@ -10,6 +10,7 @@ const {
   registerUsercontroller,
   loginController,
   logout,
+  getuserdetails,
 } = require("../controllers/users.controlers");
 const { teleId } = require("../controllers/teleId");
 
@@ -18,7 +19,7 @@ userrouter.post("/register", registerUsercontroller);
 userrouter.post("/login", loginController);
 userrouter.get("/logout", auth, logout);
 userrouter.put("/teleid", auth, teleId);
-
+userrouter.get("/getuserdetails", auth, getuserdetails);
 userrouter.get("/generate-excel", async (req, res) => {
   const username = req.query.username || "rajukani100";
 
@@ -68,10 +69,16 @@ userrouter.get("/generate-excel", async (req, res) => {
     await workbook.xlsx.writeFile(filePath);
 
     // Set CORS headers before sending the file
-    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "http://localhost:3000");
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      process.env.FRONTEND_URL || "http://localhost:3000"
+    );
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "GET");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
 
     // Send the file as a download response
     res.download(filePath, "SocialMediaDataWithCharts.xlsx", (err) => {
