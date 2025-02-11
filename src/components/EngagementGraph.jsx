@@ -4,11 +4,11 @@ import { BarChart } from "@mui/x-charts";
 const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
   // Engagement metrics data
   const engagementData = [
-    { metric: "Likes", count: likes },
-    { metric: "Replies", count: replies },
-    { metric: "Views", count: views },
-    { metric: "Reposts", count: reposts },
-    { metric: "Bookmarks", count: bookmarks },
+    { metric: "Likes", count: likes, color: "#FF6384" },
+    { metric: "Replies", count: replies, color: "#36A2EB" },
+    { metric: "Views", count: views, color: "#FFCE56" },
+    { metric: "Reposts", count: reposts, color: "#4BC0C0" },
+    { metric: "Bookmarks", count: bookmarks, color: "#9966FF" },
   ];
 
   return (
@@ -30,8 +30,8 @@ const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
               data: engagementData.map((entry) => entry.count),
             },
           ]}
-          width={750}
-          height={300}
+          width={550}
+          height={500}
         />
       </div>
     </div>

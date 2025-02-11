@@ -8,6 +8,7 @@ import TelegramPost from "../../components/sentimentPost";
 import LineChart from "components/Linechart";
 import SentimentChart from "../../components/sentimentchart";
 import Cookies from "js-cookie";
+import EngagementBarChart from "components/EngagementGraph";
 
 const Analytics = () => {
   const theme = useTheme();
@@ -168,7 +169,7 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <LineChart />
+          <EngagementBarChart likes={20} replies={15} views={25} reposts={100} bookmarks={2}/>
         </Box>
 
         {/* Suggestions */}
@@ -190,9 +191,7 @@ const Analytics = () => {
               fontWeight: "bold",
             }}
           >
-            {["LataMangeshkar", "ViratKohli"].map((hashtag, index) => (
-              <li key={index}>{hashtag}</li>
-            ))}
+           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque nisi magnam esse debitis blanditiis aperiam consequuntur libero molestias natus corporis dolores ad quos atque deserunt maiores veritatis, eius quo cum culpa? Iure quia ex culpa dicta omnis nihil incidunt deserunt voluptatibus itaque nostrum aliquid impedit praesentium dolor iste, dignissimos blanditiis?</p>
           </ul>
         </Box>
 
