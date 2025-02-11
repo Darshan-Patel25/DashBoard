@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-10">
+    <footer className="bg-[#3D3A3D] text-white py-10">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
         {/* Left Section */}
         <div>
@@ -49,9 +49,9 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
+              className="flex-1 p-2 bg-[#2C292B] border-none rounded-md text-white placeholder-gray-300 focus:outline-none"
             />
-            <button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md">
+            <button className="bg-[#456EC8] text-white px-5 py-2 rounded-md border-none font-medium text-lg cursor-pointer transition-colors duration-200 hover:bg-[#5593D7]">
               Subscribe
             </button>
           </div>
@@ -63,7 +63,7 @@ const Footer = () => {
 
       {/* Footer Bottom */}
       <div className="max-w-6xl mx-auto mt-8 border-t border-gray-700 pt-4 flex justify-between items-center px-4">
-        <p>© 2025 TrendTide. All rights reserved.</p>
+        <p>© 2025 Trendify. All rights reserved.</p>
         <div className="flex space-x-4">
           <a href="#privacy" className="text-gray-400 hover:text-white">
             Privacy Policy

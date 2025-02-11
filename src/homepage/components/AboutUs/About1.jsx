@@ -5,7 +5,7 @@ import "../../Styles/AboutUsCSS/About1.css";
 
 const About1 = () => {
   return (
-    <div className="brochure-container">
+    <div className="brochure-container font-serif">
       {/* About Company Section */}
       <section className="brochure-page about-section">
         <div className="content-wrapper">

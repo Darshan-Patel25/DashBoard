@@ -4,11 +4,11 @@ import card2img from "../assets/card2img.webp";
 
 const Card2 = () => {
   return (
-    <div className="flex mt-12 p-10 gap-12 bg-gradient-to-tr from-blue-100 to-gray-50 min-h-[50vh] items-center justify-center max-w-7xl mx-auto shadow-lg rounded-2xl">
+    <div className="flex mt-12 p-10 gap-12 bg-gradient-to-br from-[#fef7ee] to-[#fdf0e385] min-h-[50vh] items-center justify-center max-w-7xl mx-auto shadow-lg rounded-2xl">
       {/* Left Section */}
       <div className="flex-1 max-w-md">
         <div className="mb-6">
-          <span className="flex items-center bg-white text-gray-600 text-sm px-4 py-2 rounded-xl font-medium gap-2">
+          <span className="flex items-center bg-white text-gray-600 text-sm px-3 py-1 rounded-xl font-medium gap-2">
             <img src={card2icon} alt="icon" width={16} />
             Drive Deeper Connection
           </span>
@@ -23,10 +23,6 @@ const Card2 = () => {
           shares, and interactions. Describe which content resonates most with
           your audience and create more meaningful engagement.
         </p>
-
-        <button className="bg-indigo-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-indigo-700 transition">
-          Learn More
-        </button>
       </div>
 
       {/* Right Section */}

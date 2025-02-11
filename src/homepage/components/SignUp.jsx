@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import photo from "../assets/signin_img.png";
 
@@ -35,35 +34,33 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full mx-auto">
+    <div className="flex min-h-screen w-full mx-auto font-serif">
       {/* Left Section */}
-      <div className="flex-1 bg-blue-600 text-white p-5">
-        <div className="mb-10"></div>
+      <div className="flex-1 bg-[#456ec8c9] text-white p-4">
+        <div className="mb-3"></div>
         <div className="max-w-xl">
-          <h1 className="text-4xl mb-5">Do more in less time with OwlyWriter AI</h1>
-          <p className="text-lg mb-8 leading-relaxed">
-            Generate captions and posts in seconds! OwlyWriter AI makes content creation seriously easy for busy social pros like you.
-          </p>
-          <div className="bg-white/10 p-6 rounded-lg mb-8">
-            <p className="font-bold mb-2">Our AI tool is so simple to use, anyone can do it.</p>
-            <p className="text-teal-300">Click Inspiration to get started.</p>
+          <h1 className="text-4xl mb-5 ml-5">Do more in less time with our Trendify!</h1>
+          <p className="text-lg mb-8 ml-5 leading-relaxed">
+          Our dashboard is easy to use, intuitive, and packed with powerful features for seamless exploration          </p>
+          <div className="bg-white/10 p-6 rounded-lg mb-8 ml-5">
+            <p className="font-bold mb-2">Empowering Insights, Elevating Growth.</p>
           </div>
-          <div className="mt-10">
+          <div className="mt-0">
             <img src={photo} alt="AI Assistant" className="max-w-full h-auto" />
           </div>
         </div>
       </div>
 
       {/* Right Section */}
-      <div className="flex-1 bg-white flex items-center justify-center p-10">
+      <div className="flex-1 bg-white flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <h2 className="text-3xl text-blue-800 mb-8">Sign Up</h2>
+          <h2 className="text-3xl text-[#1d3557] mb-8">Sign Up</h2>
 
           {message && <p className="text-center text-red-600 mb-4">{message}</p>}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <label htmlFor="username" className="block text-blue-800">Username</label>
+              <label htmlFor="username" className="block text-[#1d3557]">Username</label>
               <input
                 type="text"
                 id="username"
@@ -74,7 +71,7 @@ const SignUp = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-blue-800">Email</label>
+              <label htmlFor="email" className="block text-[#1d3557]">Email</label>
               <input
                 type="email"
                 id="email"
@@ -86,8 +83,8 @@ const SignUp = () => {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <label htmlFor="password" className="text-blue-800">Password</label>
-                <a href="/forgot" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
+                <label htmlFor="password" className="text-[#1d3557]">Password</label>
+                <a href="/forgot" className="text-sm text-[#457b9d] hover:underline">Forgot password?</a>
               </div>
               <input
                 type="password"
@@ -100,7 +97,7 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full bg-[#456EC8] text-white py-3 rounded-md hover:bg-[#5593D7] focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               Sign Up
             </button>
