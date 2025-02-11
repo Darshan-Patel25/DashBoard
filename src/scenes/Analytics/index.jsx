@@ -152,6 +152,7 @@ const Analytics = () => {
                 description={post.description || "No description"}
                 date={post.scheduledTime || "N/A"}
                 status={post.status}
+                postId={post.postId}
               />
             ))
           ) : (
