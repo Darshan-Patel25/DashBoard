@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { themeSettings } from "theme";
 import Layout from "scenes/layout";
 import Dashboard from "scenes/dashboard";
@@ -18,6 +18,18 @@ import Home from "homepage/components/Home";
 import SignIn from "homepage/components/SignIn";
 import SignUp from "homepage/components/SignUp";
 import About from "homepage/components/AboutUs/About";
+import Cookies from "js-cookie";
+
+// Protected Route Component
+function Protected({ Component }) {
+  const isAuthenticated = !!Cookies.get("accessToken"); // Check if accessToken cookie exists
+
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  return <Component />;
+}
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -33,7 +45,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/aboutus" element={<About />} />
 
-          {/* Dashboard Routes with Theme */}
+          {/* Protected Dashboard Routes with Theme */}
           <Route
             element={
               <ThemeProvider theme={theme}>
@@ -42,18 +54,42 @@ function App() {
               </ThemeProvider>
             }
           >
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/calender" element={<Calender />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/connectaccount" element={<ConnectAccount />} />
-            <Route path="/manageaccount" element={<ManageAccount />} />
+            <Route
+              path="/dashboard"
+              element={<Protected Component={Dashboard} />}
+            />
+            <Route
+              path="/analytics"
+              element={<Protected Component={Analytics} />}
+            />
+            <Route
+              path="/schedule"
+              element={<Protected Component={Schedule} />}
+            />
+            <Route
+              path="/calender"
+              element={<Protected Component={Calender} />}
+            />
+            <Route
+              path="/account"
+              element={<Protected Component={Account} />}
+            />
+            <Route
+              path="/connectaccount"
+              element={<Protected Component={ConnectAccount} />}
+            />
+            <Route
+              path="/manageaccount"
+              element={<Protected Component={ManageAccount} />}
+            />
             <Route
               path="/competitor-insight"
-              element={<CompetitorAnalysis />}
+              element={<Protected Component={CompetitorAnalysis} />}
             />
-            <Route path="/sync-telegrambot" element={<SyncTelegrambot />} />
+            <Route
+              path="/sync-telegrambot"
+              element={<Protected Component={SyncTelegrambot} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
