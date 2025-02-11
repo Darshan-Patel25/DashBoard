@@ -4,10 +4,10 @@ const About3 = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 font-serif">
       {/* Header Section */}
-      <header className="mb-6">
-        <h1 className="text-4xl font-bold">
+      <header className="mb-6 mt-20">
+        <h1 className="text-5xl font-bold">
           <span className="block text-black">PROJECT</span>
-          <span className="block text-blue-600">CASE STUDY</span>
+          <span className="block text-[#3C5BBF]">CASE STUDY</span>
         </h1>
       </header>
 
@@ -26,7 +26,7 @@ const About3 = () => {
         {/* Sections Container */}
         <div className="flex gap-8 flex-wrap">
           {/* Project Overview */}
-          <div className="flex-1 bg-gray-800 text-white p-8 rounded-2xl relative pt-12">
+          <div className="flex-1 bg-[#3D3A3D] text-white p-8 rounded-2xl relative pt-12">
             <h3 className="text-white mb-8 text-xl">Project Overview</h3>
             <p>
               Social media is a powerful tool, but understanding its data can be overwhelming. Our dashboard simplifies this by providing real-time engagement tracking, sentiment analysis, trend identification, and competitor insights—all in one place.

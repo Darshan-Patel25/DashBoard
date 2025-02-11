@@ -10,7 +10,7 @@ const testimonials = [
     name: "Kevin Wilson",
     role: "CEO",
     content:
-      "TravelPlus helped me finally understand performance in a relevant way. The analytics are clear and concise, and I'm now able to boost my strategy to get more engagement than ever before!",
+      "Tredify helped me finally understand performance in a relevant way. The analytics are clear and concise, and I'm now able to boost my strategy to get more engagement than ever before!",
     avatar: profile1,
   },
   {
@@ -18,7 +18,7 @@ const testimonials = [
     name: "Daniel Lee",
     role: "Marketing Consultant",
     content:
-      "As a freelancer, TravelPlus gives me all the tools I need to keep my social media strategy organized. The interface is clean and intuitive, and the insights are incredibly helpful in optimizing my content.",
+      "As a freelancer, Trendify gives me all the tools I need to keep my social media strategy organized. The interface is clean and intuitive, and the insights are incredibly helpful in optimizing my content.",
     avatar: profile2,
   },
   {
@@ -26,7 +26,7 @@ const testimonials = [
     name: "Elena Hill",
     role: "Digital Designer",
     content:
-      "I love how easy it is to manage my social media accounts with TravelPlus. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
+      "I love how easy it is to manage my social media accounts with Tredify. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
     avatar: profile3,
   },
   {
@@ -34,7 +34,7 @@ const testimonials = [
     name: "Liza Wells",
     role: "Manager",
     content:
-      "TravelPlus has completely changed how I manage my social media. The analytics make it so easy to understand performance and improve engagement. I've seen a noticeable increase in my follower count since I started using it.",
+      "Trendify has completely changed how I manage my social media. The analytics make it so easy to understand performance and improve engagement. I've seen a noticeable increase in my follower count since I started using it.",
     avatar: profile4,
   },
    {
@@ -42,7 +42,7 @@ const testimonials = [
     name: "Elena Hill",
     role: "Digital Designer",
     content:
-      "I love how easy it is to manage my social media accounts with TravelPlus. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
+      "I love how easy it is to manage my social media accounts with Trendify. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
     avatar: profile3,
   },
    {
@@ -50,8 +50,8 @@ const testimonials = [
     name: "Elena Hill",
     role: "Digital Designer",
     content:
-      "I love how easy it is to manage my social media accounts with TravelPlus. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
-    avatar: profile3,
+      "I love how easy it is to manage my social media accounts with Trendify. The interface is clean and user-friendly, and I'm really impressed by its content recommendations.",
+    avatar: profile1,
   },
 ];
 

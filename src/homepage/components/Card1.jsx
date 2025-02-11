@@ -46,9 +46,7 @@ function Card1() {
             <div className="flex items-center gap-4 text-sm text-gray-600">
               <span>Today</span>
               <span>This Week</span>
-              <button className="bg-emerald-100 text-emerald-600 px-4 py-1 rounded-full font-medium">
-                Live Now
-              </button>
+          
             </div>
           </div>
           <div className="relative w-full">

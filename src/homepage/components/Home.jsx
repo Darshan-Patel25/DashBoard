@@ -77,26 +77,26 @@ function Home() {
 
   return (
     <>
-      <div className="hero_content" ref={heroRef}>
+      <div className="m-0 bg-gradient-to-br from-[#e3eeffb9] to-[#f5f9ff9d]" ref={heroRef}>
         <Navbar />
         <Hero />
       </div>
-      <div className='info' ref={infoRef}>
+      <div className='info font-serif' ref={infoRef}>
         <Info />
       </div>
-      <div className='card1' ref={card1Ref}>
+      <div className='card1 font-serif' ref={card1Ref}>
         <Card1 />
       </div>
-      <div className="card2" ref={card2Ref}>
+      <div className="card2 font-serif" ref={card2Ref}>
         <Card2 />
       </div>
-      <div className="benifit" ref={benifitsRef}>
+      <div className="benifit font-serif" ref={benifitsRef}>
         <Benifits />
       </div>
-      <div className="testimonials" ref={testimonialsRef}>
+      <div className="testimonials font-serif" ref={testimonialsRef}>
         <Testimonials />
       </div>
-      <div className="footer" ref={footerRef}>
+      <div className="footer font-serif" ref={footerRef}>
         <Footer />
       </div>
     </>

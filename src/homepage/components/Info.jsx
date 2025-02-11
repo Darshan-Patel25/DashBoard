@@ -5,18 +5,18 @@ import photo3 from "../assets/profile_img4.png";
 
 const Info = () => {
   return (
-    <div className="max-w-4xl mx-auto my-10 text-gray-800 flex">
-      <p className="text-3xl">
+    <div className="max-w-4xl mx-auto my-10 text-gray-800 flex font-serif">
+      <p className="text-3xl ">
         Whether you are aiming to grow your{" "}
-        <span className="inline-flex items-center mt-4 space-x-2">
+        <span className="inline-flex items-center mt-4 space-x-0">
           <span className="relative">
-            <img src={photo1} alt="Profile 1" className="w-7 h-7 rounded-full border-2 border-white -ml-2" />
+            <img src={photo1} alt="Profile 1" className="w-10 h-7 rounded-full border-2 border-white -ml-2" />
           </span>
           <span className="relative">
-            <img src={photo2} alt="Profile 2" className="w-7 h-7 rounded-full border-2 border-white -ml-2" />
+            <img src={photo2} alt="Profile 2" className="w-10 h-7 rounded-full border-2 border-white -ml-2" />
           </span>
           <span className="relative">
-            <img src={photo3} alt="Profile 3" className="w-7 h-7 rounded-full border-2 border-white -ml-2" />
+            <img src={photo3} alt="Profile 3" className="w-11 h-7 rounded-full border-2 border-white -ml-2" />
           </span>
         </span>{" "}
         audience, identify new opportunities, or improve engagement, our
