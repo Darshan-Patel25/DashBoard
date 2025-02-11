@@ -198,6 +198,7 @@ const Analytics = () => {
         </Box>
 
         {/* Engagement Metrics Bar Chart */}
+
         <Box
           gridColumn="span 6"
           gridRow="span 3"
@@ -205,13 +206,22 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <EngagementBarChart
+          <StatBox title="Graph" />
+
+          {childData.engagementMetrics ? <EngagementBarChart
             likes={engagementMetrics.likes}
             replies={engagementMetrics.replies}
             views={engagementMetrics.views}
             reposts={engagementMetrics.reposts}
             bookmarks={engagementMetrics.bookmarks}
-          />
+          /> : <ul style={{
+            padding: "0",
+            margin: "0",
+            listStyle: "none",
+            fontSize: "18px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}><p>No graph available.</p></ul>}
         </Box>
 
         {/* Suggestions */}
@@ -247,17 +257,30 @@ const Analytics = () => {
         >
           <StatBox title="Overall Sentiment Analysis of posts" />
           <Box mt="1rem">
-            <Typography variant="body1" gutterBottom>
-              Sentiment Category: {childData.sentimentCategory || "Neutral"}
-            </Typography>
-            <LinearProgress
-              variant="determinate"
-              value={getSentimentScore()}
-              color={getProgressColor()}
-            />
-            <Typography variant="body2" align="right">
-              {getSentimentScore()}%
-            </Typography>
+            {childData.sentimentCategory ? <>
+              <Typography variant="body1" gutterBottom>
+                Sentiment Category: {childData.sentimentCategory || "Neutral"}
+              </Typography>
+              <LinearProgress
+                variant="determinate"
+                value={getSentimentScore()}
+                color={getProgressColor()}
+              />
+              <Typography variant="body2" align="right">
+                {getSentimentScore()}%
+              </Typography>
+            </> : <ul
+              style={{
+                padding: "0",
+                margin: "0",
+                listStyle: "none",
+                fontSize: "18px",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              <p>{childData.sentimentAnalysis || "No sentiment analysis available."}</p>
+            </ul>}
           </Box>
         </Box>
       </Box>
