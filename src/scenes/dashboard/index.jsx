@@ -5,11 +5,13 @@ import FlexBetween from "components/FlexBetween";
 import LiveBadge from "homepage/components/LiveBadge";
 import { Traffic, Email, PointOfSale, PersonAdd } from "@mui/icons-material";
 import StatBox from "components/StatBox";
-import LineChart from "../../components/ThreeBarchart"; 
+import LineChart from "../../components/ThreeBarchart";
 import BarChart from "../../components/Barchart";
 import Piechart from "../../components/Piechart";
 import PostCard from "../../components/PostCard";
 import Cookies from "js-cookie"; // Import the cookie library
+import { FaUsers, FaUserCheck, FaCalendarAlt, FaCommentDots } from "react-icons/fa";
+
 
 const DashboardPage = () => {
   const theme = useTheme();
@@ -71,6 +73,11 @@ const DashboardPage = () => {
     return <Typography>Loading data...</Typography>;
   }
 
+  const iconStyle = {
+    color: theme.palette.secondary[300],
+    fontSize: "24px"
+  };
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -124,7 +131,7 @@ const DashboardPage = () => {
           value={data.Followers}
           increase={data.Average.followers}
           description="Since last month"
-          icon={<Email sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+          icon={<FaUsers style={iconStyle} />}
         />
 
         <StatBox
@@ -132,7 +139,7 @@ const DashboardPage = () => {
           value={data.Following}
           increase={data.Average.followings}
           description="Since last month"
-          icon={<PointOfSale sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+          icon={<FaUserCheck style={iconStyle} />}
         />
 
         <StatBox
@@ -140,7 +147,7 @@ const DashboardPage = () => {
           value={data.Tweets}
           increase={data.Average.tweets}
           description="Since last month"
-          icon={<PersonAdd sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+          icon={<FaCommentDots style={iconStyle} />}
         />
 
         <StatBox
@@ -148,37 +155,37 @@ const DashboardPage = () => {
           value={data.UserCreated}
           increase=""
           description=""
-          icon={<Traffic sx={{ color: theme.palette.secondary[300], fontSize: "26px" }} />}
+          icon={<FaCalendarAlt style={iconStyle} />}
         />
 
         {/* Post Table */}
-       <Box
-  gridColumn="span 4"
-  gridRow="span 5"
-  backgroundColor={theme.palette.background.alt}
-  p="1rem"
-  borderRadius="0.55rem"
-  sx={{
-   
-    overflowY: "auto",  // Vertical scrolling
-   
-  }}
->
-  <Header title="All Posts" subtitle="Schedule posts" />
-  {posts.length > 0 ? (
-    posts.map((post, index) => (
-      <PostCard
-        key={index}
-        content={post.content}
-        scheduledTime={post.scheduledTime}
-        status={post.status}
-        platform={post.platform}
-      />
-    ))
-  ) : (
-    <Typography>No posts available.</Typography>
-  )}
-</Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 5"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+          sx={{
+
+            overflowY: "auto",  // Vertical scrolling
+
+          }}
+        >
+          <Header title="All Posts" subtitle="Schedule posts" />
+          {posts.length > 0 ? (
+            posts.map((post, index) => (
+              <PostCard
+                key={index}
+                content={post.content}
+                scheduledTime={post.scheduledTime}
+                status={post.status}
+                platform={post.platform}
+              />
+            ))
+          ) : (
+            <Typography>No posts available.</Typography>
+          )}
+        </Box>
 
         {/* Charts */}
         <Box
