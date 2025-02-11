@@ -33,15 +33,10 @@ const navItems = [
   { text: "Dashboard", icon: <HomeOutlined /> },
   { text: "Analytics", icon: <DataUsageOutlined /> },
   { text: "Calender", icon: <CalendarMonth /> },
-<<<<<<< HEAD
-  { text: "Schedule", icon: <ReceiptLongOutlined /> },
-  { text: "Account", icon: <AccountCircleOutlined /> },
-=======
   {
     text: "Schedule", icon: <RiCalendarScheduleLine style={{ fontSize: "20px" }} />
   },
   { text: "Account", icon: <AccountCircleOutlined />, },
->>>>>>> ad44bc8 (changed icon)
   { text: "Competitor-Insight  ", icon: <TrendingUpOutlined /> },
   { text: "Sync-TelegramBot", icon: <Telegram /> },
 ];
