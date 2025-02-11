@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery, Typography } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import { DownloadOutlined } from "@mui/icons-material";
 import StatBox from "components/StatBox";
 import TelegramPost from "../../components/sentimentPost";
 import Cookies from "js-cookie";
@@ -77,6 +76,18 @@ const Analytics = () => {
 
     fetchPostedPosts();
   }, []);
+
+  const getSentimentScore = () => {
+    if (childData.sentimentCategory === "positive") return 90;
+    if (childData.sentimentCategory === "negative") return 10;
+    return 50; // Neutral
+  };
+
+  const getProgressColor = () => {
+    if (childData.sentimentCategory === "positive") return "success";
+    if (childData.sentimentCategory === "negative") return "error";
+    return "warning"; // Neutral
+  };
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -161,7 +172,7 @@ const Analytics = () => {
           </ul>
         </Box>
 
-        {/* Sentiment Chart */}
+        {/* Sentiment Analysis Progress Bar */}
         <Box
           gridColumn="span 6"
           gridRow="span 1"
@@ -170,9 +181,19 @@ const Analytics = () => {
           borderRadius="0.55rem"
         >
           <StatBox title="Overall Sentiment Analysis of posts" />
-          <Typography variant="body1" color="textSecondary">
-           
-          </Typography>
+          <Box mt="1rem">
+            <Typography variant="body1" gutterBottom>
+              Sentiment Category: {childData.sentimentCategory || "Neutral"}
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={getSentimentScore()}
+              color={getProgressColor()}
+            />
+            <Typography variant="body2" align="right">
+              {getSentimentScore()}%
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
