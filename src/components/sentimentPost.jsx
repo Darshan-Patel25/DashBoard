@@ -1,7 +1,44 @@
 import { Card, CardContent, Avatar, Typography, Box, Button } from "@mui/material";
 import { Twitter } from "@mui/icons-material";
+import Cookies from "js-cookie";
 
-export default function SentimentPost({ text, description, date, onAdd }) {
+export default function SentimentPost({ text, description, date, postId }) {
+  const analyzePost = async () => {
+    if (!postId) {
+      alert("Post ID not found. Please try again.");
+      return;
+    }
+
+    try {
+      const token = Cookies.get("accessToken");
+
+      if (!token) {
+        alert("Access token not found in cookies.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:8080/api/comments/sentiment-comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tweetId:postId }),
+      });
+
+      if (!response.ok) {
+        alert(`Failed to analyze post. Status: ${response.status}`);
+        return;
+      }
+
+      const data = await response.json();
+      alert(`Sentiment Category: ${data.sentimentCategory}`);
+    } catch (error) {
+      console.error("Error analyzing post:", error);
+      alert("Error analyzing post. Please try again.");
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -29,8 +66,6 @@ export default function SentimentPost({ text, description, date, onAdd }) {
         </Typography>
         <Typography variant="body1" color="grey.400" mt={1}>
           {description}
-
-          
         </Typography>
       </CardContent>
 
@@ -39,9 +74,9 @@ export default function SentimentPost({ text, description, date, onAdd }) {
         {date}
       </Typography>
 
-      {/* Add Button on the right */}
-      <Button variant="contained" color="primary" onClick={onAdd}>
-      Analyse Post
+      {/* Analyze Button on the right */}
+      <Button variant="contained" color="primary" onClick={analyzePost}>
+        Analyze Post
       </Button>
     </Card>
   );
