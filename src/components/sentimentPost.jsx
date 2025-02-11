@@ -2,7 +2,7 @@ import { Card, CardContent, Avatar, Typography, Box, Button } from "@mui/materia
 import { Twitter } from "@mui/icons-material";
 import Cookies from "js-cookie";
 
-export default function SentimentPost({ text, description, date, postId }) {
+export default function SentimentPost({ onResponse,text, description, date, postId }) {
   const analyzePost = async () => {
     if (!postId) {
       alert("Post ID not found. Please try again.");
@@ -32,6 +32,7 @@ export default function SentimentPost({ text, description, date, postId }) {
       }
 
       const data = await response.json();
+      onResponse(data);
       alert(`Sentiment Category: ${data.sentimentCategory}`);
     } catch (error) {
       console.error("Error analyzing post:", error);

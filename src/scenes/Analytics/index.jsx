@@ -1,23 +1,52 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery, Typography } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import { DownloadOutlined } from "@mui/icons-material";
 import StatBox from "components/StatBox";
 import TelegramPost from "../../components/sentimentPost";
-import LineChart from "components/Linechart";
-import SentimentChart from "../../components/sentimentchart";
 import Cookies from "js-cookie";
+import EngagementBarChart from "components/EngagementGraph";
+
+const convertMetric = (value) => {
+  if (typeof value === "string") {
+    if (value.endsWith("K")) {
+      return parseFloat(value) * 1000;
+    } else if (value.endsWith("M")) {
+      return parseFloat(value) * 1000000;
+    }
+  }
+  return parseFloat(value);
+};
 
 const Analytics = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const [postedPosts, setPostedPosts] = useState([]);
+  const [childData, setChildData] = useState({});
+  const [engagementMetrics, setEngagementMetrics] = useState({
+    likes: 0,
+    replies: 0,
+    views: 0,
+    reposts: 0,
+    bookmarks: 0,
+  });
+
+  const handleChildResponse = (data) => {
+    setChildData(data);
+    if (data.engagementMetrics) {
+      setEngagementMetrics({
+        likes: convertMetric(data.engagementMetrics.likes),
+        replies: convertMetric(data.engagementMetrics.reply),
+        views: convertMetric(data.engagementMetrics.views),
+        reposts: convertMetric(data.engagementMetrics.reposts),
+        bookmarks: convertMetric(data.engagementMetrics.bookmarks),
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchPostedPosts = async () => {
       try {
-        // Get access token from cookies
         const token = Cookies.get("accessToken");
 
         if (!token) {
@@ -25,12 +54,11 @@ const Analytics = () => {
           return;
         }
 
-        // Fetch posted posts
         const response = await fetch("http://localhost:8080/api/schedule/show-posted-post", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -49,76 +77,22 @@ const Analytics = () => {
     fetchPostedPosts();
   }, []);
 
-  const handlePdfDownload = () => {
-    fetch(`http://localhost:8080/generate-pdf`)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `Report.pdf`;
-        a.click();
-      })
-      .catch((err) => console.error("Download Error:", err));
+  const getSentimentScore = () => {
+    if (childData.sentimentCategory === "positive") return 90;
+    if (childData.sentimentCategory === "negative") return 10;
+    return 50; // Neutral
   };
 
-  const handleExcelDownload = () => {
-    fetch("http://localhost:8080/api/user/generate-excel", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "SocialMediaDataWithCharts.xlsx";
-        a.click();
-        window.URL.revokeObjectURL(url); // Cleanup
-      })
-      .catch((err) => console.error("Download Error:", err));
-  }
+  const getProgressColor = () => {
+    if (childData.sentimentCategory === "positive") return "success";
+    if (childData.sentimentCategory === "negative") return "error";
+    return "warning"; // Neutral
+  };
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title="Sentiment Analytics" subtitle="Welcome to the analytics page" />
-        <Box display="flex" gap="10px">
-          <Button
-            sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-            onClick={() => handlePdfDownload()}
-          >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download PDF
-          </Button>
-
-          <Button
-            sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-            onClick={() => handleExcelDownload()}
-          >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Excel
-          </Button>
-        </Box>
       </FlexBetween>
 
       <Box
@@ -138,10 +112,7 @@ const Analytics = () => {
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
-          sx={{
-            maxHeight: "320px",
-            overflowY: "auto",
-          }}
+          sx={{ maxHeight: "320px", overflowY: "auto" }}
         >
           <StatBox title="Posted Posts" />
           {postedPosts.length > 0 ? (
@@ -153,6 +124,7 @@ const Analytics = () => {
                 date={post.scheduledTime || "N/A"}
                 status={post.status}
                 postId={post.postId}
+                onResponse={(response) => handleChildResponse(response)}
               />
             ))
           ) : (
@@ -160,7 +132,7 @@ const Analytics = () => {
           )}
         </Box>
 
-        {/* Line Chart */}
+        {/* Engagement Metrics Bar Chart */}
         <Box
           gridColumn="span 6"
           gridRow="span 3"
@@ -168,7 +140,13 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <LineChart />
+          <EngagementBarChart
+            likes={engagementMetrics.likes}
+            replies={engagementMetrics.replies}
+            views={engagementMetrics.views}
+            reposts={engagementMetrics.reposts}
+            bookmarks={engagementMetrics.bookmarks}
+          />
         </Box>
 
         {/* Suggestions */}
@@ -179,7 +157,7 @@ const Analytics = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <StatBox title="Suggestions" />
+          <StatBox title="Summary of all comments" />
           <ul
             style={{
               padding: "0",
@@ -190,13 +168,11 @@ const Analytics = () => {
               fontWeight: "bold",
             }}
           >
-            {["LataMangeshkar", "ViratKohli"].map((hashtag, index) => (
-              <li key={index}>{hashtag}</li>
-            ))}
+            <p>{childData.sentimentAnalysis || "No sentiment analysis available."}</p>
           </ul>
         </Box>
 
-        {/* Sentiment Chart */}
+        {/* Sentiment Analysis Progress Bar */}
         <Box
           gridColumn="span 6"
           gridRow="span 1"
@@ -205,7 +181,19 @@ const Analytics = () => {
           borderRadius="0.55rem"
         >
           <StatBox title="Overall Sentiment Analysis of posts" />
-          <SentimentChart />
+          <Box mt="1rem">
+            <Typography variant="body1" gutterBottom>
+              Sentiment Category: {childData.sentimentCategory || "Neutral"}
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={getSentimentScore()}
+              color={getProgressColor()}
+            />
+            <Typography variant="body2" align="right">
+              {getSentimentScore()}%
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
