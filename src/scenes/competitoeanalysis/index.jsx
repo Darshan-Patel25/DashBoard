@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import BarLabel from '../../components/ThreeBarchart';
+import BarLabel from '../../components/BarGraph';
 import {
   Box,
   Typography,
@@ -11,16 +11,10 @@ import {
   Select,
   TextField,
   MenuItem,
+  Grid,
+  Card,
+  CardContent,
 } from '@mui/material';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
 import Header from 'components/Header';
 
 const ConnectPage = () => {
@@ -29,9 +23,22 @@ const ConnectPage = () => {
   const [selectedCompetitor, setSelectedCompetitor] = useState('');
   const [graphData, setGraphData] = useState([]);
 
+  const [followers, setFollowers] = useState(0);
+  const [followings, setFollowings] = useState(0);
+  const [tweets, setTweets] = useState(0);
+
   useEffect(() => {
     fetchCompetitors();
   }, []);
+
+  useEffect(() => {
+    if (graphData.length > 0) {
+      const latestData = graphData[graphData.length - 1];
+      setFollowers(latestData.followers);
+      setFollowings(latestData.followings);
+      setTweets(latestData.tweets);
+    }
+  }, [graphData]);
 
   // Fetch competitors from the server
   const fetchCompetitors = async () => {
@@ -138,7 +145,7 @@ const ConnectPage = () => {
         <TextField
           label="Add New Page"
           value={newPage}
-          style={{width:"70rem"}}
+          style={{ width: "70rem" }}
           onChange={(e) => setNewPage(e.target.value)}
         />
         <Button
@@ -178,12 +185,49 @@ const ConnectPage = () => {
       <Typography variant="h5" mt={4} mb={2}>
         Engagement Trends
       </Typography>
-
+          
       {graphData.length > 0 ? (
+        <>
+         <Grid container spacing={3} mt={4}>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Followers</Typography>
+              <Typography variant="h4" color="primary">
+                {followers}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Followings</Typography>
+              <Typography variant="h4" color="secondary">
+                {followings}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Tweets</Typography>
+              <Typography variant="h4" color="error">
+                {tweets}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
         <BarLabel graphData={graphData} />
+        </>
       ) : (
         <Typography>No data available for engagement trends.</Typography>
       )}
+
+      {/* Followers, Followings, and Tweets Display */}
+     
     </Box>
   );
 };
