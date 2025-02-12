@@ -18,6 +18,19 @@ import {
 import Header from 'components/Header';
 
 const ConnectPage = () => {
+
+  const convertMetric = (value) => {
+    if (typeof value === "string") {
+      value = value.replace(/,/g, ""); // Remove commas
+      if (value.endsWith("K")) {
+        return parseFloat(value) * 1000;
+      } else if (value.endsWith("M")) {
+        return parseFloat(value) * 1000000;
+      }
+    }
+    return parseFloat(value);
+  };
+
   const [newPage, setNewPage] = useState('');
   const [competitors, setCompetitors] = useState([]);
   const [selectedCompetitor, setSelectedCompetitor] = useState('');
@@ -120,9 +133,9 @@ const ConnectPage = () => {
       if (response.ok) {
         const data = result.Graph.map((item) => ({
           date: item.date,
-          followers: parseInt(item.followers) || 0,
-          followings: parseInt(item.followings) || 0,
-          tweets: parseInt(item.tweets) || 0,
+          followers: parseInt(convertMetric(item.followers)) || 0,
+          followings: parseInt(convertMetric(item.followings)) || 0,
+          tweets: parseInt(convertMetric(item.tweets)) || 0,
         }));
         setGraphData(data);
       } else {
@@ -185,49 +198,49 @@ const ConnectPage = () => {
       <Typography variant="h5" mt={4} mb={2}>
         Engagement Trends
       </Typography>
-          
+
       {graphData.length > 0 ? (
         <>
-         <Grid container spacing={3} mt={4}>
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Followers</Typography>
-              <Typography variant="h4" color="primary">
-                {followers}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Followings</Typography>
-              <Typography variant="h4" color="secondary">
-                {followings}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Tweets</Typography>
-              <Typography variant="h4" color="error">
-                {tweets}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-        <BarLabel graphData={graphData} />
+          <Grid container spacing={3} mt={4}>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Followers</Typography>
+                  <Typography variant="h4" color="primary">
+                    {followers}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Followings</Typography>
+                  <Typography variant="h4" color="secondary">
+                    {followings}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Tweets</Typography>
+                  <Typography variant="h4" color="error">
+                    {tweets}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+          <BarLabel graphData={graphData} />
         </>
       ) : (
         <Typography>No data available for engagement trends.</Typography>
       )}
 
       {/* Followers, Followings, and Tweets Display */}
-     
+
     </Box>
   );
 };

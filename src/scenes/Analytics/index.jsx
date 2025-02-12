@@ -10,6 +10,7 @@ import EngagementBarChart from "components/EngagementGraph";
 
 const convertMetric = (value) => {
   if (typeof value === "string") {
+    value = value.replace(/,/g, ""); // Remove commas
     if (value.endsWith("K")) {
       return parseFloat(value) * 1000;
     } else if (value.endsWith("M")) {
@@ -203,7 +204,7 @@ const Analytics = () => {
           gridColumn="span 6"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
-          p="1rem"
+          p="0.5rem"
           borderRadius="0.55rem"
         >
           <StatBox title="Graph" />

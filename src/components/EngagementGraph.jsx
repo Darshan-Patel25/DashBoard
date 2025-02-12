@@ -13,7 +13,7 @@ const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
 
   return (
     <div className="overflow-x-auto w-full">
-      <div className="min-w-[600px]">
+      <div className="min-w-[500px]">
         <BarChart
           xAxis={[
             {
@@ -22,7 +22,6 @@ const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
               label: "Engagement Metrics",
             },
           ]}
-          yAxis={[{ label: "Count" }]}
           series={[
             {
               id: 1,
@@ -30,8 +29,8 @@ const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
               data: engagementData.map((entry) => entry.count),
             },
           ]}
-          width={550}
-          height={500}
+          width={570}
+          height={450}
         />
       </div>
     </div>
