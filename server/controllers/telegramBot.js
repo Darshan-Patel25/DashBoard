@@ -69,22 +69,7 @@ bot.on("text", async (ctx) => {
       time: scheduledTime,
     };
 
-    const user = await User.findOne({
-      chatId: user.telegramId,
-    });
-    console.log("user", user);
-    // Handle the case when the user is not found
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found.",
-        success: false,
-      });
-    }
 
-    // Find posts based on the user's associated chatId
-    const posts = await ScheduledPost.find({
-      email: user.email
-    });
 
     try {
       // Create a scheduled post with source as 'telegram_bot'
