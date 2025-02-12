@@ -23,6 +23,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Cookies from "js-cookie";
+import { url } from "globalbackendurl";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
