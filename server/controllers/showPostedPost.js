@@ -2,6 +2,7 @@ const ScheduledPost = require("../models/schedulePost");
 const User = require("../models/user");
 exports.getPostedPosts = async (req, res) => {
   try {
+    const userId = req.userId;
     // Fetch all posts with status "posted" for the user
     const user = await User.findOne({ _id: req.userId });
     console.log("user", user);
@@ -15,7 +16,7 @@ exports.getPostedPosts = async (req, res) => {
 
     // Find posts based on the user's associated chatId
     const posts = await ScheduledPost.find({
-      chatId: user.telegramId, // Assuming 'telegramId' stores the chatId in the User schema
+      userId: userId,
       status: "posted",
     });
 
