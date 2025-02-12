@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import photo from "../assets/signin_img.png";
-
+import { url } from "globalbackendurl";
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/user/register", // Backend API
+        `${url}/api/user/register`, // Backend API
         {
           name: username,
           email: email,

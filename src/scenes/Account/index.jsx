@@ -13,7 +13,7 @@ import B6 from "assets/b6.jpeg"
 import B7 from "assets/b7.jpeg"
 import B8 from "assets/b8.jpeg"
 
-
+import { url } from "globalbackendurl";
 
 const socialNetworks = [
   { name: 'Twitter', icon: <img src={B2} alt="Facebook" style={{ width: 70, height: 70, borderRadius: '50%' }} />, buttons: ['Connect Profile'], checkbox: 'Follow us' },
@@ -65,7 +65,7 @@ const ConnectAccount = () => {
                 sx={{ mt: 1 }}
                 onClick={() => {
                   if (network.name === 'Twitter' && btn === 'Connect Profile') {
-                    window.location.href = 'http://localhost:8080/link-twitter';
+                    window.location.href = `${url}/link-twitter`;
                     // window.open('http://localhost:8080/link-twitter')
                   }
                 }}

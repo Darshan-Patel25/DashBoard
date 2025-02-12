@@ -28,7 +28,7 @@ const Calender = () => {
               Authorization: `Bearer ${token}`,
             },
           }),
-          fetch("http://localhost:8080/api/comments/getremainder", {
+          fetch(`${url}/api/comments/getremainder`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const Calender = () => {
   // Save to backend
   try {
     const token = Cookie.get("accessToken");
-    const response = await fetch("http://localhost:8080/api/comments/remainder", {
+    const response = await fetch(`${url}/api/comments/remainder`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

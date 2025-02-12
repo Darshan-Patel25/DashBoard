@@ -26,11 +26,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/report", async (req, res) => {
   try {
     // Fetch data from external API
-    const response = await axios.get("http://localhost:8080/api/comments/stas");
+    const response = await axios.get(`${url}/api/comments/stas`);
 
     // Fetch trending hashtags from the API
     const hashtagsResponse = await fetch(
-      "http://localhost:8080/api/comments/trending-hashtags"
+      `${url}/api/comments/trending-hashtags`
     );
     const trendingHashtagsData = await hashtagsResponse.json();
 
@@ -68,7 +68,7 @@ app.get("/generate-pdf", async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    await page.goto(`http://localhost:8080/report`, {
+    await page.goto(`${url}/report`, {
       waitUntil: "networkidle0",
     });
 

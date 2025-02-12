@@ -42,7 +42,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/api/user/getUserDetails", {
+        const response = await fetch(`${url}/api/user/getUserDetails`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,

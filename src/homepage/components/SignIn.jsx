@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import photo from "../assets/signin_img.png";
-
+import { url } from "globalbackendurl";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/user/login", // Backend API
+        `${url}/api/user/login`, // Backend API
         {
           email: email,
           password: password,
