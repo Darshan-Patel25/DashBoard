@@ -69,6 +69,23 @@ bot.on("text", async (ctx) => {
       time: scheduledTime,
     };
 
+    const user = await User.findOne({
+      chatId: user.telegramId,
+    });
+    console.log("user", user);
+    // Handle the case when the user is not found
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+        success: false,
+      });
+    }
+
+    // Find posts based on the user's associated chatId
+    const posts = await ScheduledPost.find({
+      email: user.email
+    });
+
     try {
       // Create a scheduled post with source as 'telegram_bot'
       const newPost = new ScheduledPost({
@@ -98,15 +115,15 @@ bot.on("text", async (ctx) => {
       await user.save();
 
       // Schedule the post
-      schedule.scheduleJob(scheduledTime, async () => {
-        await bot.telegram.sendMessage(
-          post.chatId,
-          `📢 Scheduled Post: "${post.content}" at ${post.time}`
-        );
-        console.log("🕒 Scheduled Post Sent:", post);
-        savedPost.status = "posted";
-        await savedPost.save();
-      });
+      // schedule.scheduleJob(scheduledTime, async () => {
+      //   await bot.telegram.sendMessage(
+      //     post.chatId,
+      //     `📢 Scheduled Post: "${post.content}" at ${post.time}`
+      //   );
+      //   console.log("🕒 Scheduled Post Sent:", post);
+      //   savedPost.status = "posted";
+      //   await savedPost.save();
+      // });
 
       ctx.reply(
         `✅ Your post "${post.content}" has been scheduled for ${post.time}.`

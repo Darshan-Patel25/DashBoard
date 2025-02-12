@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const fs = require("fs");
 const puppeteer = require("puppeteer");
-// const telegrambot = require("./controllers/telegramBot");
+const telegrambot = require("./controllers/telegramBot");
 const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
@@ -110,7 +110,7 @@ app.get("/generate-pdf", async (req, res) => {
 app.use(
   cors({
     credentials: true,
-    methods: "GET, POST",
+    methods: "GET, POST, PUT",
     origin: process.env.FRONTEND_URL,
     allowedHeaders: "Content-Type,Authorization",
   })
@@ -170,10 +170,11 @@ app.get("/callback", async function (req, res) {
     await user.save(); // Save the user with updated Twitter account info
 
     // Respond with success
-    res.json({
-      success: true,
-      message: "Twitter account linked successfully",
-    });
+    // res.json({
+    //   success: true,
+    //   message: "Twitter account linked successfully",
+    // });
+    res.redirect("http://localhost:3000/dashboard")
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });

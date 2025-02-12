@@ -1,27 +1,31 @@
 const schedulePost = require("../models/schedulePost");
+const user = require("../models/user");
 
 exports.scheduledmessages = async (req, res) => {
   try {
-    const id = req.userId; // You have userId in the request after authentication
-    console.log(id);
+    const id = req.userId; // Extracted userId from the request
 
-    if (!id) {
-      return res.status(400).json({
+    // Fetch user and populate the 'chatId' field (assuming it's referenced)
+    const u = await user.findOne({ _id: id }).populate("scheduledPosts").exec();
+
+    if (!u) {
+      return res.status(404).json({
         message: "User not found",
-        success: false, // Fix the typo from "sucess" to "success"
+        success: false,
       });
     }
 
-    // Use await to handle the asynchronous operation
-    const posts = await schedulePost.find({ userId: id });
 
-    // Return the posts as a response
+    // Fetch scheduled posts using populated chatId
+    // const posts = await schedulePost.find({ chatId: u.chatId._id });
+
     return res.status(200).json({
-      posts, // Renamed variable to match the response object
+      success: true,
+      posts: u.scheduledPosts,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.error("Error fetching scheduled messages:", error);
+    return res.status(500).json({
       message: "Internal server error",
       success: false,
     });

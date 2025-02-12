@@ -65,8 +65,8 @@ const ConnectAccount = () => {
                 sx={{ mt: 1 }}
                 onClick={() => {
                   if (network.name === 'Twitter' && btn === 'Connect Profile') {
-                    // window.location.href = 'http://localhost:8080/link-twitter';
-                    window.open('http://localhost:8080/link-twitter')
+                    window.location.href = 'http://localhost:8080/link-twitter';
+                    // window.open('http://localhost:8080/link-twitter')
                   }
                 }}
 

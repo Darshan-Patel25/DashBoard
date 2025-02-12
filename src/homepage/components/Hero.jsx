@@ -3,7 +3,7 @@ import facebookIcon from "../assets/icon_faceboob.webp";
 import twitterIcon from "../assets/icon_x.png";
 import instagramIcon from "../assets/icon_insta.webp";
 import linkedinIcon from "../assets/icon_linkedin.png";
-import dashboardImage from "../assets/cvmui.jpeg"
+import dashboardImage from "../assets/photo.png"
 const Hero = () => {
   const iconMap = {
     facebook: facebookIcon,
@@ -36,7 +36,7 @@ const Hero = () => {
         <img
           src={dashboardImage}
           alt="TrendTide Dashboard"
-          className="max-w-[55%] mx-auto rounded-lg shadow-xl"
+          className="w-[55%] mx-auto rounded-lg shadow-xl w"
         />
       </div>
 
@@ -45,17 +45,16 @@ const Hero = () => {
         {Object.keys(iconMap).map((platform) => (
           <div
             key={platform}
-            className={`absolute w-12 h-12 bg-white rounded-lg shadow-lg p-0 ${
-              platform === "facebook"
-                ? "top-[20%] left-[10%]"
-                : platform === "twitter"
+            className={`absolute w-12 h-12 bg-white rounded-lg shadow-lg p-0 ${platform === "facebook"
+              ? "top-[20%] left-[10%]"
+              : platform === "twitter"
                 ? "top-[15%] right-[15%]"
                 : platform === "instagram"
-                ? "bottom-[30%] left-[15%]"
-                : platform === "linkedin"
-                ? "bottom-[25%] right-[10%]"
-                : ""
-            }`}
+                  ? "bottom-[30%] left-[15%]"
+                  : platform === "linkedin"
+                    ? "bottom-[25%] right-[10%]"
+                    : ""
+              }`}
           >
             <img
               src={iconMap[platform]}
