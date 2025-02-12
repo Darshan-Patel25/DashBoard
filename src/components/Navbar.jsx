@@ -70,7 +70,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     try {
       const token = Cookies.get("accessToken");
 
-      const response = await fetch("http://localhost:8080/api/user/logout", {
+      const response = await fetch(`${url}/api/user/logout`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,

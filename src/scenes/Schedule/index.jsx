@@ -6,6 +6,7 @@ import { Facebook, Twitter, FileCopy, Image, Mood, LocationOn } from "@mui/icons
 import Header from "../../components/Header";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { url } from "globalbackendurl";
 
 export default function Schedule() {
   const [post, setPost] = useState("");
@@ -18,7 +19,7 @@ export default function Schedule() {
   useEffect(() => {
     const fetchTrendingHashtags = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/comments/trending-hashtags");
+        const response = await axios.get(`${url}/api/comments/trending-hashtags`);
         setTrendingHashtags(response.data.hashtags || []);
       } catch (error) {
         console.error("Error fetching trending hashtags:", error);
@@ -45,7 +46,7 @@ export default function Schedule() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/schedule/schedule-post", {
+      const response = await fetch(`${url}/api/schedule/schedule-post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export default function Schedule() {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/api/comments/correct", {
+      const response = await fetch(`${url}/api/comments/correct`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

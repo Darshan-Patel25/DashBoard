@@ -11,6 +11,7 @@ import Piechart from "../../components/Piechart";
 import PostCard from "../../components/PostCard";
 import Cookies from "js-cookie"; // Import the cookie library
 import { FaUsers, FaUserCheck, FaCalendarAlt, FaCommentDots } from "react-icons/fa";
+import { url } from "globalbackendurl";
 
 
 const DashboardPage = () => {
@@ -32,7 +33,7 @@ const DashboardPage = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/comments/stas", {
+        const response = await fetch(`${url}/api/comments/stas`, {
           headers: {
             Authorization: `Bearer ${token}`, // Attach token to the request
           },
@@ -46,7 +47,7 @@ const DashboardPage = () => {
 
     const fetchPosts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/schedule/showallpost", {
+        const response = await fetch(`${url}/api/schedule/showallpost`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // Attach token to the request
@@ -99,7 +100,7 @@ const DashboardPage = () => {
             padding: "10px 20px",
           }}
           onClick={() => {
-            fetch("http://localhost:8080/generate-pdf")
+            fetch(`${url}/generate-pdf`)
               .then((response) => response.blob())
               .then((blob) => {
                 const url = window.URL.createObjectURL(blob);

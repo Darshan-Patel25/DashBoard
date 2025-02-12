@@ -4,7 +4,7 @@ import { Box, Button, Typography, TextField } from "@mui/material";
 import { Telegram } from "@mui/icons-material";
 import Cookies from "js-cookie"; // Import js-cookie
 import TelegramPost from "../../components/telegrampost";
-
+import { url } from "globalbackendurl";
 const SyncTelegramBot = () => {
   const [telegramId, setTelegramId] = useState("");
   const [telegramPosts, setTelegramPosts] = useState([]);
@@ -14,7 +14,7 @@ const SyncTelegramBot = () => {
       const token = Cookies.get("accessToken"); // Get the token from the cookie
       if (!token) throw new Error("Access token not found");
 
-      const response = await fetch("http://localhost:8080/api/schedule/get-post-telegram-bot", {
+      const response = await fetch(`${url}/api/schedule/get-post-telegram-bot`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const SyncTelegramBot = () => {
       const token = Cookies.get("accessToken");
       if (!token) throw new Error("Access token not found");
 
-      const response = await fetch("http://localhost:8080/api/user/teleid", {
+      const response = await fetch(`${url}/api/user/teleid`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import TelegramPost from "../../components/sentimentPost";
 import Cookies from "js-cookie";
 import { DownloadOutlined } from "@mui/icons-material";
 import EngagementBarChart from "components/EngagementGraph";
+import { url } from "globalbackendurl";
 
 const convertMetric = (value) => {
   if (typeof value === "string") {
@@ -47,7 +48,7 @@ const Analytics = () => {
   };
 
   const handlePdfDownload = () => {
-    fetch(`http://localhost:8080/generate-pdf`)
+    fetch(`${url}/generate-pdf`)
       .then((response) => response.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -59,7 +60,7 @@ const Analytics = () => {
       .catch((err) => console.error("Download Error:", err));
   };
   const handleExcelDownload = () => {
-    fetch("http://localhost:8080/api/user/generate-excel", {
+    fetch(`${url}/api/user/generate-excel`, {
       method: "GET",
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -92,7 +93,7 @@ const Analytics = () => {
           return;
         }
 
-        const response = await fetch("http://localhost:8080/api/schedule/show-posted-post", {
+        const response = await fetch(`${url}/api/schedule/show-posted-post`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import { Card, CardContent, Avatar, Typography, Box, Button } from "@mui/material";
 import { Twitter } from "@mui/icons-material";
 import Cookies from "js-cookie";
+import { url } from "globalbackendurl";
 
 export default function SentimentPost({ onResponse,text, description, date, postId }) {
   const analyzePost = async () => {
@@ -17,7 +18,7 @@ export default function SentimentPost({ onResponse,text, description, date, post
         return;
       }
 
-      const response = await fetch("http://localhost:8080/api/comments/sentiment-comments", {
+      const response = await fetch(`${url}/api/comments/sentiment-comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

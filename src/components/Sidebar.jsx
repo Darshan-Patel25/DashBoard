@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import { url } from "globalbackendurl";
 
 const navItems = [
   { text: "Dashboard", icon: <HomeOutlined /> },
@@ -65,7 +66,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobile }) 
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/user/getuserdetails", {
+      const response = await fetch(`${url}/api/user/getuserdetails`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,

@@ -8,6 +8,7 @@ import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import { tokensDark as tokens } from "../../theme";
 import Cookie from "js-cookie";
+import { url } from "globalbackendurl";
 
 const Calender = () => {
   const colors = tokens;
@@ -20,7 +21,7 @@ const Calender = () => {
 
       try {
         const [postResponse, reminderResponse] = await Promise.all([
-          fetch("http://localhost:8080/api/schedule/showallpost", {
+          fetch(`${url}/api/schedule/showallpost`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

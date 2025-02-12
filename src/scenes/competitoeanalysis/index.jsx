@@ -16,6 +16,7 @@ import {
   CardContent,
 } from '@mui/material';
 import Header from 'components/Header';
+import { url } from 'globalbackendurl';
 
 const ConnectPage = () => {
 
@@ -62,7 +63,7 @@ const ConnectPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/comments/getcompanies', {
+      const response = await fetch(`${url}/api/comments/getcompanies`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -96,7 +97,7 @@ const ConnectPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/comments/competitor-analysis', {
+      const response = await fetch(`${url}/api/comments/competitor-analysis`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ const ConnectPage = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/comments/stas?username=${selectedCompetitor}`);
+      const response = await fetch(`${url}/api/comments/stas?username=${selectedCompetitor}`);
       const result = await response.json();
 
       if (response.ok) {
