@@ -16,23 +16,18 @@ const Footer = () => {
           <nav>
             <ul className="space-y-2">
               <li>
-                <a href="#how" className="text-gray-400 hover:text-white">
-                  How it works
+                <a href="/dashboard" className="text-gray-400 hover:text-white">
+                  Dashboard
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-gray-400 hover:text-white">
+                <a href="/analytics" className="text-gray-400 hover:text-white">
+                  Analytics
+                </a>
+              </li>
+              <li>
+                <a href="/aboutus" className="text-gray-400 hover:text-white">
                   About Us
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="text-gray-400 hover:text-white">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="text-gray-400 hover:text-white">
-                  Pricing
                 </a>
               </li>
             </ul>
