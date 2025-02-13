@@ -91,7 +91,7 @@ cron.schedule("*/1 * * * *", async () => {
         console.log(`Processing post for user: ${post.userId}`);
 
         // Fetch user from the database
-        const user = await User.findOne({ email: "rajukani100@gmail.com" });
+        const user = await User.findOne({ email: process.env.CALLBACK_MAIL });
 
         if (!user || !user.socialAccounts?.twitter?.accessToken) {
           console.error(
