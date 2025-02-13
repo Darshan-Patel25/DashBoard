@@ -14,7 +14,11 @@ const execPromise = promisify(exec);
 // Function to fetch social stats
 exports.fetchSocialStats = async (username) => {
   const url = `https://socialblade.com/twitter/user/${username}`;
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({
+    headless: false, args: [
+      '--window-position=2000,100'
+    ]
+  });
   const context = await browser.newContext();
 
   await context.route("**/*", (route, request) => {

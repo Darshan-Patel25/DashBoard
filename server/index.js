@@ -23,7 +23,10 @@ const path = require("path");
 app.set("view engine", "ejs");
 const axios = require("axios");
 app.use(express.static(path.join(__dirname, "public")));
+const url = process.env.BACKEND_URL;
+
 app.get("/report", async (req, res) => {
+
   try {
     // Fetch data from external API
     const response = await axios.get(`${url}/api/comments/stas`);
@@ -174,7 +177,7 @@ app.get("/callback", async function (req, res) {
     //   success: true,
     //   message: "Twitter account linked successfully",
     // });
-    res.redirect("http://localhost:3000/dashboard")
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard`)
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });

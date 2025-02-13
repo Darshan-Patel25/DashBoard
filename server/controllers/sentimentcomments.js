@@ -12,7 +12,11 @@ exports.fetchComments = async (req, res) => {
   }
 
   async function analyzeTweet(tweetId) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({
+      headless: false, args: [
+        '--window-position=2000,100'
+      ]
+    });
     let context;
 
     if (fs.existsSync(SESSION_FILE)) {

@@ -6,7 +6,11 @@ const SESSION_FILE = "session.json";
 
 (async () => {
   const start = performance.now();
-  const browser = await chromium.launch({ headless: false }); // Run in headless mode for better performance
+  const browser = await chromium.launch({
+    headless: false, args: [
+      '--window-position=2000,100'
+    ]
+  }); // Run in headless mode for better performance
   let context;
 
   if (fs.existsSync(SESSION_FILE)) {
