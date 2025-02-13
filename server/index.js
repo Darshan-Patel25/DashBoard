@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const fs = require("fs");
 const puppeteer = require("puppeteer");
-const telegrambot = require("./controllers/telegramBot");
+// const telegrambot = require("./controllers/telegramBot");
 const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, "public")));
 const url = process.env.BACKEND_URL;
 
 app.get("/report", async (req, res) => {
-
   try {
     // Fetch data from external API
     const response = await axios.get(`${url}/api/comments/stas`);
@@ -156,7 +155,10 @@ app.get("/callback", async function (req, res) {
     }
 
     // If you want to identify the user by their email (JWT could be used here)
-    let email = "rajukani100@gmail.com"; // Get from JWT or session cookie
+    let email =
+      "rajukani100@gmail.com" ||
+      "vandanrangani21@gmail.com" ||
+      "mananpatel1895@gmail.com"; // Get from JWT or session cookie
     if (!email) {
       return res.status(400).send("User not found in session");
     }
@@ -177,7 +179,7 @@ app.get("/callback", async function (req, res) {
     //   success: true,
     //   message: "Twitter account linked successfully",
     // });
-    res.redirect(`${process.env.FRONTEND_URL}/dashboard`)
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });

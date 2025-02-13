@@ -116,7 +116,7 @@ cron.schedule("*/1 * * * *", async () => {
           // Example of how you would use the sendPostSuccessEmail function
           await sendPostSuccessEmail(
             user.email,
-            user.name,
+            user.email,
             post.content,
             post.scheduledTime
           );
