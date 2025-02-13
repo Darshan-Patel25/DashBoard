@@ -155,10 +155,8 @@ app.get("/callback", async function (req, res) {
     }
 
     // If you want to identify the user by their email (JWT could be used here)
-    let email =
-      "rajukani100@gmail.com" ||
-      "vandanrangani21@gmail.com" ||
-      "mananpatel1895@gmail.com"; // Get from JWT or session cookie
+    let email = process.env.CALLBACK_MAIL;
+
     if (!email) {
       return res.status(400).send("User not found in session");
     }
