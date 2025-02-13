@@ -91,7 +91,7 @@ cron.schedule("*/1 * * * *", async () => {
         console.log(`Processing post for user: ${post.userId}`);
 
         // Fetch user from the database
-        const user = await User.findOne({ email: "rajukani100@gmail.com" });
+        const user = await User.findOne({ email: process.env.CALLBACK_MAIL });
 
         if (!user || !user.socialAccounts?.twitter?.accessToken) {
           console.error(
@@ -116,7 +116,7 @@ cron.schedule("*/1 * * * *", async () => {
           // Example of how you would use the sendPostSuccessEmail function
           await sendPostSuccessEmail(
             user.email,
-            user.name,
+            user.email,
             post.content,
             post.scheduledTime
           );

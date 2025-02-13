@@ -12,7 +12,7 @@ const sendPostSuccessEmail = async (
     from: `"Social Analytics" <${process.env.EMAIL_USER}>`,
     to: recipientEmail,
     subject: "🎉 Post Successfully Published!",
-    html: getPostSuccessEmailTemplate(userName, postContent, postDate),
+    html: getPostSuccessEmailTemplate(recipientEmail, postContent, postDate),
   };
 
   try {

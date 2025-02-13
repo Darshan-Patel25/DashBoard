@@ -1,21 +1,21 @@
 const transporter = require("../config/mailer"); // Ensure correct path to mailer configuration
-const getPostSuccessEmailTemplate = require("./postSuccess"); // Correct template import
+const getWelcomeEmailTemplate = require("./acccountCreation"); // Import the welcome email template
 require("dotenv").config();
 
-const sendPostSuccessEmail = async (recipientEmail, postContent, postTime) => {
+const sendWelcomeEmail = async (recipientEmail, userName) => {
   const mailOptions = {
     from: `"Social Analytics" <${process.env.EMAIL_USER}>`,
     to: recipientEmail,
-    subject: "📢 Your Post has been Successfully Published!",
-    html: getPostSuccessEmailTemplate(postContent, postTime), // Pass postContent and postTime to the template
+    subject: "🎉 Welcome to Social Analytics!",
+    html: getWelcomeEmailTemplate(userName), // Pass userName to the template
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.response);
+    console.log("Welcome email sent:", info.response);
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending welcome email:", error);
   }
 };
 
-module.exports = sendPostSuccessEmail;
+module.exports = sendWelcomeEmail;
