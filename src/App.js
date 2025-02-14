@@ -19,6 +19,7 @@ import SignIn from "homepage/components/SignIn";
 import SignUp from "homepage/components/SignUp";
 import About from "homepage/components/AboutUs/About";
 import Cookies from "js-cookie";
+import PageunderConstruction from "homepage/components/PageunderConstruction";
 
 // Protected Route Component
 function Protected({ Component }) {
@@ -78,17 +79,18 @@ function App() {
               path="/connectaccount"
               element={<Protected Component={ConnectAccount} />}
             />
-            <Route
+            {/* no requriement of this manageaccount route */}
+            {/* <Route
               path="/manageaccount"
               element={<Protected Component={ManageAccount} />}
-            />
+            /> */}
             <Route
               path="/competitor-insight"
-              element={<Protected Component={CompetitorAnalysis} />}
+              element={<Protected Component={PageunderConstruction} />}
             />
             <Route
               path="/sync-telegrambot"
-              element={<Protected Component={SyncTelegrambot} />}
+              element={<Protected Component={PageunderConstruction} />}
             />
           </Route>
         </Routes>
