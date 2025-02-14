@@ -96,7 +96,7 @@ function App() {
               path="/sync-telegrambot"
               element={<Protected Component={SyncTelegrambot} />}
             />
-           <Route path="/nearby-comp" element={<NearByComp />} />
+           <Route path="/nearby-competitor" element={<NearByComp />} />
 
           </Route>
         </Routes>
