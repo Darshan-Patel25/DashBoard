@@ -33,6 +33,11 @@ const Analytics = () => {
     reposts: 0,
     bookmarks: 0,
   });
+const [positive, setpositive] = useState(0);
+const [negative, setnegative] = useState(0);
+const [Neutral, setneutral] = useState(0);
+const [loadingPdf, setLoadingPdf] = useState(false);
+const [loadingExcel, setLoadingExcel] = useState(false);
 
 const handleChildResponse = async (data) => {
   setChildData(data);
@@ -264,7 +269,7 @@ Positive)
 
         <Box
           gridColumn="span 6"
-          gridRow="span 3"
+          gridRow="span 4"
           backgroundColor={theme.palette.background.alt}
           p="0.5rem"
           borderRadius="0.55rem"
