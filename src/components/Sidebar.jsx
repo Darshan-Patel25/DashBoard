@@ -19,7 +19,6 @@ import {
   ChevronLeft,
   ChevronRightOutlined,
   HomeOutlined,
-  ReceiptLongOutlined,
   DataUsageOutlined,
   AccountCircleOutlined,
   CalendarMonth,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from "components/Header";
-import { Box, TextField, Button, CircularProgress } from "@mui/material";
+import { Box, TextField, Button} from "@mui/material";
 import AreaCard from "components/Areacard";
 import Loader from 'homepage/components/Loader';
 

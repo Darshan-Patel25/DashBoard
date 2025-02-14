@@ -22,7 +22,7 @@ import Cookies from "js-cookie";
 
 import NearByComp from "scenes/NearBycomp";
 
-import PageunderConstruction from "homepage/components/PageunderConstruction";
+//import PageunderConstruction from "homepage/components/PageunderConstruction";
 
 
 // Protected Route Component
