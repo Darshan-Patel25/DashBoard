@@ -19,7 +19,11 @@ import SignIn from "homepage/components/SignIn";
 import SignUp from "homepage/components/SignUp";
 import About from "homepage/components/AboutUs/About";
 import Cookies from "js-cookie";
+
+import NearByComp from "scenes/NearBycomp";
+
 import PageunderConstruction from "homepage/components/PageunderConstruction";
+
 
 // Protected Route Component
 function Protected({ Component }) {
@@ -92,6 +96,8 @@ function App() {
               path="/sync-telegrambot"
               element={<Protected Component={SyncTelegrambot} />}
             />
+           <Route path="/nearby-comp" element={<NearByComp />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
