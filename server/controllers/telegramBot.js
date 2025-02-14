@@ -4,6 +4,7 @@ const ScheduledPost = require("../models/schedulePost");
 const User = require("../models/user");
 const moment = require("moment");
 const mongoose = require("mongoose");
+const axios = require("axios"); // Import axios for making HTTP requests
 
 const bot = new Telegraf("7399056212:AAFYJ-4mGBLxeHzwK2fcQ7Bt2zHwJ9Stx6U");
 const userStates = {};
@@ -16,6 +17,7 @@ bot.start((ctx) => {
     Markup.inlineKeyboard([
       [Markup.button.callback("🚀 Post Now", "post_now")],
       [Markup.button.callback("⏳ Schedule Post", "schedule_post")],
+      [Markup.button.callback("🤖 Instant Content Generate", "instant_content_generate")],
     ])
   );
   console.log(`User Chat ID: ${chatId}`);
@@ -29,6 +31,15 @@ bot.action("post_now", (ctx) => {
 bot.action("schedule_post", (ctx) => {
   ctx.reply("Send me the text you want to schedule.");
   userStates[ctx.chat.id] = "waiting_for_scheduled_text";
+});
+
+// Handle Instant Content Generation
+bot.action("instant_content_generate", (ctx) => {
+  // Ask the user for the content they want to generate
+  ctx.reply("Please send the content you'd like to generate:");
+
+  // Set state to waiting for content to generate
+  userStates[ctx.chat.id] = "waiting_for_instant_content";
 });
 
 bot.on("text", async (ctx) => {
@@ -97,17 +108,6 @@ bot.on("text", async (ctx) => {
       user.scheduledPosts.push(savedPost._id);
       await user.save();
 
-      // Schedule the post
-      // schedule.scheduleJob(scheduledTime, async () => {
-      //   await bot.telegram.sendMessage(
-      //     post.chatId,
-      //     `📢 Scheduled Post: "${post.content}" at ${post.time}`
-      //   );
-      //   console.log("🕒 Scheduled Post Sent:", post);
-      //   savedPost.status = "posted";
-      //   await savedPost.save();
-      // });
-
       ctx.reply(
         `✅ Your post "${post.content}" has been scheduled for ${post.time}.`
       );
@@ -119,6 +119,29 @@ bot.on("text", async (ctx) => {
     }
 
     delete userStates[userId];
+  } else if (userState === "waiting_for_instant_content") {
+    const content = ctx.message.text;
+
+    // Make a POST request to the local API with the content to generate a refined version
+    try {
+      const response = await axios.post("http://localhost:8080/api/comments/instantcontent", {
+        content: content,
+      });
+
+      // Assuming the API returns an object with a `generatedContent` field
+      const generatedContent = response.data.correctedTweet + ' ' + response.data.hashtags;
+
+      if (generatedContent) {
+        ctx.reply(`${generatedContent}`);
+      } else {
+        ctx.reply("❌ No content generated. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error generating content:", error);
+      ctx.reply("❌ There was an error generating content. Please try again later.");
+    }
+
+    delete userStates[userId]; // Reset user state after processing
   }
 });
 

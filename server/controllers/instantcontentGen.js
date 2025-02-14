@@ -18,9 +18,6 @@ exports.instantcontent = async (req, res) => {
 
     const result = await model.generateContent(prompt);
 
-    // Log the full response to check the structure
-    console.log("Gemini API Response:", result);
-
     let correctedTweet = "";
     let hashtags = "";
 
