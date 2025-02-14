@@ -16,6 +16,7 @@ const transporter = require("../config/mailer");
 const Reminder = require("../models/remainderSchema");
 const { rotateRadians } = require("pdf-lib");
 const { shownearcomp } = require("../controllers/shownearbycomp");
+const { instantcontent } = require("../controllers/instantcontentGen");
 router.post("/sentiment-comments", fetchComments);
 router.post("/correct", tweetCorrection);
 router.get("/trending-hashtags", fetchHashtags);
@@ -23,6 +24,7 @@ router.get("/stas", fetchSocialStats);
 router.post("/remainder", auth, postreaminder);
 router.get("/getremainder", auth, getremainders);
 router.post("/shownearcomp", shownearcomp);
+router.post("/instantcontent", instantcontent);
 router.post("/competitor-analysis", auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId);

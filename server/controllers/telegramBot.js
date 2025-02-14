@@ -69,8 +69,6 @@ bot.on("text", async (ctx) => {
       time: scheduledTime,
     };
 
-
-
     try {
       // Create a scheduled post with source as 'telegram_bot'
       const newPost = new ScheduledPost({
