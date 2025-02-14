@@ -3,7 +3,7 @@ import facebookIcon from "../assets/icon_faceboob.webp";
 import twitterIcon from "../assets/icon_x.png";
 import instagramIcon from "../assets/icon_insta.webp";
 import linkedinIcon from "../assets/icon_linkedin.png";
-import dashboardImage from "../assets/photo.png"
+import dashboardImage from "../assets/photo1.png"
 const Hero = () => {
   const iconMap = {
     facebook: facebookIcon,

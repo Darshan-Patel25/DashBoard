@@ -19,6 +19,7 @@ import SignIn from "homepage/components/SignIn";
 import SignUp from "homepage/components/SignUp";
 import About from "homepage/components/AboutUs/About";
 import Cookies from "js-cookie";
+import PageunderConstruction from "homepage/components/PageunderConstruction";
 
 // Protected Route Component
 function Protected({ Component }) {
@@ -78,6 +79,7 @@ function App() {
               path="/connectaccount"
               element={<Protected Component={ConnectAccount} />}
             />
+            {/* no requriement of this manageaccount route */}
             <Route
               path="/manageaccount"
               element={<Protected Component={ManageAccount} />}
