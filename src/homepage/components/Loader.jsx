@@ -10,7 +10,7 @@ const Loader = () => {
     position: 'fixed', // Ensures it stays centered even when scrolling
     top: 0,
     left: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Optional: Light overlay effect
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Optional: Light overlay effect
   };
 
   const loaderStyle = {
