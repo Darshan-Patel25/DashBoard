@@ -16,11 +16,13 @@ const DonutChart = ({positive,neutral,negative}) => {
 
   // Chart Options
   const options = {
-    title: "Sentiment Distribution",
+    
     pieHole: 0.4, // Donut style
     is3D: false,
     backgroundColor: "transparent",
-    legend: { position: "bottom" },
+    legend: { position: "bottom",
+        textStyle: { color: "#FFFFFF", fontSize: 13 } 
+     },
     pieSliceText: "value",
     chartArea: { width: "90%", height: "75%" },
     slices: {
@@ -31,12 +33,10 @@ const DonutChart = ({positive,neutral,negative}) => {
   };
 
   return (
-    <Box textAlign="center" p={3}>
-      <Typography variant="h6" gutterBottom>
-        Overall Sentiment Analysis
-      </Typography>
+    <Box textAlign="center" m={-3}>
+     
       {positive + neutral + negative > 0 ? (
-        <Chart chartType="PieChart" width="100%" height="300px" data={data} options={options} />
+        <Chart chartType="PieChart" width="100%" height="250px" data={data} options={options} />
       ) : (
         <Typography color="#EAEAEA">No sentiment data available.</Typography>
       )}

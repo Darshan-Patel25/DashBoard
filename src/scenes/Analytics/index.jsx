@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress ,CircularProgress} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import StatBox from "components/StatBox";
 import TelegramPost from "../../components/sentimentPost";
@@ -29,6 +29,8 @@ const Analytics = () => {
   const [negative, setnegative] = useState();
   const [Neutral, setneutral] = useState();
   const [childData,setChildData] = useState({});
+  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [loadingExcel, setLoadingExcel] = useState(false);
   const [engagementMetrics, setEngagementMetrics] = useState({
     likes: 0,
     replies: 0,
@@ -104,6 +106,7 @@ Positive)
 
 
   const handlePdfDownload = () => {
+    setLoadingPdf(true);
     fetch(`${url}/generate-pdf`)
       .then((response) => response.blob())
       .then((blob) => {
@@ -112,10 +115,14 @@ Positive)
         a.href = url;
         a.download = `Report.pdf`;
         a.click();
+        setLoadingPdf(false)
       })
-      .catch((err) => console.error("Download Error:", err));
+      .catch((err) => console.error("Download Error:", err)
+       .finally(() => setLoadingPdf(false))
+    );
   };
   const handleExcelDownload = () => {
+    setLoadingExcel(true);
     fetch(`${url}/api/user/generate-excel`, {
       method: "GET",
       headers: {
@@ -136,7 +143,8 @@ Positive)
         a.click();
         window.URL.revokeObjectURL(url); // Cleanup
       })
-      .catch((err) => console.error("Download Error:", err));
+      .catch((err) => console.error("Download Error:", err))
+       .finally(() => setLoadingExcel(false));
   }
 
   useEffect(() => {
@@ -197,10 +205,11 @@ Positive)
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={() => handlePdfDownload()}
+            onClick={handlePdfDownload}
+            disabled={loadingPdf}
           >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download PDF
+           {loadingPdf ? <CircularProgress size={20} sx={{ color: theme.palette.background.alt, mr: "10px" }} /> : <DownloadOutlined sx={{ mr: "10px" }} />}
+            {loadingPdf ? "Downloading..." : "Download PDF"}
           </Button>
           <Button
             sx={{
@@ -210,10 +219,11 @@ Positive)
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={() => handleExcelDownload()}
+            onClick={handleExcelDownload}
+            disabled={loadingExcel}
           >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Excel
+             {loadingExcel ? <CircularProgress size={20} sx={{ color: theme.palette.background.alt, mr: "10px" }} /> : <DownloadOutlined sx={{ mr: "10px" }} />}
+            {loadingExcel ? "Downloading..." : "Download Excel"}
           </Button>
         </Box>
       </FlexBetween>
