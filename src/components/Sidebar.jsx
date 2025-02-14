@@ -25,6 +25,7 @@ import {
   CalendarMonth,
   Telegram,
   TrendingUpOutlined,
+  ShareLocation
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
@@ -39,7 +40,7 @@ const navItems = [
   },
   { text: "Account", icon: <AccountCircleOutlined />, },
   { text: "Competitor-Insight  ", icon: <TrendingUpOutlined /> },
-  { text: "Nearby-Competitor", icon: <AccountCircleOutlined />, },
+  { text: "Nearby-Competitor", icon: <ShareLocation />, },
   { text: "Sync-TelegramBot", icon: <Telegram /> },
 ];
 
