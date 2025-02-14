@@ -12,6 +12,8 @@ import PostCard from "../../components/PostCard";
 import Cookies from "js-cookie"; // Import the cookie library
 import { FaUsers, FaUserCheck, FaCalendarAlt, FaCommentDots } from "react-icons/fa";
 import { url } from "globalbackendurl";
+import DefaultLoaderExample from "homepage/components/Loader";
+import Loader from "homepage/components/Loader";
 
 
 const DashboardPage = () => {
@@ -71,7 +73,7 @@ const DashboardPage = () => {
   }, []);
 
   if (!data) {
-    return <Typography>Loading data...</Typography>;
+    return <Typography> <Loader/> </Typography>;
   }
 
   const iconStyle = {

@@ -80,17 +80,17 @@ function App() {
               element={<Protected Component={ConnectAccount} />}
             />
             {/* no requriement of this manageaccount route */}
-            {/* <Route
+            <Route
               path="/manageaccount"
               element={<Protected Component={ManageAccount} />}
-            /> */}
+            />
             <Route
               path="/competitor-insight"
-              element={<Protected Component={PageunderConstruction} />}
+              element={<Protected Component={CompetitorAnalysis} />}
             />
             <Route
               path="/sync-telegrambot"
-              element={<Protected Component={PageunderConstruction} />}
+              element={<Protected Component={SyncTelegrambot} />}
             />
           </Route>
         </Routes>
