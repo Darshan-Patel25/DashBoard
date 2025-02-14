@@ -39,6 +39,7 @@ const navItems = [
   },
   { text: "Account", icon: <AccountCircleOutlined />, },
   { text: "Competitor-Insight  ", icon: <TrendingUpOutlined /> },
+  { text: "NearBy-Competitor", icon: <AccountCircleOutlined />, },
   { text: "Sync-TelegramBot", icon: <Telegram /> },
 ];
 
