@@ -13,9 +13,8 @@ exports.fetchComments = async (req, res) => {
 
   async function analyzeTweet(tweetId) {
     const browser = await chromium.launch({
-      headless: false, args: [
-        '--window-position=2000,100'
-      ]
+      headless: false,
+      args: ["--window-position=2000,100"],
     });
     let context;
 
@@ -177,6 +176,7 @@ exports.fetchComments = async (req, res) => {
         sentimentCategory,
         sentimentAnalysis,
         engagementMetrics,
+        topComments,
       };
     } catch (error) {
       console.error("Error during tweet scraping:", error);

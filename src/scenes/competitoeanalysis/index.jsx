@@ -154,7 +154,7 @@ const ConnectPage = () => {
         <Header title={'Competitor Analytics'} />
       </Typography>
 
-      {/* New Page Input and Add Button */}
+      
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <TextField
           label="Add New Page"
