@@ -25,12 +25,7 @@ const Analytics = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const [postedPosts, setPostedPosts] = useState([]);
-  const [positive, setpositive] = useState();
-  const [negative, setnegative] = useState();
-  const [Neutral, setneutral] = useState();
-  const [childData,setChildData] = useState({});
-  const [loadingPdf, setLoadingPdf] = useState(false);
-  const [loadingExcel, setLoadingExcel] = useState(false);
+  const [childData, setChildData] = useState({});
   const [engagementMetrics, setEngagementMetrics] = useState({
     likes: 0,
     replies: 0,
@@ -294,32 +289,26 @@ Positive)
 
         {/* Suggestions */}
         <Box
-  gridColumn="span 6"
-  gridRow="span 1"
-  backgroundColor={theme.palette.background.alt}
-  p="0.5rem"
-  borderRadius="0.55rem"
-  sx={{ maxHeight: "150px", overflowY: "auto" }} // Add max height and scroll behavior
->
-  <StatBox title="Summary of all comments" />
-  <Box
-    sx={{
-      padding: "0.5rem",
-      margin: "0",
-      fontSize: "18px",
-      textAlign: "center",
-      fontWeight: "bold",
-      whiteSpace: "pre-wrap", // Ensures long text wraps properly
-    }}
-  >
-    {childData.sentimentAnalysis ? (
-      <Typography variant="body1">{childData.sentimentAnalysis}</Typography>
-    ) : (
-      <Typography variant="body1">No sentiment analysis available.</Typography>
-    )}
-  </Box>
-</Box>
-
+          gridColumn="span 6"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+          <StatBox title="Summary of all comments" />
+          <ul
+            style={{
+              padding: "0",
+              margin: "0",
+              listStyle: "none",
+              fontSize: "18px",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            <p>{childData.sentimentAnalysis || "No sentiment analysis available."}</p>
+          </ul>
+        </Box>
 
         {/* Sentiment Analysis Progress Bar */}
         <Box
