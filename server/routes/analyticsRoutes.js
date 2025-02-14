@@ -22,7 +22,7 @@ router.get("/trending-hashtags", fetchHashtags);
 router.get("/stas", fetchSocialStats);
 router.post("/remainder", auth, postreaminder);
 router.get("/getremainder", auth, getremainders);
-router.get("/shownearcomp", auth, shownearcomp);
+router.post("/shownearcomp", shownearcomp);
 router.post("/competitor-analysis", auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId);

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from "components/Header";
-import { Box, TextField, Button, CircularProgress, Grid } from "@mui/material";
+import { Box, TextField, Button, CircularProgress } from "@mui/material";
 import AreaCard from "components/Areacard";
+import Loader from 'homepage/components/Loader';
 
 const NearByComp = () => {
   const [location, setLocation] = useState('');
@@ -9,14 +10,22 @@ const NearByComp = () => {
   const [competitors, setCompetitors] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchCompetitors();
-  }, []);
-
   const fetchCompetitors = async () => {
+    if (!location || !category) {
+      alert("Please enter both location and category.");
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/api/comments/shownearcomp"); // Ensure this URL is correct
+      const response = await fetch("http://localhost:8080/api/comments/shownearcomp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ location, category }),
+      });
+
       const data = await response.json();
       if (data.success) {
         setCompetitors(data.competitors);
@@ -32,6 +41,7 @@ const NearByComp = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="Nearby Competitor" />
+      
       <Box mt={2} p={3} border="1px solid #ccc" borderRadius="8px" textAlign="center">
         <Box display="flex" gap={2} justifyContent="center">
           <TextField
@@ -59,16 +69,14 @@ const NearByComp = () => {
 
       {loading ? (
         <Box textAlign="center" mt={3}>
-          <CircularProgress />
+          <Loader/>
         </Box>
       ) : (
-        <Grid container spacing={3} mt={2}>
+        <>
           {competitors.map((comp, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <AreaCard name={comp.name} address={comp.address} />
-            </Grid>
+            <AreaCard name={comp.name} address={comp.address} key={index} />
           ))}
-        </Grid>
+        </>
       )}
     </Box>
   );
