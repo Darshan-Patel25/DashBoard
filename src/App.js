@@ -20,6 +20,11 @@ import SignUp from "homepage/components/SignUp";
 import About from "homepage/components/AboutUs/About";
 import Cookies from "js-cookie";
 
+import NearByComp from "scenes/NearBycomp";
+
+import PageunderConstruction from "homepage/components/PageunderConstruction";
+
+
 // Protected Route Component
 function Protected({ Component }) {
   const isAuthenticated = !!Cookies.get("accessToken"); // Check if accessToken cookie exists
@@ -78,6 +83,7 @@ function App() {
               path="/connectaccount"
               element={<Protected Component={ConnectAccount} />}
             />
+            {/* no requriement of this manageaccount route */}
             <Route
               path="/manageaccount"
               element={<Protected Component={ManageAccount} />}
@@ -90,6 +96,8 @@ function App() {
               path="/sync-telegrambot"
               element={<Protected Component={SyncTelegrambot} />}
             />
+           <Route path="/nearby-competitor" element={<NearByComp />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
