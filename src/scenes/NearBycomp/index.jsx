@@ -16,7 +16,7 @@ const NearByComp = () => {
   const fetchCompetitors = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://192.168.6.164:8080/api/comments/shownearcomp"); // Ensure this URL is correct
+      const response = await fetch("http://localhost:8080/api/comments/shownearcomp"); // Ensure this URL is correct
       const data = await response.json();
       if (data.success) {
         setCompetitors(data.competitors);
