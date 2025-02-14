@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import { DownloadOutlined } from "@mui/icons-material";
 import EngagementBarChart from "components/EngagementGraph";
 import { url } from "globalbackendurl";
-
+import Doublechart from "../../components/doublePi"
 const convertMetric = (value) => {
   if (typeof value === "string") {
     value = value.replace(/,/g, ""); // Remove commas
@@ -25,7 +25,10 @@ const Analytics = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const [postedPosts, setPostedPosts] = useState([]);
-  const [childData, setChildData] = useState({});
+  const [positive, setpositive] = useState();
+  const [negative, setnegative] = useState();
+  const [Neutral, setneutral] = useState();
+  const [childData,setChildData] = useState({});
   const [engagementMetrics, setEngagementMetrics] = useState({
     likes: 0,
     replies: 0,
@@ -34,18 +37,71 @@ const Analytics = () => {
     bookmarks: 0,
   });
 
-  const handleChildResponse = (data) => {
-    setChildData(data);
-    if (data.engagementMetrics) {
-      setEngagementMetrics({
-        likes: convertMetric(data.engagementMetrics.likes),
-        replies: convertMetric(data.engagementMetrics.reply),
-        views: convertMetric(data.engagementMetrics.views),
-        reposts: convertMetric(data.engagementMetrics.reposts),
-        bookmarks: convertMetric(data.engagementMetrics.bookmarks),
+const handleChildResponse = async (data) => {
+  setChildData(data);
+  console.log("Sentiment comments:", data.topComments);
+
+  if (data.engagementMetrics) {
+    setEngagementMetrics({
+      likes: convertMetric(data.engagementMetrics.likes),
+      replies: convertMetric(data.engagementMetrics.reply),
+      views: convertMetric(data.engagementMetrics.views),
+      reposts: convertMetric(data.engagementMetrics.reposts),
+      bookmarks: convertMetric(data.engagementMetrics.bookmarks),
+    });
+  }
+
+  if (data.topComments && data.topComments.length > 0) {
+    try {
+      const response = await fetch("https://8d11-202-129-240-131.ngrok-free.app/analyze_sentiment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comments: data.topComments }),
       });
+
+      if (!response.ok) {
+        console.error(`Error analyzing comments: ${response.status}`);
+        return;
+      }
+
+      const sentimentResult = await response.json();
+      // console.log("Sentiment Analysis Result:", sentimentResult);
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Negative
+);
+setnegative(sentimentResult.
+sentiment_distribution
+.
+Negative)
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Neutral);
+setneutral(sentimentResult.
+sentiment_distribution
+.
+Neutral)
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Positive);
+setpositive(sentimentResult.
+sentiment_distribution
+.
+Positive)
+
+    } catch (error) {
+      console.error("Error analyzing comments:", error);
     }
-  };
+  } else {
+    console.warn("No top comments available to analyze.");
+  }
+};
+
 
   const handlePdfDownload = () => {
     fetch(`${url}/generate-pdf`)
@@ -229,7 +285,7 @@ const Analytics = () => {
         {/* Suggestions */}
         <Box
           gridColumn="span 6"
-          gridRow="span 2"
+          gridRow="span 1"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
@@ -252,25 +308,15 @@ const Analytics = () => {
         {/* Sentiment Analysis Progress Bar */}
         <Box
           gridColumn="span 6"
-          gridRow="span 1"
+          gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
         >
           <StatBox title="Overall Sentiment Analysis of posts" />
           <Box mt="1rem">
-            {childData.sentimentCategory ? <>
-              <Typography variant="body1" gutterBottom>
-                Sentiment Category: {childData.sentimentCategory || "Neutral"}
-              </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={getSentimentScore()}
-                color={getProgressColor()}
-              />
-              <Typography variant="body2" align="right">
-                {getSentimentScore()}%
-              </Typography>
+            {childData ? <>
+             <Doublechart positive={positive} negative={negative} neutral={Neutral} />
             </> : <ul
               style={{
                 padding: "0",

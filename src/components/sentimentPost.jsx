@@ -24,7 +24,7 @@ export default function SentimentPost({ onResponse,text, description, date, post
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ tweetId:postId }),
+        body: JSON.stringify({ tweetId:"1888828440461107269" }),
       });
 
       if (!response.ok) {
