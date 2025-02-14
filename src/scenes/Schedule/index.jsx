@@ -51,25 +51,11 @@ export default function Schedule() {
     }
 
     try {
-<<<<<<< HEAD
-      const response = await fetch(`${url}/api/schedule/schedule-post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ content: post, scheduledTime }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Failed to schedule the post.");
-=======
       const response = await axios.post(
         `${url}/api/schedule/schedule-post`,
         { content: post, scheduledTime },
         { headers: { Authorization: `Bearer ${token}` } }
       );
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
 
       alert("Post scheduled successfully!");
       console.log("Response:", response.data);
@@ -99,14 +85,7 @@ export default function Schedule() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-<<<<<<< HEAD
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Failed to optimize the post.");
-
-      setPost(`${data.correctedTweet || post} ${data.hashtags || ""}`);
-=======
       setPost(`${response.data.correctedTweet || post} ${response.data.hashtags || ""}`);
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
       alert("Post optimized and hashtags added!");
     } catch (error) {
       console.error("Error optimizing the post:", error);
@@ -185,11 +164,7 @@ export default function Schedule() {
           {/* Textarea */}
           <Box mt={2} position="relative">
             <textarea
-<<<<<<< HEAD
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-=======
               className="w-full p-2 border rounded"
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
               placeholder="What do you want to share?"
               value={post}
               onChange={(e) => setPost(e.target.value)}
@@ -202,18 +177,6 @@ export default function Schedule() {
                 backgroundColor: "white",
                 color: "black",
                 resize: "none",
-<<<<<<< HEAD
-                overflowY: "auto",
-              }}
-            />
-            {/* File Icon */}
-            <Box position="absolute" bottom="18px" left="12px" display="flex" alignItems="center">
-              <label style={{ cursor: "pointer" }}>
-                <input type="file" accept="image/*" style={{ display: "none" }} />
-                <Image sx={{ fontSize: 20, color: "gray" }} />
-              </label>
-            </Box>
-=======
               }}
             />
           </Box>
@@ -225,7 +188,6 @@ export default function Schedule() {
               <Image sx={{ fontSize: 24, color: "gray", marginRight: "8px" }} />
               {imageFile ? imageFile.name : "Upload an image"}
             </label>
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
           </Box>
 
           {/* Schedule Time Input */}
@@ -241,25 +203,10 @@ export default function Schedule() {
             />
           </Box>
 
-<<<<<<< HEAD
-              
-
-          {/* Statistics */}
-          <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} gap={2}>
-            <StatBox title="Total Posts" value="234" increase="+5%" />
-            <StatBox title="Scheduled Posts" value="45" increase="+10%" />
-          </Box>
-
-          {/* Buttons */}
-          <Box display="flex" justifyContent="space-between" mt={2}>
-            <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleOptimizePost}>
-              AI-Powered Post Optimization
-=======
           {/* Buttons */}
           <Box display="flex" justifyContent="space-between" mt={2}>
             <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleOptimizePost}>
               AI-Powered Optimization
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
             </Button>
             <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleDirectPost}>
               Direct Post
@@ -270,30 +217,11 @@ export default function Schedule() {
           </Box>
         </Box>
 
-<<<<<<< HEAD
-        {/* Trending Hashtags Section */}
-        <Box
-          gridColumn="span 4"
-          gridRow="span 5"
-          backgroundColor={theme.palette.background.alt}
-          p="1rem"
-          borderRadius="0.55rem"
-          sx={{ overflowY: "auto" }}
-        >
-          <StatBox title="Top Trending Hashtags" />
-          <ul style={{ padding: "0", listStyle: "none", fontSize: "18px", textAlign: "center", fontWeight: "bold" }}>
-            {trendingHashtags.length > 0 ? (
-              trendingHashtags.map((hashtag, index) => <li key={index} style={{ padding: "5px 0" }}>{hashtag}</li>)
-            ) : (
-              <Typography>No hashtags available.</Typography>
-            )}
-=======
         {/* Trending Hashtags */}
         <Box gridColumn="span 4"gridRow="span 5"  backgroundColor={theme.palette.background.alt} p="1rem" borderRadius="0.55rem" sx={{ overflowY: "auto" }}>
           <StatBox title="Top Trending Hashtags" />
           <ul style={{ listStyle: "none", textAlign: "center" }}>
             {trendingHashtags.length > 0 ? trendingHashtags.map((tag, i) => <li key={i} style={{ fontSize: "1rem", fontWeight: "bold", margin: "10px 0" }}>{tag}</li>) : <Typography>No hashtags available.</Typography>}
->>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
           </ul>
         </Box>
       </Box>
