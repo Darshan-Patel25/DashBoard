@@ -30,7 +30,7 @@ const EngagementBarChart = ({ likes, replies, views, reposts, bookmarks }) => {
             },
           ]}
           width={570}
-          height={450}
+          height={600}
         />
       </div>
     </div>

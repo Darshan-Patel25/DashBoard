@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, Typography, LinearProgress ,CircularProgress} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import StatBox from "components/StatBox";
 import TelegramPost from "../../components/sentimentPost";
@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import { DownloadOutlined } from "@mui/icons-material";
 import EngagementBarChart from "components/EngagementGraph";
 import { url } from "globalbackendurl";
-
+import Doublechart from "../../components/doublePi"
 const convertMetric = (value) => {
   if (typeof value === "string") {
     value = value.replace(/,/g, ""); // Remove commas
@@ -33,21 +33,80 @@ const Analytics = () => {
     reposts: 0,
     bookmarks: 0,
   });
+const [positive, setpositive] = useState(0);
+const [negative, setnegative] = useState(0);
+const [Neutral, setneutral] = useState(0);
+const [loadingPdf, setLoadingPdf] = useState(false);
+const [loadingExcel, setLoadingExcel] = useState(false);
 
-  const handleChildResponse = (data) => {
-    setChildData(data);
-    if (data.engagementMetrics) {
-      setEngagementMetrics({
-        likes: convertMetric(data.engagementMetrics.likes),
-        replies: convertMetric(data.engagementMetrics.reply),
-        views: convertMetric(data.engagementMetrics.views),
-        reposts: convertMetric(data.engagementMetrics.reposts),
-        bookmarks: convertMetric(data.engagementMetrics.bookmarks),
+const handleChildResponse = async (data) => {
+  setChildData(data);
+  console.log("Sentiment comments:", data.topComments);
+
+  if (data.engagementMetrics) {
+    setEngagementMetrics({
+      likes: convertMetric(data.engagementMetrics.likes),
+      replies: convertMetric(data.engagementMetrics.reply),
+      views: convertMetric(data.engagementMetrics.views),
+      reposts: convertMetric(data.engagementMetrics.reposts),
+      bookmarks: convertMetric(data.engagementMetrics.bookmarks),
+    });
+  }
+
+  if (data.topComments && data.topComments.length > 0) {
+    try {
+      const response = await fetch("https://8d11-202-129-240-131.ngrok-free.app/analyze_sentiment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comments: data.topComments }),
       });
+
+      if (!response.ok) {
+        console.error(`Error analyzing comments: ${response.status}`);
+        return;
+      }
+
+      const sentimentResult = await response.json();
+      // console.log("Sentiment Analysis Result:", sentimentResult);
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Negative
+);
+setnegative(sentimentResult.
+sentiment_distribution
+.
+Negative)
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Neutral);
+setneutral(sentimentResult.
+sentiment_distribution
+.
+Neutral)
+      console.log("Sentiment Analysis Result:", sentimentResult.
+sentiment_distribution
+.
+Positive);
+setpositive(sentimentResult.
+sentiment_distribution
+.
+Positive)
+
+    } catch (error) {
+      console.error("Error analyzing comments:", error);
     }
-  };
+  } else {
+    console.warn("No top comments available to analyze.");
+  }
+};
+
 
   const handlePdfDownload = () => {
+    setLoadingPdf(true);
     fetch(`${url}/generate-pdf`)
       .then((response) => response.blob())
       .then((blob) => {
@@ -56,10 +115,14 @@ const Analytics = () => {
         a.href = url;
         a.download = `Report.pdf`;
         a.click();
+        setLoadingPdf(false)
       })
-      .catch((err) => console.error("Download Error:", err));
+      .catch((err) => console.error("Download Error:", err)
+       .finally(() => setLoadingPdf(false))
+    );
   };
   const handleExcelDownload = () => {
+    setLoadingExcel(true);
     fetch(`${url}/api/user/generate-excel`, {
       method: "GET",
       headers: {
@@ -80,7 +143,8 @@ const Analytics = () => {
         a.click();
         window.URL.revokeObjectURL(url); // Cleanup
       })
-      .catch((err) => console.error("Download Error:", err));
+      .catch((err) => console.error("Download Error:", err))
+       .finally(() => setLoadingExcel(false));
   }
 
   useEffect(() => {
@@ -141,10 +205,11 @@ const Analytics = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={() => handlePdfDownload()}
+            onClick={handlePdfDownload}
+            disabled={loadingPdf}
           >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download PDF
+           {loadingPdf ? <CircularProgress size={20} sx={{ color: theme.palette.background.alt, mr: "10px" }} /> : <DownloadOutlined sx={{ mr: "10px" }} />}
+            {loadingPdf ? "Downloading..." : "Download PDF"}
           </Button>
           <Button
             sx={{
@@ -154,10 +219,11 @@ const Analytics = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
-            onClick={() => handleExcelDownload()}
+            onClick={handleExcelDownload}
+            disabled={loadingExcel}
           >
-            <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Excel
+             {loadingExcel ? <CircularProgress size={20} sx={{ color: theme.palette.background.alt, mr: "10px" }} /> : <DownloadOutlined sx={{ mr: "10px" }} />}
+            {loadingExcel ? "Downloading..." : "Download Excel"}
           </Button>
         </Box>
       </FlexBetween>
@@ -203,7 +269,7 @@ const Analytics = () => {
 
         <Box
           gridColumn="span 6"
-          gridRow="span 3"
+          gridRow="span 4"
           backgroundColor={theme.palette.background.alt}
           p="0.5rem"
           borderRadius="0.55rem"
@@ -252,25 +318,15 @@ const Analytics = () => {
         {/* Sentiment Analysis Progress Bar */}
         <Box
           gridColumn="span 6"
-          gridRow="span 1"
+          gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
           borderRadius="0.55rem"
         >
           <StatBox title="Overall Sentiment Analysis of posts" />
           <Box mt="1rem">
-            {childData.sentimentCategory ? <>
-              <Typography variant="body1" gutterBottom>
-                Sentiment Category: {childData.sentimentCategory || "Neutral"}
-              </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={getSentimentScore()}
-                color={getProgressColor()}
-              />
-              <Typography variant="body2" align="right">
-                {getSentimentScore()}%
-              </Typography>
+            {childData ? <>
+             <Doublechart positive={positive} negative={negative} neutral={Neutral} />
             </> : <ul
               style={{
                 padding: "0",

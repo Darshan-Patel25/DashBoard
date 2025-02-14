@@ -1,9 +1,12 @@
-import { Card, CardContent, Avatar, Typography, Box, Button } from "@mui/material";
+import { Card, CardContent, Avatar, Typography, Box, Button, CircularProgress } from "@mui/material";
 import { Twitter } from "@mui/icons-material";
 import Cookies from "js-cookie";
 import { url } from "globalbackendurl";
+import { useState } from "react";
 
-export default function SentimentPost({ onResponse,text, description, date, postId }) {
+export default function SentimentPost({ onResponse, text, description, date, postId }) {
+  const [loading, setLoading] = useState(false); // Loading state
+
   const analyzePost = async () => {
     if (!postId) {
       alert("Post ID not found. Please try again.");
@@ -11,10 +14,12 @@ export default function SentimentPost({ onResponse,text, description, date, post
     }
 
     try {
+      setLoading(true); // Set loading to true when analysis starts
       const token = Cookies.get("accessToken");
 
       if (!token) {
         alert("Access token not found in cookies.");
+        setLoading(false);
         return;
       }
 
@@ -24,20 +29,23 @@ export default function SentimentPost({ onResponse,text, description, date, post
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ tweetId:postId }),
+        body: JSON.stringify({ tweetId: postId }),
       });
 
       if (!response.ok) {
         alert(`Failed to analyze post. Status: ${response.status}`);
+        setLoading(false);
         return;
       }
 
       const data = await response.json();
       onResponse(data);
-      alert(`Sentiment Category: ${data.sentimentCategory}`);
+      // alert(`Sentiment Category: ${data.sentimentCategory}`);
     } catch (error) {
       console.error("Error analyzing post:", error);
       alert("Error analyzing post. Please try again.");
+    } finally {
+      setLoading(false); // Reset loading state when API call is finished
     }
   };
 
@@ -77,8 +85,14 @@ export default function SentimentPost({ onResponse,text, description, date, post
       </Typography>
 
       {/* Analyze Button on the right */}
-      <Button variant="contained" color="primary" onClick={analyzePost}>
-        Analyze Post
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={analyzePost}
+        disabled={loading} // Disable when loading
+        sx={{ minWidth: "150px" }} // Ensure proper button width
+      >
+        {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Analyze Post"}
       </Button>
     </Card>
   );
