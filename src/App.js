@@ -21,7 +21,7 @@ import About from "homepage/components/AboutUs/About";
 import Cookies from "js-cookie";
 
 import NearByComp from "scenes/NearBycomp";
-
+import HowItWorks from "homepage/components/HowItWorks";
 //import PageunderConstruction from "homepage/components/PageunderConstruction";
 
 
@@ -49,7 +49,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/aboutus" element={<About />} />
-
+          <Route path="/howitworks" element={<HowItWorks />} />
           {/* Protected Dashboard Routes with Theme */}
           <Route
             element={
