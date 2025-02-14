@@ -71,6 +71,18 @@ exports.fetchComments = async (req, res) => {
 
       // Extract engagement metrics
       const engagementMetrics = await page.evaluate(() => {
+        const targetSpan = Array.from(document.querySelectorAll('span'))
+          .find(span => span.textContent.includes("Show probable spam"));
+
+        if (targetSpan) {
+          const targetDiv = targetSpan.closest('div');
+          if (targetDiv) {
+            targetDiv.click();
+            console.log("Clicked the div successfully.");
+          }
+        }
+
+
         const tweetElement = document.querySelector(
           'article[data-testid="tweet"]'
         );
