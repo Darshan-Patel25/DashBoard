@@ -11,10 +11,12 @@ export default function Schedule() {
   const [post, setPost] = useState("");
   const [trendingHashtags, setTrendingHashtags] = useState([]);
   const [scheduledTime, setScheduledTime] = useState("");
+  const [imageFile, setImageFile] = useState(null); // ✅ Fixed state for image upload
 
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
+  // Fetch trending hashtags
   useEffect(() => {
     const fetchTrendingHashtags = async () => {
       try {
@@ -27,6 +29,15 @@ export default function Schedule() {
     fetchTrendingHashtags();
   }, []);
 
+  // Handle Image Selection
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
+
+  // Schedule Post
   const handleSchedulePost = async () => {
     if (!post.trim() || !scheduledTime) {
       alert("Please enter both a post and a valid date/time.");
@@ -40,6 +51,7 @@ export default function Schedule() {
     }
 
     try {
+<<<<<<< HEAD
       const response = await fetch(`${url}/api/schedule/schedule-post`, {
         method: "POST",
         headers: {
@@ -51,15 +63,23 @@ export default function Schedule() {
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Failed to schedule the post.");
+=======
+      const response = await axios.post(
+        `${url}/api/schedule/schedule-post`,
+        { content: post, scheduledTime },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
 
       alert("Post scheduled successfully!");
-      console.log("Response:", data);
+      console.log("Response:", response.data);
     } catch (error) {
       console.error("Error scheduling the post:", error);
-      alert(`Error: ${error.message}`);
+      alert("Failed to schedule the post.");
     }
   };
 
+  // Optimize Post
   const handleOptimizePost = async () => {
     if (!post.trim()) {
       alert("Please enter a post to optimize.");
@@ -73,23 +93,59 @@ export default function Schedule() {
         return;
       }
 
-      const response = await fetch(`${url}/api/comments/correct`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ content: post }),
-      });
+      const response = await axios.post(
+        `${url}/api/comments/correct`,
+        { content: post },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
+<<<<<<< HEAD
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Failed to optimize the post.");
 
       setPost(`${data.correctedTweet || post} ${data.hashtags || ""}`);
+=======
+      setPost(`${response.data.correctedTweet || post} ${response.data.hashtags || ""}`);
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
       alert("Post optimized and hashtags added!");
     } catch (error) {
       console.error("Error optimizing the post:", error);
-      alert(`Error: ${error.message}`);
+      alert("Failed to optimize the post.");
+    }
+  };
+
+  // Direct Post with Image Upload
+  const handleDirectPost = async () => {
+    if (!post.trim()) {
+      alert("Please enter a post.");
+      return;
+    }
+
+    const token = Cookies.get("accessToken");
+    if (!token) {
+      console.error("Access token is missing.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("content", post);
+      if (imageFile) formData.append("image", imageFile);
+
+      const response = await axios.post(`${url}/api/schedule/direct-post`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Post uploaded successfully!");
+      console.log("Response:", response.data);
+      setPost("");
+      setImageFile(null);
+    } catch (error) {
+      console.error("Error uploading post:", error);
+      alert("Failed to upload post.");
     }
   };
 
@@ -105,7 +161,7 @@ export default function Schedule() {
         gap="20px"
         sx={{ "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" } }}
       >
-        {/* Main Post Section */}
+        
         <Box
           gridColumn="span 8"
           gridRow="span 5"
@@ -129,7 +185,11 @@ export default function Schedule() {
           {/* Textarea */}
           <Box mt={2} position="relative">
             <textarea
+<<<<<<< HEAD
               className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+=======
+              className="w-full p-2 border rounded"
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
               placeholder="What do you want to share?"
               value={post}
               onChange={(e) => setPost(e.target.value)}
@@ -142,6 +202,7 @@ export default function Schedule() {
                 backgroundColor: "white",
                 color: "black",
                 resize: "none",
+<<<<<<< HEAD
                 overflowY: "auto",
               }}
             />
@@ -152,11 +213,24 @@ export default function Schedule() {
                 <Image sx={{ fontSize: 20, color: "gray" }} />
               </label>
             </Box>
+=======
+              }}
+            />
+          </Box>
+
+          {/* File Upload */}
+          <Box mt={2}>
+            <label style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+              <input type="file" accept="image/*" style={{ display: "none" }} onChange={handleImageChange} />
+              <Image sx={{ fontSize: 24, color: "gray", marginRight: "8px" }} />
+              {imageFile ? imageFile.name : "Upload an image"}
+            </label>
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
           </Box>
 
           {/* Schedule Time Input */}
           <Box mt={2}>
-            <Typography variant="subtitle1">Schedule Time (yyyy-mm-dd hh:mm):</Typography>
+            <Typography variant="subtitle1">Schedule Time:</Typography>
             <TextField
               type="datetime-local"
               value={scheduledTime}
@@ -167,6 +241,7 @@ export default function Schedule() {
             />
           </Box>
 
+<<<<<<< HEAD
               
 
           {/* Statistics */}
@@ -179,8 +254,14 @@ export default function Schedule() {
           <Box display="flex" justifyContent="space-between" mt={2}>
             <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleOptimizePost}>
               AI-Powered Post Optimization
+=======
+          {/* Buttons */}
+          <Box display="flex" justifyContent="space-between" mt={2}>
+            <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleOptimizePost}>
+              AI-Powered Optimization
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
             </Button>
-            <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }}>
+            <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleDirectPost}>
               Direct Post
             </Button>
             <Button variant="contained" sx={{ backgroundColor: "#1877F2", color: "white" }} onClick={handleSchedulePost}>
@@ -189,6 +270,7 @@ export default function Schedule() {
           </Box>
         </Box>
 
+<<<<<<< HEAD
         {/* Trending Hashtags Section */}
         <Box
           gridColumn="span 4"
@@ -205,6 +287,13 @@ export default function Schedule() {
             ) : (
               <Typography>No hashtags available.</Typography>
             )}
+=======
+        {/* Trending Hashtags */}
+        <Box gridColumn="span 4"gridRow="span 5"  backgroundColor={theme.palette.background.alt} p="1rem" borderRadius="0.55rem" sx={{ overflowY: "auto" }}>
+          <StatBox title="Top Trending Hashtags" />
+          <ul style={{ listStyle: "none", textAlign: "center" }}>
+            {trendingHashtags.length > 0 ? trendingHashtags.map((tag, i) => <li key={i} style={{ fontSize: "1rem", fontWeight: "bold", margin: "10px 0" }}>{tag}</li>) : <Typography>No hashtags available.</Typography>}
+>>>>>>> 301d71db1543e96ed6fb2203794a04189b233c95
           </ul>
         </Box>
       </Box>
