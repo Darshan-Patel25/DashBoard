@@ -24,9 +24,9 @@ const DonutChart = ({positive,neutral,negative}) => {
     pieSliceText: "value",
     chartArea: { width: "90%", height: "75%" },
     slices: {
-      0: { color: "#4caf50" }, // Green for Positive
-      1: { color: "#ffeb3b" }, // Yellow for Neutral
-      2: { color: "#f44336" }, // Red for Negative
+      0: { color: "#00C9A7" }, // Green for Positive
+      1: { color: "#FFB400" }, // Yellow for Neutral
+      2: { color: "#FF3D68" }, // Red for Negative
     },
   };
 
@@ -38,7 +38,7 @@ const DonutChart = ({positive,neutral,negative}) => {
       {positive + neutral + negative > 0 ? (
         <Chart chartType="PieChart" width="100%" height="300px" data={data} options={options} />
       ) : (
-        <Typography color="textSecondary">No sentiment data available.</Typography>
+        <Typography color="#EAEAEA">No sentiment data available.</Typography>
       )}
     </Box>
   );
